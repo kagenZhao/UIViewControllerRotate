@@ -1,6 +1,5 @@
 //
 //  UIViewController+Rotation.m
-//  wmICIOS
 //
 //  Created by 赵国庆 on 2018/7/11.
 //  Copyright © 2018年 kagen. All rights reserved.
@@ -23,11 +22,11 @@
  使用方法:
     只需要在项目中引入文件,
     在需要旋转的界面重写:
-    shouldAutorotate
-    supportedInterfaceOrientations
-    preferredInterfaceOrientationForPresentation
-    preferredStatusBarStyle
-    prefersStatusBarHidden
+    shouldAutorotate  默认返回 true / YES
+    supportedInterfaceOrientations 默认返回 UIInterfaceOrientationMaskPortrait
+    preferredInterfaceOrientationForPresentation 默认返回 UIInterfaceOrientationPortrait
+    preferredStatusBarStyle 默认返回 UIStatusBarStyleDefault
+    prefersStatusBarHidden 默认返回 NO
     等方法即可 非常低耦合
  
  Bug:

@@ -1,6 +1,5 @@
 //
 //  UIViewController+Rotation.h
-//  wmICIOS
 //
 //  Created by 赵国庆 on 2018/7/11.
 //  Copyright © 2018年 kagen. All rights reserved.
@@ -238,11 +237,12 @@ static void *rotation_viewWillDisappearBlockKey;
  因为在视图B回到视图A时，如果当时设备方向已经是Portrait，再设置成Portrait会不起作用(直接return)。
  */
 - (void)rotation_forceToOrientation:(UIDeviceOrientation)orientation {
-    NSLog(@"orientation: %ld", orientation);
-    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
-    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
-    NSNumber *orientationTarget = [NSNumber numberWithInt:orientation];
-    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+    [[UIDevice currentDevice] setValue:@(UIDeviceOrientationUnknown) forKey:@"orientation"];
+    [[UIDevice currentDevice] setValue:@(orientation) forKey:@"orientation"];
+}
+
+- (void)rotation_forceToOrientation1:(UIInterfaceOrientation)orientation {
+    [self rotation_forceToOrientation:(UIDeviceOrientation)orientation];
 }
 
 // 有一些 系统内部类, 无法重写, 这里就给出一个列表来进行修改
@@ -274,7 +274,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     UIViewController *topVC = self.rotation_findTopViewController;
     UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
     if (preference && preference.shouldAutorotate) return preference.shouldAutorotate.boolValue;
-    return topVC == self ? NO : topVC.shouldAutorotate;
+    return topVC == self ? YES : topVC.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -291,6 +291,10 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
     if (preference && preference.preferredInterfaceOrientationForPresentation) return preference.preferredInterfaceOrientationForPresentation.integerValue;
     return topVC == self ? UIInterfaceOrientationPortrait : topVC.preferredInterfaceOrientationForPresentation;
+}
+
+- (UIInterfaceOrientation)rotation_fix_preferredInterfaceOrientationForPresentation {
+    return self.shouldAutorotate ? self.preferredInterfaceOrientationForPresentation : UIInterfaceOrientationPortrait;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -397,27 +401,12 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 
 - (void)rotation_setupPrientationWithFromVC:(UIViewController *)fromViewController toVC:(UIViewController *)toViewController {
-    if (fromViewController.preferredInterfaceOrientationForPresentation != toViewController.preferredInterfaceOrientationForPresentation) {
+    if (fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation != toViewController.rotation_fix_preferredInterfaceOrientationForPresentation) {
         __weak UIViewController * weak_toController = toViewController;
         toViewController.rotation_viewWillAppearBlock = ^{
             if (weak_toController == nil) { return; }
-            UIInterfaceOrientation ori = weak_toController.preferredInterfaceOrientationForPresentation;
-            switch (ori) {
-                case UIInterfaceOrientationUnknown:
-                    break;
-                case UIInterfaceOrientationPortrait:
-                    [self rotation_forceToOrientation:(UIDeviceOrientationPortrait)];
-                    break;
-                case UIInterfaceOrientationLandscapeLeft:
-                    [self rotation_forceToOrientation:(UIDeviceOrientationLandscapeLeft)];
-                    break;
-                case UIInterfaceOrientationLandscapeRight:
-                    [self rotation_forceToOrientation:(UIDeviceOrientationLandscapeRight)];
-                    break;
-                case UIInterfaceOrientationPortraitUpsideDown:
-                    [self rotation_forceToOrientation:(UIDeviceOrientationPortraitUpsideDown)];
-                    break;
-            }
+            UIInterfaceOrientation ori = weak_toController.rotation_fix_preferredInterfaceOrientationForPresentation;
+            [self rotation_forceToOrientation1:ori];
         };
     } else {
         toViewController.rotation_viewWillAppearBlock = nil;
@@ -429,7 +418,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     UIViewController *topVC = self.rotation_findTopViewController;
     UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
     if (preference && preference.shouldAutorotate) return preference.shouldAutorotate.boolValue;
-    return topVC == self ? NO : topVC.shouldAutorotate;
+    return topVC == self ? YES : topVC.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -472,11 +461,33 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 @end
 
 @implementation UITabBarController (Rotation)
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _exchangeClassInstanceMethod(UITabBarController.class, @selector(setSelectedIndex:), @selector(rotation_hook_setSelectedIndex:));
+        _exchangeClassInstanceMethod(UITabBarController.class, @selector(setSelectedViewController:), @selector(rotation_hook_setSelectedViewController:));
+    });
+}
+
+- (void)rotation_hook_setSelectedIndex:(NSUInteger)selectedIndex {
+    [self rotation_hook_setSelectedIndex:selectedIndex];
+    UIViewController *vc = self.selectedViewController;
+    UIInterfaceOrientation ori = vc.rotation_fix_preferredInterfaceOrientationForPresentation;
+    [self rotation_forceToOrientation1:ori];
+}
+
+- (void)rotation_hook_setSelectedViewController:(__kindof UIViewController *)selectedViewController {
+    [self rotation_hook_setSelectedViewController:selectedViewController];
+    UIViewController *vc = self.selectedViewController;
+    UIInterfaceOrientation ori = vc.rotation_fix_preferredInterfaceOrientationForPresentation;
+    [self rotation_forceToOrientation1:ori];
+}
+
 - (BOOL)shouldAutorotate {
     UIViewController *topVC = self.rotation_findTopViewController;
     UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
     if (preference && preference.shouldAutorotate) return preference.shouldAutorotate.boolValue;
-    return topVC == self ? NO : topVC.shouldAutorotate;
+    return topVC == self ? YES : topVC.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

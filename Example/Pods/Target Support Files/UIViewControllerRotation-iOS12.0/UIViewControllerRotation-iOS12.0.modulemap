@@ -1,5 +1,5 @@
 framework module UIViewControllerRotation {
-  umbrella header "UIViewControllerRotation-umbrella.h"
+  umbrella header "UIViewControllerRotation-iOS12.0-umbrella.h"
 
   export *
   module * { export * }

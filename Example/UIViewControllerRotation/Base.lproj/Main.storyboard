@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5ke-8R-ZbO">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--不可旋转-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="UIViewControllerRotation_Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -20,12 +20,234 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbV-Kl-RGd">
+                                <rect key="frame" x="16" y="92" width="99" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="push 旋转向左"/>
+                                <connections>
+                                    <segue destination="7BC-RI-P00" kind="show" id="VjS-AW-dbP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SNl-iJ-Neu">
+                                <rect key="frame" x="16" y="157" width="99" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="push 旋转向右"/>
+                                <connections>
+                                    <segue destination="kh9-fi-dJw" kind="show" id="G3g-EG-12y"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEh-5u-uBK">
+                                <rect key="frame" x="16" y="240" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 旋转向左"/>
+                                <connections>
+                                    <segue destination="7BC-RI-P00" kind="presentation" id="ujL-Ar-1ll"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8VZ-h5-8XJ">
+                                <rect key="frame" x="16" y="312" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 旋转向左"/>
+                                <connections>
+                                    <segue destination="kh9-fi-dJw" kind="presentation" id="39X-EA-GXO"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" title="不可旋转" id="LnB-Ol-OG1"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="143" y="133"/>
+            <point key="canvasLocation" x="1983" y="9"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="IpI-hQ-zhm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="V2m-Rs-FWd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="MWE-Xp-ooQ"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="abt-zr-Om0">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="SqD-9P-JxB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eK5-uD-llI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1124" y="9"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="Kz3-Q7-V13">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="5ke-8R-ZbO" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5RG-SJ-fai">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="V2m-Rs-FWd" kind="relationship" relationship="viewControllers" id="29n-1s-k4B"/>
+                        <segue destination="U1Z-n5-Q5J" kind="relationship" relationship="viewControllers" id="1hl-UQ-JCN"/>
+                        <segue destination="MdR-IE-JlV" kind="relationship" relationship="viewControllers" id="DFe-LO-bFe"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gku-ed-Smy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="141.59999999999999" y="132.68365817091455"/>
+        </scene>
+        <!--旋转向左-->
+        <scene sceneID="hTD-88-fz6">
+            <objects>
+                <viewController id="7BC-RI-P00" customClass="ViewController1" customModule="UIViewControllerRotation_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uYC-J5-V4L"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fld-ed-cbc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JYy-kq-j7e">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5q-kt-dVs">
+                                <rect key="frame" x="24" y="100" width="41" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="返回"/>
+                                <connections>
+                                    <action selector="goback" destination="7BC-RI-P00" eventType="touchUpInside" id="lq3-KF-BKp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwi-aA-IyL">
+                                <rect key="frame" x="24" y="146" width="99" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="push 旋转向左"/>
+                                <connections>
+                                    <segue destination="7BC-RI-P00" kind="show" id="Kka-CT-haa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ISM-H7-9oN">
+                                <rect key="frame" x="24" y="184" width="99" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="push 旋转向右"/>
+                                <connections>
+                                    <segue destination="kh9-fi-dJw" kind="show" id="3s0-qa-8A5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="re0-vZ-6u9">
+                                <rect key="frame" x="31" y="229" width="63" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="返回Root"/>
+                                <connections>
+                                    <action selector="gobackRoot" destination="7BC-RI-P00" eventType="touchUpInside" id="i58-oZ-Jj2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="旋转向左" id="2Hc-Uu-63z"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Pe-HJ-O60" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2020" y="843.32833583208401"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="CdP-MH-2de">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="U1Z-n5-Q5J" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="3eM-DI-eps"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vBV-Cx-Hxp">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="7BC-RI-P00" kind="relationship" relationship="rootViewController" id="dK7-yb-KdD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XaN-7e-tOz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1081" y="844"/>
+        </scene>
+        <!--旋转向右-->
+        <scene sceneID="iGi-tG-I51">
+            <objects>
+                <viewController id="kh9-fi-dJw" customClass="ViewController2" customModule="UIViewControllerRotation_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="veD-YS-SYU"/>
+                        <viewControllerLayoutGuide type="bottom" id="V3B-92-arB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Eth-na-ai1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uCV-zy-o3J">
+                                <rect key="frame" x="25" y="93" width="41" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="返回"/>
+                                <connections>
+                                    <action selector="goback" destination="kh9-fi-dJw" eventType="touchUpInside" id="J94-HD-4SW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPg-Av-hSM">
+                                <rect key="frame" x="25" y="137" width="99" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="push 旋转向左"/>
+                                <connections>
+                                    <segue destination="7BC-RI-P00" kind="show" id="YEX-Ka-Tkx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPS-Oa-VSE">
+                                <rect key="frame" x="25" y="175" width="99" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="push 旋转向右"/>
+                                <connections>
+                                    <segue destination="kh9-fi-dJw" kind="show" id="8vY-mM-K0q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fq-5T-IYB">
+                                <rect key="frame" x="25" y="213" width="63" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="返回Root"/>
+                                <connections>
+                                    <action selector="gobackRoot" destination="kh9-fi-dJw" eventType="touchUpInside" id="EeB-r0-E3G"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="旋转向右" id="IOY-Xc-0j0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IdG-nT-EZQ" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2020" y="1559"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="0uJ-yY-fSJ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MdR-IE-JlV" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="HwM-sA-S5S"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dbv-ja-1rj">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kh9-fi-dJw" kind="relationship" relationship="rootViewController" id="7L1-1A-f4m"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UDb-3V-fxb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1081" y="1559"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="3s0-qa-8A5"/>
+        <segue reference="YEX-Ka-Tkx"/>
+    </inferredMetricsTieBreakers>
 </document>
