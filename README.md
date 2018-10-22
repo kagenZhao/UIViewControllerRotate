@@ -1,0 +1,2 @@
+# UIViewControllerRotate
+最简单的方法使Controller支持旋转
