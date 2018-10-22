@@ -1,0 +1,604 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A33C7F4BDDD21C6DBB665BECE7EDCED /* UIViewController+Rotation.h in Headers */ = {isa = PBXBuildFile; fileRef = DE5D09AD51982EC5B529B9A0BEB44D06 /* UIViewController+Rotation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7E31F0867570FE10B0F84B20ECB83534 /* UIViewController+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C9414176A3A1F5EE384F5F37D05036 /* UIViewController+Rotation.m */; };
+		9D605913F5FE2829A883285EA8660D50 /* Pods-UIViewControllerRotation_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EEFC1BC6882DB4B46F2622CD34663CF3 /* Pods-UIViewControllerRotation_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AADDB45C5F5C661612CFA82CB024A645 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		CD49DA84B4671065BD3B691F22BFB906 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		CD93BD3A0DC47C54DBF0D44E8EEF693C /* Pods-UIViewControllerRotation_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC152638F1BECCD4A5AFB769E0B2D99 /* Pods-UIViewControllerRotation_Example-dummy.m */; };
+		E5DB1C817E16E4A59BF94CCEF7523888 /* UIViewControllerRotation-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 54DB8EF4FE5DF09A568C363B4AC67BF4 /* UIViewControllerRotation-dummy.m */; };
+		F557E3BEAF101A53E48B4D93BBE78003 /* UIViewControllerRotation-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F7E28C75E1927E2174889EE67D1411A /* UIViewControllerRotation-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EF053CEC02A668E661603AF6E9F5B684 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 57697EFE6E020E0C0DC8EDCC812A7A11;
+			remoteInfo = UIViewControllerRotation;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		100D74F6C6A4C7C401E12E40ABA5CE90 /* Pods_UIViewControllerRotation_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_UIViewControllerRotation_Example.framework; path = "Pods-UIViewControllerRotation_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CE020A0B54A3E7BB1D75394A38DE80A /* Pods-UIViewControllerRotation_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UIViewControllerRotation_Example.release.xcconfig"; sourceTree = "<group>"; };
+		1EDB85BBC77C1E0AB5A50955B3E8F45E /* UIViewControllerRotation.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = UIViewControllerRotation.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		3F7E28C75E1927E2174889EE67D1411A /* UIViewControllerRotation-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIViewControllerRotation-umbrella.h"; sourceTree = "<group>"; };
+		450AFDE1850236EE3FA466E958375612 /* Pods-UIViewControllerRotation_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-UIViewControllerRotation_Example-frameworks.sh"; sourceTree = "<group>"; };
+		4D3EACACE3788C058B3E7A76A1DAFC51 /* UIViewControllerRotation.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = UIViewControllerRotation.modulemap; sourceTree = "<group>"; };
+		54DB8EF4FE5DF09A568C363B4AC67BF4 /* UIViewControllerRotation-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIViewControllerRotation-dummy.m"; sourceTree = "<group>"; };
+		5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		6DC152638F1BECCD4A5AFB769E0B2D99 /* Pods-UIViewControllerRotation_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-UIViewControllerRotation_Example-dummy.m"; sourceTree = "<group>"; };
+		6E545013F0A25F86013414DFE04BC75C /* Pods-UIViewControllerRotation_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-UIViewControllerRotation_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		7265206A0265F5349201F6733B6E0DFE /* Pods-UIViewControllerRotation_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-UIViewControllerRotation_Example-resources.sh"; sourceTree = "<group>"; };
+		8F5937C5EBAF26A7184DAE0170669C2A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		947A35262F7DA085B09A186668301FF9 /* UIViewControllerRotation-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIViewControllerRotation-prefix.pch"; sourceTree = "<group>"; };
+		A295792E088CDADE6863733F20992645 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		A984500F8508329014161CC7A64B77E1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C580D803CEFC38A0171DFAAFBE9E28D5 /* UIViewControllerRotation.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = UIViewControllerRotation.xcconfig; sourceTree = "<group>"; };
+		CC00DF02A312F8D73AB23B3ED10B7D3B /* Pods-UIViewControllerRotation_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-UIViewControllerRotation_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		DADFDA2FC5AA983EEC7276776C3DC690 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		DCB0ED5C2C1539E902CA2A4058521605 /* Pods-UIViewControllerRotation_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-UIViewControllerRotation_Example.modulemap"; sourceTree = "<group>"; };
+		DE5D09AD51982EC5B529B9A0BEB44D06 /* UIViewController+Rotation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Rotation.h"; path = "UIViewControllerRotation/Classes/UIViewController+Rotation.h"; sourceTree = "<group>"; };
+		EEFC1BC6882DB4B46F2622CD34663CF3 /* Pods-UIViewControllerRotation_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-UIViewControllerRotation_Example-umbrella.h"; sourceTree = "<group>"; };
+		F4632E393E0924585339EBB1E1B8F74D /* UIViewControllerRotation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = UIViewControllerRotation.framework; path = UIViewControllerRotation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4C9414176A3A1F5EE384F5F37D05036 /* UIViewController+Rotation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+Rotation.m"; path = "UIViewControllerRotation/Classes/UIViewController+Rotation.m"; sourceTree = "<group>"; };
+		FEB78FD3E2096DDE160418E1CA069044 /* Pods-UIViewControllerRotation_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UIViewControllerRotation_Example.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2ACCE112BB7EA610DD79E7DB2AABDEC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AADDB45C5F5C661612CFA82CB024A645 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5E87945490E39EE769B6E8B1CFB840E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD49DA84B4671065BD3B691F22BFB906 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2D3C32D598CF9ED0FC7B2A3FF9A149CD /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				FF338C30F58B4A909B141CA687CA746F /* Pods-UIViewControllerRotation_Example */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		3A390D189ABEB6C6FCF90D7BE8067D77 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8F5937C5EBAF26A7184DAE0170669C2A /* Info.plist */,
+				4D3EACACE3788C058B3E7A76A1DAFC51 /* UIViewControllerRotation.modulemap */,
+				C580D803CEFC38A0171DFAAFBE9E28D5 /* UIViewControllerRotation.xcconfig */,
+				54DB8EF4FE5DF09A568C363B4AC67BF4 /* UIViewControllerRotation-dummy.m */,
+				947A35262F7DA085B09A186668301FF9 /* UIViewControllerRotation-prefix.pch */,
+				3F7E28C75E1927E2174889EE67D1411A /* UIViewControllerRotation-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/UIViewControllerRotation";
+			sourceTree = "<group>";
+		};
+		5E0D919E635D23B70123790B8308F8EF /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				B712165CFFCE83EA02F0EF5E560B1CD2 /* Development Pods */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				E5C799B875DDD20922BA11628BE04E22 /* Products */,
+				2D3C32D598CF9ED0FC7B2A3FF9A149CD /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		892311742B2DC53A04A70EC069F835C1 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				A295792E088CDADE6863733F20992645 /* LICENSE */,
+				DADFDA2FC5AA983EEC7276776C3DC690 /* README.md */,
+				1EDB85BBC77C1E0AB5A50955B3E8F45E /* UIViewControllerRotation.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		B712165CFFCE83EA02F0EF5E560B1CD2 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CB884DA4D58ACB165F1F5C4C7FA77E29 /* UIViewControllerRotation */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5E0D919E635D23B70123790B8308F8EF /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CB884DA4D58ACB165F1F5C4C7FA77E29 /* UIViewControllerRotation */ = {
+			isa = PBXGroup;
+			children = (
+				DE5D09AD51982EC5B529B9A0BEB44D06 /* UIViewController+Rotation.h */,
+				F4C9414176A3A1F5EE384F5F37D05036 /* UIViewController+Rotation.m */,
+				892311742B2DC53A04A70EC069F835C1 /* Pod */,
+				3A390D189ABEB6C6FCF90D7BE8067D77 /* Support Files */,
+			);
+			name = UIViewControllerRotation;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		E5C799B875DDD20922BA11628BE04E22 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				100D74F6C6A4C7C401E12E40ABA5CE90 /* Pods_UIViewControllerRotation_Example.framework */,
+				F4632E393E0924585339EBB1E1B8F74D /* UIViewControllerRotation.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF338C30F58B4A909B141CA687CA746F /* Pods-UIViewControllerRotation_Example */ = {
+			isa = PBXGroup;
+			children = (
+				A984500F8508329014161CC7A64B77E1 /* Info.plist */,
+				DCB0ED5C2C1539E902CA2A4058521605 /* Pods-UIViewControllerRotation_Example.modulemap */,
+				CC00DF02A312F8D73AB23B3ED10B7D3B /* Pods-UIViewControllerRotation_Example-acknowledgements.markdown */,
+				6E545013F0A25F86013414DFE04BC75C /* Pods-UIViewControllerRotation_Example-acknowledgements.plist */,
+				6DC152638F1BECCD4A5AFB769E0B2D99 /* Pods-UIViewControllerRotation_Example-dummy.m */,
+				450AFDE1850236EE3FA466E958375612 /* Pods-UIViewControllerRotation_Example-frameworks.sh */,
+				7265206A0265F5349201F6733B6E0DFE /* Pods-UIViewControllerRotation_Example-resources.sh */,
+				EEFC1BC6882DB4B46F2622CD34663CF3 /* Pods-UIViewControllerRotation_Example-umbrella.h */,
+				FEB78FD3E2096DDE160418E1CA069044 /* Pods-UIViewControllerRotation_Example.debug.xcconfig */,
+				1CE020A0B54A3E7BB1D75394A38DE80A /* Pods-UIViewControllerRotation_Example.release.xcconfig */,
+			);
+			name = "Pods-UIViewControllerRotation_Example";
+			path = "Target Support Files/Pods-UIViewControllerRotation_Example";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		000590FFD64EFB7A3AEB9193902EB071 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A33C7F4BDDD21C6DBB665BECE7EDCED /* UIViewController+Rotation.h in Headers */,
+				F557E3BEAF101A53E48B4D93BBE78003 /* UIViewControllerRotation-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E8D66E15D6E8D269354F23B2074BA3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D605913F5FE2829A883285EA8660D50 /* Pods-UIViewControllerRotation_Example-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		57697EFE6E020E0C0DC8EDCC812A7A11 /* UIViewControllerRotation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C1AD0A8C980571D7682F3884C485676D /* Build configuration list for PBXNativeTarget "UIViewControllerRotation" */;
+			buildPhases = (
+				000590FFD64EFB7A3AEB9193902EB071 /* Headers */,
+				52EB5563AF9334C71BDCE02F3E4684B1 /* Sources */,
+				2ACCE112BB7EA610DD79E7DB2AABDEC7 /* Frameworks */,
+				8F84F018EFD3B78F5A224A03B06473CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UIViewControllerRotation;
+			productName = UIViewControllerRotation;
+			productReference = F4632E393E0924585339EBB1E1B8F74D /* UIViewControllerRotation.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E88E82DEA8D8302E2C461A0B2A66A666 /* Pods-UIViewControllerRotation_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B8DDDD3E0614ADD24F01B8E6676E5C3 /* Build configuration list for PBXNativeTarget "Pods-UIViewControllerRotation_Example" */;
+			buildPhases = (
+				52E8D66E15D6E8D269354F23B2074BA3 /* Headers */,
+				DD7A8D65671997F1BA2934F31939F8A2 /* Sources */,
+				C5E87945490E39EE769B6E8B1CFB840E /* Frameworks */,
+				8D5FE974A31A8E42C8A512E9CA3E8CDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				12B4D35246E51606AD4D5BBC042344FD /* PBXTargetDependency */,
+			);
+			name = "Pods-UIViewControllerRotation_Example";
+			productName = "Pods-UIViewControllerRotation_Example";
+			productReference = 100D74F6C6A4C7C401E12E40ABA5CE90 /* Pods_UIViewControllerRotation_Example.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = E5C799B875DDD20922BA11628BE04E22 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E88E82DEA8D8302E2C461A0B2A66A666 /* Pods-UIViewControllerRotation_Example */,
+				57697EFE6E020E0C0DC8EDCC812A7A11 /* UIViewControllerRotation */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5FE974A31A8E42C8A512E9CA3E8CDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F84F018EFD3B78F5A224A03B06473CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		52EB5563AF9334C71BDCE02F3E4684B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E31F0867570FE10B0F84B20ECB83534 /* UIViewController+Rotation.m in Sources */,
+				E5DB1C817E16E4A59BF94CCEF7523888 /* UIViewControllerRotation-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD7A8D65671997F1BA2934F31939F8A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD93BD3A0DC47C54DBF0D44E8EEF693C /* Pods-UIViewControllerRotation_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		12B4D35246E51606AD4D5BBC042344FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UIViewControllerRotation;
+			target = 57697EFE6E020E0C0DC8EDCC812A7A11 /* UIViewControllerRotation */;
+			targetProxy = EF053CEC02A668E661603AF6E9F5B684 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		56A05ADD3BABDA1B56D1F979845809B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		6A2BA4905E0D686BAA0A564A069555B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEB78FD3E2096DDE160418E1CA069044 /* Pods-UIViewControllerRotation_Example.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-UIViewControllerRotation_Example/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-UIViewControllerRotation_Example/Pods-UIViewControllerRotation_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7F6CF9469208B954C462F1711B555F10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C580D803CEFC38A0171DFAAFBE9E28D5 /* UIViewControllerRotation.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/UIViewControllerRotation/UIViewControllerRotation-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/UIViewControllerRotation/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/UIViewControllerRotation/UIViewControllerRotation.modulemap";
+				PRODUCT_MODULE_NAME = UIViewControllerRotation;
+				PRODUCT_NAME = UIViewControllerRotation;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BDD42B9B507E2326947EC8F12A83FEB6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1CE020A0B54A3E7BB1D75394A38DE80A /* Pods-UIViewControllerRotation_Example.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-UIViewControllerRotation_Example/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-UIViewControllerRotation_Example/Pods-UIViewControllerRotation_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BEFDB93BF207328A04F1220475D02C3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		D0D74769B4C4F1C7A08E4D47B57145C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C580D803CEFC38A0171DFAAFBE9E28D5 /* UIViewControllerRotation.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/UIViewControllerRotation/UIViewControllerRotation-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/UIViewControllerRotation/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/UIViewControllerRotation/UIViewControllerRotation.modulemap";
+				PRODUCT_MODULE_NAME = UIViewControllerRotation;
+				PRODUCT_NAME = UIViewControllerRotation;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEFDB93BF207328A04F1220475D02C3B /* Debug */,
+				56A05ADD3BABDA1B56D1F979845809B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8B8DDDD3E0614ADD24F01B8E6676E5C3 /* Build configuration list for PBXNativeTarget "Pods-UIViewControllerRotation_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A2BA4905E0D686BAA0A564A069555B0 /* Debug */,
+				BDD42B9B507E2326947EC8F12A83FEB6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C1AD0A8C980571D7682F3884C485676D /* Build configuration list for PBXNativeTarget "UIViewControllerRotation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0D74769B4C4F1C7A08E4D47B57145C8 /* Debug */,
+				7F6CF9469208B954C462F1711B555F10 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

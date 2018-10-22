@@ -1,0 +1,6 @@
+framework module Pods_UIViewControllerRotation_Example {
+  umbrella header "Pods-UIViewControllerRotation_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

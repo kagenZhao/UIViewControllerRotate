@@ -1,0 +1,16 @@
+PODS:
+  - UIViewControllerRotation (0.1.0)
+
+DEPENDENCIES:
+  - UIViewControllerRotation (from `../`)
+
+EXTERNAL SOURCES:
+  UIViewControllerRotation:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  UIViewControllerRotation: 694c317e62ae833b8af08036b77b53a6402757a6
+
+PODFILE CHECKSUM: e47a1d050f858348d9691f361c1d9ec67410b873
+
+COCOAPODS: 1.5.3
