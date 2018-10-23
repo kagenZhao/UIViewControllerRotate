@@ -34,4 +34,8 @@ class ViewController1: UIViewController {
         navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
 //        navigationController?.popToRootViewController(animated: true)
     }
+    
+    deinit {
+        print("\(type(of: self)) 已经销毁了")
+    }
 }

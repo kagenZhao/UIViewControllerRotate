@@ -414,8 +414,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     UIViewController *fixController = [[InterfaceOrientationController alloc] initWithRotation:UIDeviceOrientationPortrait];
     [vcs insertObject:fixController atIndex:vcs.count - 1];
     self.viewControllers = vcs;
-    [self popViewControllerAnimated:true];
-    return vcs;
+    return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:[self rotation_hook_popToViewController:viewController animated:animated]];
 }
 
 - (NSArray<UIViewController *> *)rotation_hook_popToRootViewControllerAnimated:(BOOL)animated {
@@ -433,10 +432,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     UIViewController *fixController = [[InterfaceOrientationController alloc] initWithRotation:UIDeviceOrientationPortrait];
     [vcs insertObject:fixController atIndex:vcs.count - 1];
     self.viewControllers = vcs;
-    [self popViewControllerAnimated:true];
-    [self rotation_hook_popToRootViewControllerAnimated:false];
-    return vcs;
-
+    return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:[self rotation_hook_popToRootViewControllerAnimated:false]];
 }
 
 - (void)rotation_setupPrientationWithFromVC:(UIViewController *)fromViewController toVC:(UIViewController *)toViewController {

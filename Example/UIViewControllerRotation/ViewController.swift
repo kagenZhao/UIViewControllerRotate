@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UIViewControllerRotation
 
 class ViewController: UIViewController {
 
@@ -31,6 +30,10 @@ class ViewController: UIViewController {
     @IBAction func gobackRoot() {
         navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
         //        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    deinit {
+        print("\(type(of: self)) 已经销毁了")
     }
 }
 

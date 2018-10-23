@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0453A1A8217EE09F008A7A83 /* UIViewControllerRotate.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = UIViewControllerRotate.podspec; path = ../UIViewControllerRotate.podspec; sourceTree = "<group>"; };
+		0453A1A8217EE09F008A7A83 /* UIViewControllerRotate.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = UIViewControllerRotate.podspec; path = ../UIViewControllerRotate.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		046131E0217DC376005E3FF8 /* ViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController1.swift; sourceTree = "<group>"; };
 		046131E2217DC384005E3FF8 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 		157DBFBC4F0FAE74A3B808AA /* Pods-UIViewControllerRotation_Example_OC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIViewControllerRotation_Example_OC.release.xcconfig"; path = "Pods/Target Support Files/Pods-UIViewControllerRotation_Example_OC/Pods-UIViewControllerRotation_Example_OC.release.xcconfig"; sourceTree = "<group>"; };
@@ -164,7 +164,7 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 3GC8WR7B3G;
+						DevelopmentTeam = 4LR9RAJP9V;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
@@ -393,7 +393,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3GC8WR7B3G;
+				DEVELOPMENT_TEAM = 4LR9RAJP9V;
 				INFOPLIST_FILE = UIViewControllerRotation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -411,7 +411,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3GC8WR7B3G;
+				DEVELOPMENT_TEAM = 4LR9RAJP9V;
 				INFOPLIST_FILE = UIViewControllerRotation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;

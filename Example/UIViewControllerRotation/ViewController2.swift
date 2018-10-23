@@ -36,4 +36,8 @@ class ViewController2: UIViewController {
 //        navigationController?.popToRootViewController(animated: true)
     }
     
+    deinit {
+        print("\(type(of: self)) 已经销毁了")
+    }
+    
 }
