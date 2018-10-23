@@ -27,7 +27,14 @@ pod 'UIViewControllerRotation'
 - `preferredStatusBarStyle` <font color=#f00>默认返回</font> `UIStatusBarStyleDefault`
 - `prefersStatusBarHidden` <font color=#f00>默认返回</font> `false`
 
-#### <font color=#f00>PS.如遇到某些类想要强制修改其方向, 需要用到 `UIViewControllerRotationModel` 进行设置</font>
+PS.如遇到某些类想要强制修改其方向, 需要用到 `UIViewControllerRotationModel` 进行设置
+
+目前已经包含的内部类包括:
+1. AVFullScreenViewController
+2. AVPlayerViewController
+3. AVFullScreenViewController
+4. AVFullScreenPlaybackControlsViewController
+5. WebFullScreenVideoRootViewController
 
 
 ## 风险提示:

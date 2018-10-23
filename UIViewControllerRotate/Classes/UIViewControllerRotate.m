@@ -185,6 +185,17 @@ preferredInterfaceOrientationForPresentation:(NSNumber *)preferredInterfaceOrien
     }
     return self;
 }
+
+- (id)copyWithZone:(nullable NSZone *)zone {
+    return [[UIViewControllerRotationModel allocWithZone:zone]
+            initWithClass:self.cls
+            shouldAutorotate:self.shouldAutorotate
+            supportedInterfaceOrientations:self.supportedInterfaceOrientations
+            preferredInterfaceOrientationForPresentation:self.preferredInterfaceOrientationForPresentation
+            preferredStatusBarStyle:self.preferredStatusBarStyle
+            prefersStatusBarHidden:self.prefersStatusBarHidden];
+}
+
 @end
 
 @interface UIViewController ()
@@ -219,14 +230,20 @@ static void *rotation_viewWillAppearBlockKey;
         _exchangeClassInstanceMethod(UIViewController.class, @selector(dismissViewControllerAnimated:completion:), @selector(rotation_hook_dismissViewControllerAnimated:completion:));
         _exchangeClassInstanceMethod(UIViewController.class, @selector(viewWillAppear:), @selector(rotation_hook_viewWillAppear:));
 
-        UIViewControllerRotationModel *AVFullScreenViewController = [[UIViewControllerRotationModel alloc] initWithCls:@"AVFullScreenViewController"
-                                                                                                      shouldAutorotate:YES
-                                                                                        supportedInterfaceOrientations:UIInterfaceOrientationMaskAll];
-        UIViewControllerRotationModel *UIAlertController = [[UIViewControllerRotationModel alloc] initWithCls:@"UIAlertController"
-                                                                                            shouldAutorotate:YES
-                                                                               supportedInterfaceOrientations:UIInterfaceOrientationMaskAll];
-        [self registerClass:@[AVFullScreenViewController, UIAlertController]];
         
+        NSArray <NSString *>*classNames = @[@"AVFullScreenViewController",
+                                            @"AVPlayerViewController",
+                                            @"AVFullScreenViewController",
+                                            @"AVFullScreenPlaybackControlsViewController",
+                                            @"WebFullScreenVideoRootViewController"];
+        
+        NSMutableArray *models = [NSMutableArray arrayWithCapacity:classNames.count];
+        [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
+            [models addObject:[[UIViewControllerRotationModel alloc] initWithCls:className
+                                                                shouldAutorotate:YES
+                                                  supportedInterfaceOrientations:UIInterfaceOrientationMaskAll]];
+        }];
+        [self registerClasses:models];
     });
 }
 
@@ -294,12 +311,20 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     return _rotation_preferenceRotateInternalClassModel;
 }
 
-+ (void)registerClass:(NSArray<UIViewControllerRotationModel *> *)models {
++ (void)registerClasses:(NSArray<UIViewControllerRotationModel *> *)models {
     for (UIViewControllerRotationModel *model in models) {
         if (NSClassFromString(model.cls)) {
             [[self rotation_preferenceRotateInternalClassModel] setObject:model forKey:model.cls];
         }
     }
+}
+
++ (NSArray <UIViewControllerRotationModel *> *)registedClasses {
+    return [[NSArray alloc] initWithArray:self.rotation_preferenceRotateInternalClassModel.allValues copyItems:true];
+}
+
++ (void)removeClasses:(NSArray<NSString *> *)classes {
+    [self.rotation_preferenceRotateInternalClassModel removeObjectsForKeys:classes];
 }
 
 - (NSMutableDictionary <NSString *,UIViewControllerRotationModel *>*)rotation_preferenceRotateInternalClassModel {

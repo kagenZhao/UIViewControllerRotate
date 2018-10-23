@@ -29,7 +29,14 @@
     prefersStatusBarHidden 默认返回 NO
     等方法即可 非常低耦合
  
-    PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerRotationModel 进行设置
+PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerRotationModel 进行设置
+
+目前已经包含的内部类包括:
+1. AVFullScreenViewController
+2. AVPlayerViewController
+3. AVFullScreenViewController
+4. AVFullScreenPlaybackControlsViewController
+5. WebFullScreenVideoRootViewController
  
  风险提示:
     本扩展使用runtime替换了以下方法, 如果有冲突请自行修改或寻找其他解决方案:
@@ -50,7 +57,7 @@
          @selector(application:supportedInterfaceOrientationsForWindow:)
  */
 
-@interface UIViewControllerRotationModel : NSObject
+@interface UIViewControllerRotationModel : NSObject <NSCopying>
 
 - (instancetype)initWithDefault:(NSString *)cls; // 默认不改变这个类
 
@@ -93,9 +100,17 @@ preferredInterfaceOrientationForPresentation:(UIInterfaceOrientation)preferredIn
 
 /*
  如果发现某个系统的类或者第三方框架中的类需要或者不需要旋转的话 请在Appdelegate 中进行注册
+ 默认包含:
+ 1. AVFullScreenViewController
+ 2. AVPlayerViewController
+ 3. AVFullScreenViewController
+ 4. AVFullScreenPlaybackControlsViewController
+ 5. WebFullScreenVideoRootViewController
+ 如果不想要这些 可以调用 "removeClasses:"进行删除
  */
-+ (void)registerClass:(NSArray<UIViewControllerRotationModel *> *)models;
-
++ (void)registerClasses:(NSArray<UIViewControllerRotationModel *> *)models;
++ (NSArray <UIViewControllerRotationModel *> *)registedClasses;
++ (void)removeClasses:(NSArray<NSString *> *)classes;
 @end
 
 @interface UIApplication (Rotation)
