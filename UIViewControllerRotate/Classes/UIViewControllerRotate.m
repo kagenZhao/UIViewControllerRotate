@@ -1,11 +1,11 @@
 //
-//  UIViewController+Rotation.h
+//  UIViewController+Rotation.m
 //
 //  Created by 赵国庆 on 2018/7/11.
 //  Copyright © 2018年 kagen. All rights reserved.
 //
 
-#import "UIViewController+Rotation.h"
+#import "UIViewControllerRotate.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
 
@@ -18,6 +18,46 @@ static void _exchangeClassInstanceMethod(Class cls, SEL s1, SEL s2) {
         method_exchangeImplementations(originalMethod, swizzledMethod);
     }
 }
+
+@interface InterfaceOrientationController : UIViewController
+@property (nonatomic, assign) UIDeviceOrientation orientation;
+- (instancetype)initWithRotation:(UIDeviceOrientation)orientation;
+@end
+@implementation InterfaceOrientationController
+
+- (instancetype)initWithRotation:(UIDeviceOrientation)orientation {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _orientation = orientation;
+    }
+    return self;
+}
+
+- (BOOL)shouldAutorotate {
+    return true;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    switch (_orientation) {
+        case UIDeviceOrientationPortrait:
+        case UIDeviceOrientationUnknown:
+        case UIDeviceOrientationFaceUp:
+        case UIDeviceOrientationFaceDown:
+            return UIInterfaceOrientationMaskPortrait;
+        case UIDeviceOrientationPortraitUpsideDown:
+            return UIInterfaceOrientationMaskPortraitUpsideDown;
+        case UIDeviceOrientationLandscapeLeft:
+            return UIInterfaceOrientationMaskLandscapeLeft;
+        case UIDeviceOrientationLandscapeRight:
+            return UIInterfaceOrientationMaskLandscapeRight;
+    }
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return (UIInterfaceOrientation)_orientation;
+}
+
+@end
 
 @interface UIViewControllerRotationModel ()
 @property (nonatomic, copy) NSString *cls;
@@ -150,10 +190,9 @@ preferredInterfaceOrientationForPresentation:(NSNumber *)preferredInterfaceOrien
 @interface UIViewController ()
 @property (nonatomic, assign) BOOL rotation_isDissmissing;
 @property (nonatomic, copy) void(^rotation_viewWillAppearBlock)(void);
-@property (nonatomic, copy) void(^rotation_viewWillDisappearBlock)(void);
 @end
 
-@implementation UIViewController (Rotation)
+@implementation UIViewController (Rotate)
 
 static void *rotation_isDissmissingKey;
 - (BOOL)rotation_isDissmissing {
@@ -173,24 +212,12 @@ static void *rotation_viewWillAppearBlockKey;
     objc_setAssociatedObject(self, &rotation_viewWillAppearBlockKey, (id)rotation_viewWillAppearBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-static void *rotation_viewWillDisappearBlockKey;
-- (void (^)(void))rotation_viewWillDisappearBlock {
-    return objc_getAssociatedObject(self, &rotation_viewWillDisappearBlockKey);
-}
-
-- (void)setRotation_viewWillDisappearBlock:(void (^)(void))rotation_viewWillDisappearBlock {
-    objc_setAssociatedObject(self, &rotation_viewWillDisappearBlockKey, (id)rotation_viewWillDisappearBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _exchangeClassInstanceMethod(UIViewController.class, @selector(dismissViewControllerAnimated:completion:), @selector(rotation_hook_dismissViewControllerAnimated:completion:));
-        _exchangeClassInstanceMethod(UIViewController.class, @selector(presentViewController:animated:completion:), @selector(rotation_hook_presentViewController:animated:completion:));
         _exchangeClassInstanceMethod(UIViewController.class, @selector(viewWillAppear:), @selector(rotation_hook_viewWillAppear:));
-        _exchangeClassInstanceMethod(UIViewController.class, @selector(viewWillDisappear:), @selector(rotation_hook_viewWillDisappear:));
-        
-        
+
         UIViewControllerRotationModel *AVFullScreenViewController = [[UIViewControllerRotationModel alloc] initWithCls:@"AVFullScreenViewController"
                                                                                                       shouldAutorotate:YES
                                                                                         supportedInterfaceOrientations:UIInterfaceOrientationMaskAll];
@@ -212,24 +239,11 @@ static void *rotation_viewWillDisappearBlockKey;
     }];
 }
 
-- (void)rotation_hook_presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion {
-    [self rotation_hook_presentViewController:viewControllerToPresent animated:flag completion:^{
-        if (completion) {
-            completion();
-        }
-    }];
-}
-
 - (void)rotation_hook_viewWillAppear:(BOOL)animated {
     [self rotation_hook_viewWillAppear: animated];
     if (self.rotation_viewWillAppearBlock) {
         self.rotation_viewWillAppearBlock();
     }
-}
-
-- (void)rotation_hook_viewWillDisappear:(BOOL)animated {
-    [self rotation_hook_viewWillDisappear: animated];
-    if (self.rotation_viewWillDisappearBlock) self.rotation_viewWillDisappearBlock();
 }
 
 /*
@@ -356,7 +370,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
  因为当 默认的UINavigationController和UITabBarController 创建的时候内部也重写了这些方法 这里要把它再重写掉
  优先级为 UIViewController < UIViewController(Category) < UINavigationController/UITabBarController < UINavigationController(Category)/UITabBarController(Category) < 自定义UINavigationController/UITabBarController
  */
-@implementation UINavigationController (Rotation)
+@implementation UINavigationController (Rotate)
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -377,27 +391,52 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     [self rotation_hook_pushViewController: viewController animated: animated];
 }
 
+/*
+ 在系统调用下列两个方法的时候 只有两个相邻的ViewController之间POP才会修复旋转
+ 所以在这种情况下 在POP超过两个界面的情况下 插入一个中间界面与想要跳转的界面方向相同 即可解决
+ */
 - (NSArray<UIViewController *> *)rotation_hook_popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (self.viewControllers.count <= 2) { return [self rotation_hook_popToViewController:viewController animated:animated]; }
     UIViewController *fromViewController = self.viewControllers.lastObject;
     UIViewController *toViewController = viewController;
-    if (self.viewControllers.count <= 2) { return [self rotation_hook_popToViewController:viewController animated:animated]; }
+    if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return [self rotation_hook_popToViewController:viewController animated:animated]; }
     if (fromViewController == toViewController) { return [self rotation_hook_popToViewController:viewController animated:animated]; }
+    if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
+        return [self rotation_hook_popToViewController:viewController animated:animated];
+    }
+    if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] != UIInterfaceOrientationPortrait) {
+        return [self rotation_hook_popToViewController:viewController animated:animated];
+    }
     NSInteger idx = [self.viewControllers indexOfObject:viewController];
     if (idx == NSNotFound) { return [self rotation_hook_popToViewController:viewController animated:animated]; }
     if (idx == self.viewControllers.count - 2) { return @[[self popViewControllerAnimated:animated]]; };
-    NSArray<UIViewController *> * vcs = [self.viewControllers subarrayWithRange:NSMakeRange(idx, self.viewControllers.count - (idx + 1))];
-    [self popToViewController:self.viewControllers[idx + 1] animated:animated];
-    [self popViewControllerAnimated:false];
+    NSMutableArray<UIViewController *> * vcs = [self.viewControllers mutableCopy];
+    UIViewController *fixController = [[InterfaceOrientationController alloc] initWithRotation:UIDeviceOrientationPortrait];
+    [vcs insertObject:fixController atIndex:vcs.count - 1];
+    self.viewControllers = vcs;
+    [self popViewControllerAnimated:true];
     return vcs;
 }
 
 - (NSArray<UIViewController *> *)rotation_hook_popToRootViewControllerAnimated:(BOOL)animated {
-    if (self.viewControllers.count < 2) { return [self rotation_hook_popToRootViewControllerAnimated:animated]; }
-    if (self.viewControllers.count == 2) { return @[[self popViewControllerAnimated:animated]]; }
-    NSArray<UIViewController *> * vcs = [self.viewControllers subarrayWithRange:NSMakeRange(1, self.viewControllers.count - 2)];
-    [self popToViewController:self.viewControllers[1] animated:animated];
-    [self popViewControllerAnimated:false];
+    if (self.viewControllers.count <= 2) { return [self rotation_hook_popToRootViewControllerAnimated:animated]; }
+    UIViewController *fromViewController = self.viewControllers.lastObject;
+    UIViewController *toViewController = self.viewControllers.firstObject;
+    if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return [self rotation_hook_popToRootViewControllerAnimated:animated]; }
+    if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
+        return [self rotation_hook_popToRootViewControllerAnimated:animated];
+    }
+    if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] != UIInterfaceOrientationPortrait) {
+        return [self rotation_hook_popToRootViewControllerAnimated:animated];
+    }
+    NSMutableArray<UIViewController *> * vcs = [self.viewControllers mutableCopy];
+    UIViewController *fixController = [[InterfaceOrientationController alloc] initWithRotation:UIDeviceOrientationPortrait];
+    [vcs insertObject:fixController atIndex:vcs.count - 1];
+    self.viewControllers = vcs;
+    [self popViewControllerAnimated:true];
+    [self rotation_hook_popToRootViewControllerAnimated:false];
     return vcs;
+
 }
 
 - (void)rotation_setupPrientationWithFromVC:(UIViewController *)fromViewController toVC:(UIViewController *)toViewController {
@@ -411,7 +450,6 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     } else {
         toViewController.rotation_viewWillAppearBlock = nil;
     }
-    toViewController.rotation_viewWillDisappearBlock = nil;
 }
 
 - (BOOL)shouldAutorotate {
@@ -460,7 +498,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 @end
 
-@implementation UITabBarController (Rotation)
+@implementation UITabBarController (Rotate)
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -529,7 +567,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 @end
 
-@implementation UIApplication (Rotation)
+@implementation UIApplication (Rotate)
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -563,5 +601,3 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     }
 }
 @end
-
-

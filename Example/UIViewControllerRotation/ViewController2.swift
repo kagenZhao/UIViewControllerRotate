@@ -24,7 +24,7 @@ class ViewController2: UIViewController {
     }
 
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .landscapeLeft
+        return .landscapeRight
     }
     
     @IBAction func goback() {
@@ -32,7 +32,8 @@ class ViewController2: UIViewController {
     }
     
     @IBAction func gobackRoot() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
+//        navigationController?.popToRootViewController(animated: true)
     }
     
 }

@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- 屏幕旋转控制类, 耦合性低, 但有些许的侵入性,
+ 屏幕旋转控制类, 耦合性低, 但因为用到了runtime 所以有侵入性,
  
  使用情景:
     现在市面上大部分app 并不是所有页面都可以旋转屏幕, 一般只有些许几个页面需要旋转屏幕, 比如查看文档, 观看视频等界面.
@@ -29,17 +29,24 @@
     prefersStatusBarHidden 默认返回 NO
     等方法即可 非常低耦合
  
- Bug:
-    极端情况(连续的几个界面分别向不同的方向) 如果使用过程当中 返回时没有旋转回正确的方向
-    请在返回的页面的 viewWillAppear: 添加如下代码
-    let application = UIApplication.shared
-    if application.statusBarOrientation != UIInterfaceOrientation.portrait {
-        let vc = UIViewController()
-        vc.view.backgroundColor = view.backgroundColor
-        self.navigationController?.present(vc, animated: false, completion: {[weak self] in
-            self?.navigationController?.dismiss(animated: true, completion: nil)
-        })
-    }
+    PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerRotationModel 进行设置
+ 
+ 风险提示:
+    本扩展使用runtime替换了以下方法, 如果有冲突请自行修改或寻找其他解决方案:
+    UIViewController:
+        @selector(dismissViewControllerAnimated:completion:)
+        @selector(viewWillAppear:)
+    UINavigationController:
+        @selector(pushViewController:animated:)
+        @selector(popToViewController:animated:)
+        @selector(popToRootViewControllerAnimated:)
+    UITabBarController:
+        @selector(setSelectedIndex:)
+        @selector(setSelectedViewController:)
+    UIApplication:
+        @selector(setDelegate:)
+    UIApplication.delegate
+         @selector(application:supportedInterfaceOrientationsForWindow:)
  */
 
 @interface UIViewControllerRotationModel : NSObject

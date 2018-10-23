@@ -1,7 +1,7 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## UIViewControllerRotation
+## UIViewControllerRotate
 
 Copyright (c) 2018 kagenZhao <Guoqing.Zhao@cicc.com.cn>
 

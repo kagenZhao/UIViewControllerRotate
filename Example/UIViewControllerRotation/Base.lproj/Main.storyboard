@@ -38,7 +38,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEh-5u-uBK">
-                                <rect key="frame" x="16" y="240" width="118" height="30"/>
+                                <rect key="frame" x="16" y="280" width="118" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="present 旋转向左"/>
                                 <connections>
@@ -51,6 +51,23 @@
                                 <state key="normal" title="present 旋转向左"/>
                                 <connections>
                                     <segue destination="kh9-fi-dJw" kind="presentation" id="39X-EA-GXO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOu-3Y-KbZ">
+                                <rect key="frame" x="22" y="202" width="69" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="push 正向"/>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="show" id="u6W-87-eZR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jui-xA-QXl">
+                                <rect key="frame" x="22" y="240" width="63" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="返回Root"/>
+                                <connections>
+                                    <action selector="gobackRoot" destination="7BC-RI-P00" eventType="touchUpInside" id="D76-Oo-Gv5"/>
+                                    <action selector="gobackRoot" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Nrn-0q-cje"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -138,11 +155,19 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="re0-vZ-6u9">
-                                <rect key="frame" x="31" y="229" width="63" height="30"/>
+                                <rect key="frame" x="24" y="258" width="63" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="返回Root"/>
                                 <connections>
                                     <action selector="gobackRoot" destination="7BC-RI-P00" eventType="touchUpInside" id="i58-oZ-Jj2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNZ-J1-Hko">
+                                <rect key="frame" x="21" y="220" width="69" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="push 正向"/>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="show" id="D6o-Hn-dLg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -210,11 +235,19 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fq-5T-IYB">
-                                <rect key="frame" x="25" y="213" width="63" height="30"/>
+                                <rect key="frame" x="25" y="266" width="63" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="返回Root"/>
                                 <connections>
                                     <action selector="gobackRoot" destination="kh9-fi-dJw" eventType="touchUpInside" id="EeB-r0-E3G"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PDl-Da-kMD">
+                                <rect key="frame" x="25" y="221" width="69" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="push 正向"/>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="show" id="yn4-YV-rqk"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -247,7 +280,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="3s0-qa-8A5"/>
-        <segue reference="YEX-Ka-Tkx"/>
+        <segue reference="G3g-EG-12y"/>
+        <segue reference="VjS-AW-dbP"/>
+        <segue reference="D6o-Hn-dLg"/>
     </inferredMetricsTieBreakers>
 </document>

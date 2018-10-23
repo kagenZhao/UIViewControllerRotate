@@ -1,0 +1,6 @@
+framework module UIViewControllerRotate {
+  umbrella header "UIViewControllerRotate-umbrella.h"
+
+  export *
+  module * { export * }
+}

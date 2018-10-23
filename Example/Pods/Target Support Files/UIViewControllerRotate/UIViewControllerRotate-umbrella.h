@@ -10,7 +10,8 @@
 #endif
 #endif
 
+#import "UIViewControllerRotate.h"
 
-FOUNDATION_EXPORT double Pods_UIViewControllerRotation_Example_OCVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_UIViewControllerRotation_Example_OCVersionString[];
+FOUNDATION_EXPORT double UIViewControllerRotateVersionNumber;
+FOUNDATION_EXPORT const unsigned char UIViewControllerRotateVersionString[];
 

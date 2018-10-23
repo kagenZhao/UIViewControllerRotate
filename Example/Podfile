@@ -1,11 +1,6 @@
+
 use_frameworks!
-
 target 'UIViewControllerRotation_Example' do
-    pod 'UIViewControllerRotation', :path => '../'
-  
+    pod 'UIViewControllerRotate', :path => '../'
 end
 
-
-target 'UIViewControllerRotation_Example_OC' do
-    pod 'UIViewControllerRotation', :path => '../'
-end
