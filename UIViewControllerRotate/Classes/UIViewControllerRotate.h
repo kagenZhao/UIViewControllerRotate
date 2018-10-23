@@ -34,6 +34,7 @@
  风险提示:
     本扩展使用runtime替换了以下方法, 如果有冲突请自行修改或寻找其他解决方案:
     UIViewController:
+        @selector(presentViewController:animated:completion:)
         @selector(dismissViewControllerAnimated:completion:)
         @selector(viewWillAppear:)
     UINavigationController:
@@ -98,4 +99,5 @@ preferredInterfaceOrientationForPresentation:(UIInterfaceOrientation)preferredIn
 @end
 
 @interface UIApplication (Rotation)
+
 @end

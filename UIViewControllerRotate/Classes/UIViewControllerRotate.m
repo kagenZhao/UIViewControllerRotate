@@ -215,6 +215,7 @@ static void *rotation_viewWillAppearBlockKey;
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        _exchangeClassInstanceMethod(UIViewController.class, @selector(presentViewController:animated:completion:), @selector(rotation_hook_presentViewController:animated:completion:));
         _exchangeClassInstanceMethod(UIViewController.class, @selector(dismissViewControllerAnimated:completion:), @selector(rotation_hook_dismissViewControllerAnimated:completion:));
         _exchangeClassInstanceMethod(UIViewController.class, @selector(viewWillAppear:), @selector(rotation_hook_viewWillAppear:));
 
@@ -225,9 +226,33 @@ static void *rotation_viewWillAppearBlockKey;
                                                                                             shouldAutorotate:YES
                                                                                supportedInterfaceOrientations:UIInterfaceOrientationMaskAll];
         [self registerClass:@[AVFullScreenViewController, UIAlertController]];
+        
     });
 }
 
+/*
+ hook 这个方法的目的是解决这个bug:
+ A正向 B向左/向右, B C 方向相反
+ A push B,
+ B pop  A,
+ A present C,
+ 结果: C 的方向与B一样了
+ */
+- (void)rotation_hook_presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion {
+    UIInterfaceOrientation ori = self.rotation_fix_preferredInterfaceOrientationForPresentation;
+    [self rotation_forceToOrientation1:ori];
+    [self rotation_hook_presentViewController:viewControllerToPresent animated:flag completion:completion];
+}
+
+
+/*
+ hook 这个方法的目的是解决这个bug:
+ A B 方向不同
+ A present B,
+ B dismiss A,
+ 结果: B -> A 一刻 A 的 presentedViewController 并不是 nil
+ 导致: 下方的 rotation_findTopViewController 读取错误
+ */
 - (void)rotation_hook_dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
     __weak __typeof(self) weak_self = self;
     self.rotation_isDissmissing = true;
