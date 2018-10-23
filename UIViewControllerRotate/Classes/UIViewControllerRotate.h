@@ -5,7 +5,10 @@
 //  Copyright © 2018年 kagen. All rights reserved.
 //
 
+
+
 #import <UIKit/UIKit.h>
+
 
 /**
  屏幕旋转控制类, 耦合性低, 但因为用到了runtime 所以有侵入性,
@@ -56,8 +59,9 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerR
     UIApplication.delegate
          @selector(application:supportedInterfaceOrientationsForWindow:)
  */
-
+NS_ASSUME_NONNULL_BEGIN
 @interface UIViewControllerRotationModel : NSObject <NSCopying>
+@property (nonatomic, copy, readonly) NSString *cls;
 
 - (instancetype)initWithDefault:(NSString *)cls; // 默认不改变这个类
 
@@ -94,6 +98,11 @@ preferredInterfaceOrientationForPresentation:(UIInterfaceOrientation)preferredIn
 - (void)conigPreferredStatusBarStyle:(UIStatusBarStyle)preferredStatusBarStyle;
 - (void)conigPreferredInterfaceOrientationForPresentation:(BOOL)preferredInterfaceOrientationForPresentation;
 
+/*
+ 可以通过打印来查看具体内容
+ */
+- (NSString *)description;
+- (NSString *)debugDescription;
 @end
 
 @interface UIViewController (Rotation)
@@ -116,3 +125,4 @@ preferredInterfaceOrientationForPresentation:(UIInterfaceOrientation)preferredIn
 @interface UIApplication (Rotation)
 
 @end
+NS_ASSUME_NONNULL_END

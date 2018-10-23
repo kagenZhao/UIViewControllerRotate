@@ -196,6 +196,93 @@ preferredInterfaceOrientationForPresentation:(NSNumber *)preferredInterfaceOrien
             prefersStatusBarHidden:self.prefersStatusBarHidden];
 }
 
+- (NSString *)description {
+    if (!_shouldAutorotate && !_supportedInterfaceOrientations &&
+        !_preferredInterfaceOrientationForPresentation && !_preferredStatusBarStyle &&
+        !_prefersStatusBarHidden) {
+        return [NSString stringWithFormat:@"Class<%@> is Default", _cls];
+    }
+    NSMutableString *string = [NSMutableString stringWithFormat:@"Class<%@>: {", _cls];
+    if (_shouldAutorotate) {
+        [string appendFormat:@"\n shouldAutorotate: %@", stringForBool([_shouldAutorotate boolValue])];
+    }
+    if (_supportedInterfaceOrientations) {
+        [string appendFormat:@"\n   supportedInterfaceOrientations: %@", stringForInterfaceOrientationMask([_supportedInterfaceOrientations unsignedIntegerValue])];
+    }
+    if (_preferredInterfaceOrientationForPresentation) {
+        [string appendFormat:@"\n   preferredInterfaceOrientationForPresentation: %@", stringForInterfaceOrientation([_preferredInterfaceOrientationForPresentation integerValue])];
+    }
+    if (_preferredStatusBarStyle) {
+        [string appendFormat:@"\n   preferredStatusBarStyle: %@", stringForBarStyle([_preferredStatusBarStyle integerValue])];
+    }
+    if (_prefersStatusBarHidden) {
+        [string appendFormat:@"\n   prefersStatusBarHidden: %@", stringForBool([_prefersStatusBarHidden boolValue])];
+    }
+    [string appendFormat:@"\n}"];
+    return string;
+}
+
+- (NSString *)debugDescription {
+    return self.description;
+}
+
+static NSString *stringForBool(BOOL val) {
+    return val ? @"true" : @"false";
+}
+
+static NSString *stringForInterfaceOrientationMask(UIInterfaceOrientationMask mask) {
+    switch (mask) {
+        case UIInterfaceOrientationMaskPortrait:
+            return @"MaskPortrait";
+        case UIInterfaceOrientationMaskLandscapeLeft:
+            return @"MaskLandscapeLeft";
+        case UIInterfaceOrientationMaskLandscapeRight:
+            return @"MaskLandscapeRight";
+        case UIInterfaceOrientationMaskPortraitUpsideDown:
+            return @"MaskPortraitUpsideDown";
+        case UIInterfaceOrientationMaskLandscape:
+            return @"MaskLandscape";
+        case UIInterfaceOrientationMaskAll:
+            return @"MaskAll";
+        case UIInterfaceOrientationMaskAllButUpsideDown:
+            return @"MaskAllButUpsideDown";
+        default:
+            return @"Unknown";
+    }
+}
+
+static NSString *stringForInterfaceOrientation(UIInterfaceOrientation orientation) {
+    switch (orientation) {
+        case UIInterfaceOrientationPortrait:
+            return @"Portrait";
+        case UIInterfaceOrientationLandscapeLeft:
+            return @"LandscapeLeft";
+        case UIInterfaceOrientationLandscapeRight:
+            return @"LandscapeRight";
+        case UIInterfaceOrientationPortraitUpsideDown:
+            return @"PortraitUpsideDown";
+        case UIInterfaceOrientationUnknown:
+        default:
+            return @"Unknown";
+    }
+}
+
+static NSString *stringForBarStyle(UIStatusBarStyle style) {
+    switch (style) {
+        case UIStatusBarStyleDefault:
+            return @"Default";
+        case UIStatusBarStyleLightContent:
+            return @"LightContent";
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        case UIStatusBarStyleBlackOpaque:
+            return @"BlackOpaque";
+#pragma clang diagnostic pop
+        default:
+            return @"Unknown";
+    }
+}
+
 @end
 
 @interface UIViewController ()
@@ -229,21 +316,6 @@ static void *rotation_viewWillAppearBlockKey;
         _exchangeClassInstanceMethod(UIViewController.class, @selector(presentViewController:animated:completion:), @selector(rotation_hook_presentViewController:animated:completion:));
         _exchangeClassInstanceMethod(UIViewController.class, @selector(dismissViewControllerAnimated:completion:), @selector(rotation_hook_dismissViewControllerAnimated:completion:));
         _exchangeClassInstanceMethod(UIViewController.class, @selector(viewWillAppear:), @selector(rotation_hook_viewWillAppear:));
-
-        
-        NSArray <NSString *>*classNames = @[@"AVFullScreenViewController",
-                                            @"AVPlayerViewController",
-                                            @"AVFullScreenViewController",
-                                            @"AVFullScreenPlaybackControlsViewController",
-                                            @"WebFullScreenVideoRootViewController"];
-        
-        NSMutableArray *models = [NSMutableArray arrayWithCapacity:classNames.count];
-        [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
-            [models addObject:[[UIViewControllerRotationModel alloc] initWithCls:className
-                                                                shouldAutorotate:YES
-                                                  supportedInterfaceOrientations:UIInterfaceOrientationMaskAll]];
-        }];
-        [self registerClasses:models];
     });
 }
 
@@ -307,6 +379,16 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _rotation_preferenceRotateInternalClassModel = [NSMutableDictionary dictionary];
+        NSArray <NSString *>*classNames = @[@"AVFullScreenViewController",
+                                            @"AVPlayerViewController",
+                                            @"AVFullScreenViewController",
+                                            @"AVFullScreenPlaybackControlsViewController",
+                                            @"WebFullScreenVideoRootViewController"];
+        [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
+            [_rotation_preferenceRotateInternalClassModel setObject:[[UIViewControllerRotationModel alloc] initWithCls:className
+                                                                                                      shouldAutorotate:true
+                                                                                        supportedInterfaceOrientations:UIInterfaceOrientationMaskAll] forKey:className];
+        }];
     });
     return _rotation_preferenceRotateInternalClassModel;
 }
