@@ -60,43 +60,33 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerR
          @selector(application:supportedInterfaceOrientationsForWindow:)
  */
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol UIApplicationOrientationDefault <NSObject>
+@optional
+@property (class, nonatomic, assign, readonly) BOOL defaultShouldAutorotate; // default YES
+@property (class, nonatomic, assign, readonly) UIInterfaceOrientationMask defaultSupportedInterfaceOrientations; // default UIInterfaceOrientationMaskPortrait
+@property (class, nonatomic, assign, readonly) UIInterfaceOrientation defaultPreferredInterfaceOrientationForPresentation; // default UIInterfaceOrientationPortrait
+@property (class, nonatomic, assign, readonly) UIStatusBarStyle defaultPreferredStatusBarStyle; // default UIStatusBarStyleDefault
+@property (class, nonatomic, assign, readonly) BOOL defaultPrefersStatusBarHidden; // default NO
+@end
+
+@interface UIApplication (Rotation) <UIApplicationOrientationDefault>
+/*
+ UIApplicationOrientationDefault 协议 需要自行实现其方法
+ */
+@end
+
+__attribute__((objc_subclassing_restricted))
 @interface UIViewControllerRotationModel : NSObject <NSCopying>
 @property (nonatomic, copy, readonly) NSString *cls;
 
-- (instancetype)initWithDefault:(NSString *)cls; // 默认不改变这个类
+- (instancetype)initWithClass:(NSString *)cls; // 默认不改变这个类
 
-- (instancetype)initWithCls:(NSString *)cls
-           shouldAutorotate: (BOOL)shouldAutorotate
-supportedInterfaceOrientations:(UIInterfaceOrientationMask)supportedInterfaceOrientations;
-
-- (instancetype)initWithCls:(NSString *)cls
-           shouldAutorotate: (BOOL)shouldAutorotate
-supportedInterfaceOrientations:(UIInterfaceOrientationMask)supportedInterfaceOrientations
-preferredInterfaceOrientationForPresentation:(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation;
-
-- (instancetype)initWithCls:(NSString *)cls
-    preferredStatusBarStyle:(UIStatusBarStyle)preferredStatusBarStyle
-     prefersStatusBarHidden:(BOOL)prefersStatusBarHidden;
-
-- (instancetype)initWithCls:(NSString *)cls
-    preferredStatusBarStyle:(UIStatusBarStyle)preferredStatusBarStyle;
-
-- (instancetype)initWithCls:(NSString *)cls
-     prefersStatusBarHidden:(BOOL)prefersStatusBarHidden;
-
-- (instancetype)initWithCls:(NSString *)cls
-           shouldAutorotate: (BOOL)shouldAutorotate
-supportedInterfaceOrientations:(UIInterfaceOrientationMask)supportedInterfaceOrientations
-preferredInterfaceOrientationForPresentation:(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-    preferredStatusBarStyle:(UIStatusBarStyle)preferredStatusBarStyle
-     prefersStatusBarHidden:(BOOL)prefersStatusBarHidden;
-
-
-- (void)conigShouldAutorotate:(BOOL)shouldAutorotate;
-- (void)conigSupportedInterfaceOrientations:(UIInterfaceOrientationMask)supportedInterfaceOrientations;
-- (void)conigPrefersStatusBarHidden:(UIInterfaceOrientation)prefersStatusBarHidden;
-- (void)conigPreferredStatusBarStyle:(UIStatusBarStyle)preferredStatusBarStyle;
-- (void)conigPreferredInterfaceOrientationForPresentation:(BOOL)preferredInterfaceOrientationForPresentation;
+- (instancetype)configShouldAutorotate:(BOOL)shouldAutorotate;
+- (instancetype)configSupportedInterfaceOrientations:(UIInterfaceOrientationMask)supportedInterfaceOrientations;
+- (instancetype)configPrefersStatusBarHidden:(UIInterfaceOrientation)prefersStatusBarHidden;
+- (instancetype)configPreferredStatusBarStyle:(UIStatusBarStyle)preferredStatusBarStyle;
+- (instancetype)configPreferredInterfaceOrientationForPresentation:(BOOL)preferredInterfaceOrientationForPresentation;
 
 /*
  可以通过打印来查看具体内容
@@ -120,9 +110,5 @@ preferredInterfaceOrientationForPresentation:(UIInterfaceOrientation)preferredIn
 + (void)registerClasses:(NSArray<UIViewControllerRotationModel *> *)models;
 + (NSArray <UIViewControllerRotationModel *> *)registedClasses;
 + (void)removeClasses:(NSArray<NSString *> *)classes;
-@end
-
-@interface UIApplication (Rotation)
-
 @end
 NS_ASSUME_NONNULL_END

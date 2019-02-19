@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -28,8 +28,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func gobackRoot() {
-        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
-        //        navigationController?.popToRootViewController(animated: true)
+//        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     deinit {

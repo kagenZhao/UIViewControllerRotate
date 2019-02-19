@@ -32,8 +32,8 @@ class ViewController2: UIViewController {
     }
     
     @IBAction func gobackRoot() {
-        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
-//        navigationController?.popToRootViewController(animated: true)
+//        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     deinit {

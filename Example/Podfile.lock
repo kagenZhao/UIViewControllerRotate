@@ -1,16 +1,27 @@
 PODS:
-  - UIViewControllerRotate (1.0.0)
+  - RSSwizzle (0.1.0)
+  - UIViewControllerRotate (1.0.5):
+    - RSSwizzle (~> 0.1)
 
 DEPENDENCIES:
+  - RSSwizzle (from `https://github.com/kagenZhao/RSSwizzle.git`)
   - UIViewControllerRotate (from `../`)
 
 EXTERNAL SOURCES:
+  RSSwizzle:
+    :git: https://github.com/kagenZhao/RSSwizzle.git
   UIViewControllerRotate:
     :path: "../"
 
-SPEC CHECKSUMS:
-  UIViewControllerRotate: ca3c10211cf9e1ec59b2fb23fa7e59c4ef51654b
+CHECKOUT OPTIONS:
+  RSSwizzle:
+    :commit: cb180ea88fa8daec6257403c5f67ff41028c4416
+    :git: https://github.com/kagenZhao/RSSwizzle.git
 
-PODFILE CHECKSUM: 56903a4e7abdbc1919c7930762b1a94169fcea47
+SPEC CHECKSUMS:
+  RSSwizzle: d561958f595028bfcef98c7d55c318b3878a61c6
+  UIViewControllerRotate: 7df07237a9bed9c2387d849ba011a2e4372e974a
+
+PODFILE CHECKSUM: 9cd54340f2fdeefeaf68e555a07af4dbeed2cf02
 
 COCOAPODS: 1.5.3
