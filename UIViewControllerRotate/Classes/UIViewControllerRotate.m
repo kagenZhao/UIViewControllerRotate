@@ -850,7 +850,7 @@ static void *rotation_currentOrientationKey;
          inClass:UIApplication.class
          newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
              void(*originalImplementation_)(__unsafe_unretained id, SEL, id<UIApplicationDelegate> delegate);
-             SEL selector_ = @selector(setSelectedViewController:);
+             SEL selector_ = @selector(setDelegate:);
              return ^void (__unsafe_unretained id self, id<UIApplicationDelegate> delegate) {
                  [self hook_setDelegate:delegate];
                  RSSWCallOriginal(delegate);
