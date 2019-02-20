@@ -1,6 +1,6 @@
 PODS:
   - RSSwizzle (0.1.0)
-  - UIViewControllerRotate (1.0.5):
+  - UIViewControllerRotate (1.1.1):
     - RSSwizzle (~> 0.1)
 
 DEPENDENCIES:
@@ -20,8 +20,8 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   RSSwizzle: d561958f595028bfcef98c7d55c318b3878a61c6
-  UIViewControllerRotate: 7df07237a9bed9c2387d849ba011a2e4372e974a
+  UIViewControllerRotate: e3a60ff7abfea025f88b603e561f84997a70f0af
 
-PODFILE CHECKSUM: 9cd54340f2fdeefeaf68e555a07af4dbeed2cf02
+PODFILE CHECKSUM: e64a07557d386ada2156a1269136842cd191bb8a
 
 COCOAPODS: 1.5.3

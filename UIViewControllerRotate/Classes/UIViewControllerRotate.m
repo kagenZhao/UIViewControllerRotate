@@ -8,7 +8,7 @@
 #import "UIViewControllerRotate.h"
 #import <objc/runtime.h>
 #import <RSSwizzle/RSSwizzle.h>
-@interface UIApplication (Rotation)
+@interface UIApplication (_Rotation)
 @property (nonatomic, assign) UIDeviceOrientation m_currentOrientation;
 + (BOOL)__UIApplicationRotation__disableMethidSwizzle;
 + (BOOL)__UIApplicationRotation__defaultShouldAutorotate;
@@ -21,7 +21,7 @@
 @interface UIViewController ()
 @property (nonatomic, assign) BOOL rotation_isDissmissing;
 @property (nonatomic, copy) void(^rotation_viewWillAppearBlock)(void);
-- (void)rotation_forceToOrientation:(UIInterfaceOrientation)orientation;
+//- (void)rotation_forceToOrientation:(UIInterfaceOrientation)orientation;
 @end
 
 @interface InterfaceOrientationController : UIViewController
@@ -438,7 +438,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 
 - (UIInterfaceOrientation)rotation_fix_preferredInterfaceOrientationForPresentation {
-    UIInterfaceOrientation currentInterface = [UIApplication sharedApplication].m_currentOrientation;
+    UIInterfaceOrientation currentInterface = (UIInterfaceOrientation)[UIApplication sharedApplication].m_currentOrientation;
     if (self.shouldAutorotate) {
         if (self.supportedInterfaceOrientations & (1 << currentInterface)) {
             return currentInterface;
@@ -605,7 +605,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
              }
              if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
                  NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
-                 InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:[toViewController rotation_fix_preferredInterfaceOrientationForPresentation]];
+                 InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:(UIDeviceOrientation)[toViewController rotation_fix_preferredInterfaceOrientationForPresentation]];
                  fixController.view.backgroundColor = [toViewController.view backgroundColor];
                  [vcs insertObject:fixController atIndex:vcs.count - 1];
                  [self setViewControllers:vcs];
@@ -645,7 +645,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
              }
              if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
                  NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
-                 InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:UIInterfaceOrientationPortrait];
+                 InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:(UIDeviceOrientation)UIInterfaceOrientationPortrait];
                  fixController.view.backgroundColor = [toViewController.view backgroundColor];
                  [vcs insertObject:fixController atIndex:vcs.count - 1];
                  [self setViewControllers:vcs];
@@ -866,7 +866,6 @@ static void *rotation_currentOrientationKey;
 }
 
 - (void)setM_currentOrientation:(UIDeviceOrientation)m_currentOrientation {
-    NSLog(@"~~~%@", stringForInterfaceOrientation(m_currentOrientation));
     objc_setAssociatedObject(self, &rotation_currentOrientationKey, @(m_currentOrientation), OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 

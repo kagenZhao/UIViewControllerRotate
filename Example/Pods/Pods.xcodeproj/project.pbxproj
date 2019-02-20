@@ -10,16 +10,16 @@
 		0F47FC8881A96A3478561DDB5E2CAFF9 /* RSSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = C03A5BCF04E22F986D5F7EF096D36DCB /* RSSwizzle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		175212F4443601D636501AC03C5CFC6B /* Pods-UIViewControllerRotation_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D225B1822658714BFC299F8F31D702AD /* Pods-UIViewControllerRotation_Example-dummy.m */; };
 		2476A8529E053990FF76B0AA90275D38 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B63FCADCBA035BE131F25E5E90FD32 /* Foundation.framework */; };
-		2D5CF5ACBFA43C9AF73F432675437AC3 /* RSSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 591FBBDB00083B411E60547C8F0B8ADD /* RSSwizzle.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		2FDC07604412A1FD1BDE34EA8C1F6844 /* UIViewControllerRotate-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FFABE4119A15F73C6D1F04759E561DF4 /* UIViewControllerRotate-dummy.m */; };
 		347FCEB1AAA521080C740DEE8D6B3FFD /* RSSwizzle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A8A0BEE3F2013A9480EA8EA5F2307C9 /* RSSwizzle.framework */; };
-		352561729EB9ABD571496A23A08C4F5E /* UIViewControllerRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = B08009C6B037BE59161B3BE8FD9BD26E /* UIViewControllerRotate.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		34B77726DAC5F750B429F3D3E5A92D95 /* UIViewControllerRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = B08009C6B037BE59161B3BE8FD9BD26E /* UIViewControllerRotate.m */; };
 		3AF7EA85C01ABBB0273DC872BB1B7ADE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B63FCADCBA035BE131F25E5E90FD32 /* Foundation.framework */; };
 		3F0C26516A98ED1414DA384E03F903EC /* UIViewControllerRotate-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B959126E276359965F28403905487A /* UIViewControllerRotate-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67848017752167D03699684FEC244F09 /* RSSwizzle-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8A1EE8EA396C3165C562AA5DEF2BCE /* RSSwizzle-dummy.m */; };
 		6E7BB092D5B1A8567192E734D51C4ED8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B63FCADCBA035BE131F25E5E90FD32 /* Foundation.framework */; };
+		9ACAE13577CCFB86FC04238B11CFB13F /* UIViewControllerRotate-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FFABE4119A15F73C6D1F04759E561DF4 /* UIViewControllerRotate-dummy.m */; };
 		A2DF1B94BCEED89AD0F43A82E947314E /* UIViewControllerRotate.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A6DC81791F5F9B30D18D6E5EE87D1B /* UIViewControllerRotate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A91319EBBFBF9E4D584B11989B6E0590 /* RSSwizzle-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FB06C2F237ACD2BF5D54303B41F0D6D /* RSSwizzle-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F758819A11992C1F86D64CCADC2EB081 /* RSSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 591FBBDB00083B411E60547C8F0B8ADD /* RSSwizzle.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		FDBE84D9E7348FA6D1F775C99F9121AB /* Pods-UIViewControllerRotation_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F8E2952BB3D79A7C55E60FCBDA1927E4 /* Pods-UIViewControllerRotation_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -293,7 +293,7 @@
 			buildConfigurationList = 0A103B0F4BD159A2BEA1CF2525BA5FE6 /* Build configuration list for PBXNativeTarget "UIViewControllerRotate" */;
 			buildPhases = (
 				1A72DB23C88A0BBCD01162F93165CA55 /* Headers */,
-				5752F04705030CBC23018F47588AF3E9 /* Sources */,
+				B265F5CAD448A85D8AB74BCC513ECF49 /* Sources */,
 				BED43144C952B7A57CF23F7AFDD861BA /* Frameworks */,
 				E271F9A1169831B0E6EC34DF2133A1DF /* Resources */,
 			);
@@ -398,21 +398,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5752F04705030CBC23018F47588AF3E9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2FDC07604412A1FD1BDE34EA8C1F6844 /* UIViewControllerRotate-dummy.m in Sources */,
-				352561729EB9ABD571496A23A08C4F5E /* UIViewControllerRotate.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		655848435A154A1F002A86DE945F0712 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				67848017752167D03699684FEC244F09 /* RSSwizzle-dummy.m in Sources */,
-				2D5CF5ACBFA43C9AF73F432675437AC3 /* RSSwizzle.m in Sources */,
+				F758819A11992C1F86D64CCADC2EB081 /* RSSwizzle.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B265F5CAD448A85D8AB74BCC513ECF49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9ACAE13577CCFB86FC04238B11CFB13F /* UIViewControllerRotate-dummy.m in Sources */,
+				34B77726DAC5F750B429F3D3E5A92D95 /* UIViewControllerRotate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
