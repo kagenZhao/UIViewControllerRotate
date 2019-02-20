@@ -25,7 +25,6 @@
 @end
 
 @interface InterfaceOrientationController : UIViewController
-@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, assign) UIDeviceOrientation orientation;
 - (instancetype)initWithRotation:(UIDeviceOrientation)orientation;
 @end
@@ -37,15 +36,6 @@
         _orientation = orientation;
     }
     return self;
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:self.imageView];
-}
-
-- (void)setImage: (UIImage *)image {
-    self.imageView.image = image;
 }
 
 - (BOOL)shouldAutorotate {
@@ -288,15 +278,25 @@ static void *rotation_viewWillAppearBlockKey;
  结果: C 的方向与B一样了
  */
 + (void)rotation_hook_present {
-    RSSwizzleInstanceMethod(UIViewController.class,
-                            @selector(presentViewController:animated:completion:),
-                            RSSWReturnType(void),
-                            RSSWArguments(UIViewController *viewControllerToPresent, BOOL flag, void (^__nullable completion)(void)),
-                            RSSWReplacement({
-        UIInterfaceOrientation ori = [self rotation_fix_preferredInterfaceOrientationForPresentation];
-        [self rotation_forceToOrientation:ori];
-        RSSWCallOriginal(viewControllerToPresent, flag, completion);
-    }), RSSwizzleModeAlways, NULL)
+    
+    [RSSwizzle
+     swizzleInstanceMethod:@selector(presentViewController:animated:completion:)
+     inClass:UIViewController.class
+     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         void (*originalImplementation_)(__unsafe_unretained id, SEL, UIViewController *viewControllerToPresent, BOOL flag, void (^__nullable completion)(void));
+         SEL selector_ = @selector(presentViewController:animated:completion:);
+         return ^void (__unsafe_unretained id self, UIViewController *viewControllerToPresent, BOOL flag, void (^__nullable completion)(void)) {
+             if ([viewControllerToPresent supportedInterfaceOrientations] & (1 << [self rotation_fix_preferredInterfaceOrientationForPresentation])) {
+                 RSSWCallOriginal(viewControllerToPresent, flag, completion);
+             } else {
+                 UIInterfaceOrientation ori = [viewControllerToPresent rotation_fix_preferredInterfaceOrientationForPresentation];
+                 [self rotation_forceToOrientation:ori];
+                 RSSWCallOriginal(viewControllerToPresent, flag, completion);
+             }
+         };
+     }
+     mode:RSSwizzleModeAlways
+     key:NULL];
 }
 
 
@@ -309,39 +309,49 @@ static void *rotation_viewWillAppearBlockKey;
  导致: 下方的 rotation_findTopViewController 读取错误
  */
 + (void)rotation_hook_dismiss {
-    RSSwizzleInstanceMethod(UIViewController.class,
-                            @selector(dismissViewControllerAnimated:completion:),
-                            RSSWReturnType(void),
-                            RSSWArguments(BOOL flag, void (^__nullable completion)(void)),
-                            RSSWReplacement({
-        if ([self presentingViewController] == nil) {
-            RSSWCallOriginal(flag, completion);
-        } else {
-            __weak __typeof(self) weak_self = self;
-            [self setRotation_isDissmissing:true];
-            RSSWCallOriginal(flag, ^{
-                if (weak_self) {
-                    [weak_self setRotation_isDissmissing:false];
-                }
-                if (completion) {
-                    completion();
-                }
-            });
-        }
-    }), RSSwizzleModeAlways, NULL)
+    [RSSwizzle
+     swizzleInstanceMethod:@selector(dismissViewControllerAnimated:completion:)
+     inClass:UIViewController.class
+     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         void (*originalImplementation_)(__unsafe_unretained id, SEL, BOOL flag, void (^__nullable completion)(void));
+         SEL selector_ = @selector(dismissViewControllerAnimated:completion:);
+         return ^void (__unsafe_unretained id self, BOOL flag, void (^__nullable completion)(void)) {
+             if ([self presentingViewController] == nil) {
+                 RSSWCallOriginal(flag, completion);
+             } else {
+                 __weak __typeof(self) weak_self = self;
+                 [self setRotation_isDissmissing:true];
+                 RSSWCallOriginal(flag, ^{
+                     if (weak_self) {
+                         [weak_self setRotation_isDissmissing:false];
+                     }
+                     if (completion) {
+                         completion();
+                     }
+                 });
+             }
+         };
+     }
+     mode:RSSwizzleModeAlways
+     key:NULL];
 }
 
 + (void)rotation_hook_viewWillAppear {
-    RSSwizzleInstanceMethod(UIViewController.class,
-                            @selector(viewWillAppear:),
-                            RSSWReturnType(void),
-                            RSSWArguments(BOOL animated),
-                            RSSWReplacement({
-        RSSWCallOriginal(animated);
-        if ([self rotation_viewWillAppearBlock]) {
-            [self rotation_viewWillAppearBlock]();
-        }
-    }), RSSwizzleModeAlways, NULL)
+    [RSSwizzle
+     swizzleInstanceMethod:@selector(viewWillAppear:)
+     inClass:UIViewController.class
+     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         void (*originalImplementation_)(__unsafe_unretained id, SEL, BOOL animated);
+         SEL selector_ = @selector(viewWillAppear:);
+         return ^void (__unsafe_unretained id self, BOOL animated) {
+             RSSWCallOriginal(animated);
+             if ([self rotation_viewWillAppearBlock]) {
+                 [self rotation_viewWillAppearBlock]();
+             }
+         };
+     }
+     mode:RSSwizzleModeAlways
+     key:NULL];
 }
 
 /*
@@ -519,16 +529,21 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 
 + (void)rotation_hook_push {
-    RSSwizzleInstanceMethod(UINavigationController.class,
-                            @selector(pushViewController:animated:),
-                            RSSWReturnType(void),
-                            RSSWArguments(UIViewController *viewController, BOOL animated),
-                            RSSWReplacement({
-        UIViewController *fromViewController = [self viewControllers].lastObject;
-        UIViewController *toViewController = viewController;
-        [self rotation_setupPrientationWithFromVC:fromViewController toVC:toViewController];
-        RSSWCallOriginal(viewController, animated);
-    }), RSSwizzleModeAlways, NULL)
+    [RSSwizzle
+     swizzleInstanceMethod:@selector(pushViewController:animated:)
+     inClass:UINavigationController.class
+     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         void (*originalImplementation_)(__unsafe_unretained id, SEL, UIViewController *viewController, BOOL animated);
+         SEL selector_ = @selector(pushViewController:animated:);
+         return ^void (__unsafe_unretained id self, UIViewController *viewController, BOOL animated) {
+             UIViewController *fromViewController = [self viewControllers].lastObject;
+             UIViewController *toViewController = viewController;
+             [self rotation_setupPrientationWithFromVC:fromViewController toVC:toViewController];
+             RSSWCallOriginal(viewController, animated);
+         };
+     }
+     mode:RSSwizzleModeAlways
+     key:NULL];
 }
 
 /*
@@ -537,106 +552,121 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
  */
 
 + (void)rotation_hook_pop {
-    RSSwizzleInstanceMethod(UINavigationController.class,
-                            @selector(popViewControllerAnimated:),
-                            RSSWReturnType(UIViewController *),
-                            RSSWArguments(BOOL animated),
-                            RSSWReplacement({
-        if ([self viewControllers].count < 2) { return nil; }
-        UIViewController *fromViewController = [self viewControllers].lastObject;
-        UIViewController *toViewController = [self viewControllers][[self viewControllers].count - 2];
-        if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return RSSWCallOriginal(animated); }
-        if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
-            return RSSWCallOriginal(animated);
-        }
-        if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
-            return RSSWCallOriginal(animated);
-        }
-        if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-            return RSSWCallOriginal(animated);
-        }
-        __weak __typeof(toViewController) weakToViewController = toViewController;
-        toViewController.rotation_viewWillAppearBlock = ^{
-            __strong __typeof(weakToViewController) toViewController = weakToViewController;
-            if (toViewController == nil) { return; }
-            UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
-            [toViewController rotation_forceToOrientation:ori];
-            toViewController.rotation_viewWillAppearBlock = nil;
-        };
-        return RSSWCallOriginal(animated);
-    }), RSSwizzleModeAlways, NULL)
+    [RSSwizzle
+     swizzleInstanceMethod:@selector(popViewControllerAnimated:)
+     inClass:UINavigationController.class
+     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         UIViewController *(*originalImplementation_)(__unsafe_unretained id, SEL,  BOOL animated);
+         SEL selector_ = @selector(popViewControllerAnimated:);
+         return ^UIViewController * (__unsafe_unretained id self, BOOL animated) {
+             if ([self viewControllers].count < 2) { return nil; }
+             UIViewController *fromViewController = [self viewControllers].lastObject;
+             UIViewController *toViewController = [self viewControllers][[self viewControllers].count - 2];
+             if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return RSSWCallOriginal(animated); }
+             if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
+                 return RSSWCallOriginal(animated);
+             }
+             if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
+                 return RSSWCallOriginal(animated);
+             }
+             if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+                 return RSSWCallOriginal(animated);
+             }
+             __weak __typeof(toViewController) weakToViewController = toViewController;
+             toViewController.rotation_viewWillAppearBlock = ^{
+                 __strong __typeof(weakToViewController) toViewController = weakToViewController;
+                 if (toViewController == nil) { return; }
+                 UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
+                 [toViewController rotation_forceToOrientation:ori];
+                 toViewController.rotation_viewWillAppearBlock = nil;
+             };
+             return RSSWCallOriginal(animated);
+         };
+     }
+     mode:RSSwizzleModeAlways
+     key:NULL];
 }
 
 + (void)rotation_hook_popToController {
-    RSSwizzleInstanceMethod(UINavigationController.class,
-                            @selector(popToViewController:animated:),
-                            RSSWReturnType(NSArray<UIViewController *> *),
-                            RSSWArguments(UIViewController *viewController, BOOL animated),
-                            RSSWReplacement({
-        if ([self viewControllers].count < 2) { return nil; }
-        UIViewController *fromViewController = [self viewControllers].lastObject;
-        UIViewController *toViewController = viewController;
-        if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return RSSWCallOriginal(viewController, animated); }
-        
-        if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
-            return RSSWCallOriginal(viewController, animated);
-        }
-        if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
-            NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
-            InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:[toViewController rotation_fix_preferredInterfaceOrientationForPresentation]];
-            fixController.view.backgroundColor = [toViewController.view backgroundColor];
-            [vcs insertObject:fixController atIndex:vcs.count - 1];
-            [self setViewControllers:vcs];
-            return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(viewController, false)];
-        }
-        if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-            return RSSWCallOriginal(viewController, animated);
-        }
-        __weak __typeof(toViewController) weakToViewController = toViewController;
-        toViewController.rotation_viewWillAppearBlock = ^{
-            __strong __typeof(weakToViewController) toViewController = weakToViewController;
-            if (toViewController == nil) { return; }
-            UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
-            [toViewController rotation_forceToOrientation:ori];
-            toViewController.rotation_viewWillAppearBlock = nil;
-        };
-        return RSSWCallOriginal(viewController, animated);
-    }), RSSwizzleModeAlways, NULL)
+    [RSSwizzle
+     swizzleInstanceMethod:@selector(popToViewController:animated:)
+     inClass:UINavigationController.class
+     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         NSArray<UIViewController *> *(*originalImplementation_)(__unsafe_unretained id, SEL, UIViewController *viewController, BOOL animated);
+         SEL selector_ = @selector(popToViewController:animated:);
+         return ^NSArray<UIViewController *> * (__unsafe_unretained id self, UIViewController *viewController, BOOL animated) {
+             if ([self viewControllers].count < 2) { return nil; }
+             UIViewController *fromViewController = [self viewControllers].lastObject;
+             UIViewController *toViewController = viewController;
+             if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return RSSWCallOriginal(viewController, animated); }
+             
+             if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
+                 return RSSWCallOriginal(viewController, animated);
+             }
+             if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
+                 NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
+                 InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:[toViewController rotation_fix_preferredInterfaceOrientationForPresentation]];
+                 fixController.view.backgroundColor = [toViewController.view backgroundColor];
+                 [vcs insertObject:fixController atIndex:vcs.count - 1];
+                 [self setViewControllers:vcs];
+                 return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(viewController, false)];
+             }
+             if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+                 return RSSWCallOriginal(viewController, animated);
+             }
+             __weak __typeof(toViewController) weakToViewController = toViewController;
+             toViewController.rotation_viewWillAppearBlock = ^{
+                 __strong __typeof(weakToViewController) toViewController = weakToViewController;
+                 if (toViewController == nil) { return; }
+                 UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
+                 [toViewController rotation_forceToOrientation:ori];
+                 toViewController.rotation_viewWillAppearBlock = nil;
+             };
+             return RSSWCallOriginal(viewController, animated);
+         };
+     }
+     mode:RSSwizzleModeAlways
+     key:NULL];
 }
 
 + (void)rotation_hook_popToRoot {
-    RSSwizzleInstanceMethod(UINavigationController.class,
-                            @selector(popToRootViewControllerAnimated:),
-                            RSSWReturnType(NSArray<UIViewController *> *),
-                            RSSWArguments(BOOL animated),
-                            RSSWReplacement({
-        if ([self viewControllers].count < 2) { return nil; }
-        UIViewController *fromViewController = [self viewControllers].lastObject;
-        UIViewController *toViewController = [self viewControllers].firstObject;
-        if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
-            return RSSWCallOriginal(animated);
-        }
-        if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
-            NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
-            InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:UIInterfaceOrientationPortrait];
-            fixController.view.backgroundColor = [toViewController.view backgroundColor];
-            [vcs insertObject:fixController atIndex:vcs.count - 1];
-            [self setViewControllers:vcs];
-            return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(false)];
-        }
-        if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-            return RSSWCallOriginal(animated);
-        }
-        __weak __typeof(toViewController) weakToViewController = toViewController;
-        toViewController.rotation_viewWillAppearBlock = ^{
-            __strong __typeof(weakToViewController) toViewController = weakToViewController;
-            if (toViewController == nil) { return; }
-            UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
-            [toViewController rotation_forceToOrientation:ori];
-            toViewController.rotation_viewWillAppearBlock = nil;
-        };
-        return RSSWCallOriginal(animated);
-    }), RSSwizzleModeAlways, NULL)
+    [RSSwizzle
+     swizzleInstanceMethod:@selector(popToRootViewControllerAnimated:)
+     inClass:UINavigationController.class
+     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         NSArray<UIViewController *> *(*originalImplementation_)(__unsafe_unretained id, SEL, BOOL animated);
+         SEL selector_ = @selector(popToRootViewControllerAnimated:);
+         return ^NSArray<UIViewController *> * (__unsafe_unretained id self, BOOL animated) {
+             if ([self viewControllers].count < 2) { return nil; }
+             UIViewController *fromViewController = [self viewControllers].lastObject;
+             UIViewController *toViewController = [self viewControllers].firstObject;
+             if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
+                 return RSSWCallOriginal(animated);
+             }
+             if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
+                 NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
+                 InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:UIInterfaceOrientationPortrait];
+                 fixController.view.backgroundColor = [toViewController.view backgroundColor];
+                 [vcs insertObject:fixController atIndex:vcs.count - 1];
+                 [self setViewControllers:vcs];
+                 return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(false)];
+             }
+             if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+                 return RSSWCallOriginal(animated);
+             }
+             __weak __typeof(toViewController) weakToViewController = toViewController;
+             toViewController.rotation_viewWillAppearBlock = ^{
+                 __strong __typeof(weakToViewController) toViewController = weakToViewController;
+                 if (toViewController == nil) { return; }
+                 UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
+                 [toViewController rotation_forceToOrientation:ori];
+                 toViewController.rotation_viewWillAppearBlock = nil;
+             };
+             return RSSWCallOriginal(animated);
+         };
+     }
+     mode:RSSwizzleModeAlways
+     key:NULL];
 }
 
 - (void)rotation_setupPrientationWithFromVC:(UIViewController *)fromViewController toVC:(UIViewController *)toViewController {
@@ -716,38 +746,47 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 
 + (void)rotation_hook_setSelectedIndex {
-    RSSwizzleInstanceMethod(UITabBarController.class,
-                            @selector(setSelectedIndex:),
-                            RSSWReturnType(void),
-                            RSSWArguments(NSUInteger selectedIndex),
-                            RSSWReplacement({
-        UIViewController *fromVC = [self selectedViewController];
-        RSSWCallOriginal(selectedIndex); 
-        UIViewController *toVc = [self selectedViewController];
-        if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-            return;
-        }
-        UIInterfaceOrientation ori = toVc.rotation_fix_preferredInterfaceOrientationForPresentation;
-        [self rotation_forceToOrientation:ori];
-    }), RSSwizzleModeAlways, NULL)
+    [RSSwizzle
+     swizzleInstanceMethod:@selector(setSelectedIndex:)
+     inClass:UITabBarController.class
+     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         void(*originalImplementation_)(__unsafe_unretained id, SEL, NSUInteger selectedIndex);
+         SEL selector_ = @selector(setSelectedIndex:);
+         return ^void (__unsafe_unretained id self, NSUInteger selectedIndex) {
+             UIViewController *fromVC = [self selectedViewController];
+             RSSWCallOriginal(selectedIndex);
+             UIViewController *toVc = [self selectedViewController];
+             if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+                 return;
+             }
+             UIInterfaceOrientation ori = toVc.rotation_fix_preferredInterfaceOrientationForPresentation;
+             [self rotation_forceToOrientation:ori];
+         };
+     }
+     mode:RSSwizzleModeAlways
+     key:NULL];
 }
 
 + (void)rotation_hook_setSelectedViewController {
-    RSSwizzleInstanceMethod(UITabBarController.class,
-                            @selector(setSelectedViewController:),
-                            RSSWReturnType(void),
-                            RSSWArguments(__kindof UIViewController *selectedViewController),
-                            RSSWReplacement({
-        UIViewController *fromVC = [self selectedViewController];
-        RSSWCallOriginal(selectedViewController);
-        UIViewController *vc = [self selectedViewController];
-        UIViewController *toVc = [self selectedViewController];
-        if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-            return;
-        }
-        UIInterfaceOrientation ori = vc.rotation_fix_preferredInterfaceOrientationForPresentation;
-        [self rotation_forceToOrientation:ori];
-    }), RSSwizzleModeAlways, NULL)
+    [RSSwizzle
+     swizzleInstanceMethod:@selector(setSelectedViewController:)
+     inClass:UITabBarController.class
+     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         void(*originalImplementation_)(__unsafe_unretained id, SEL, __kindof UIViewController *selectedViewController);
+         SEL selector_ = @selector(setSelectedViewController:);
+         return ^void (__unsafe_unretained id self, __kindof UIViewController *selectedViewController) {
+             UIViewController *fromVC = [self selectedViewController];
+             RSSWCallOriginal(selectedViewController);
+             UIViewController *toVc = [self selectedViewController];
+             if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+                 return;
+             }
+             UIInterfaceOrientation ori = toVc.rotation_fix_preferredInterfaceOrientationForPresentation;
+             [self rotation_forceToOrientation:ori];
+         };
+     }
+     mode:RSSwizzleModeAlways
+     key:NULL];
 }
 
 - (BOOL)shouldAutorotate {
@@ -806,14 +845,19 @@ static void *rotation_currentOrientationKey;
         if ([UIApplication __UIApplicationRotation__disableMethidSwizzle]) {
             return;
         }
-        RSSwizzleInstanceMethod(UIApplication.class,
-                                @selector(setDelegate:),
-                                RSSWReturnType(void),
-                                RSSWArguments(id<UIApplicationDelegate> delegate),
-                                RSSWReplacement({
-            [self hook_setDelegate:delegate];
-            RSSWCallOriginal(delegate);
-        }), RSSwizzleModeAlways, NULL)
+        [RSSwizzle
+         swizzleInstanceMethod:@selector(setDelegate:)
+         inClass:UIApplication.class
+         newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+             void(*originalImplementation_)(__unsafe_unretained id, SEL, id<UIApplicationDelegate> delegate);
+             SEL selector_ = @selector(setSelectedViewController:);
+             return ^void (__unsafe_unretained id self, id<UIApplicationDelegate> delegate) {
+                 [self hook_setDelegate:delegate];
+                 RSSWCallOriginal(delegate);
+             };
+         }
+         mode:RSSwizzleModeAlways
+         key:NULL];
     });
 }
 
@@ -822,6 +866,7 @@ static void *rotation_currentOrientationKey;
 }
 
 - (void)setM_currentOrientation:(UIDeviceOrientation)m_currentOrientation {
+    NSLog(@"~~~%@", stringForInterfaceOrientation(m_currentOrientation));
     objc_setAssociatedObject(self, &rotation_currentOrientationKey, @(m_currentOrientation), OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
@@ -834,18 +879,21 @@ static void *rotation_currentOrientationKey;
     SEL selector = @selector(application:supportedInterfaceOrientationsForWindow:);
     struct objc_method_description protocol_del = protocol_getMethodDescription(@protocol(UIApplicationDelegate), selector, false, true);
     Method method = class_getInstanceMethod([delegate class], protocol_del.name);
+    id block = ^UIInterfaceOrientationMask(__unsafe_unretained id self, UIApplication *application, UIWindow *window) {
+        return UIInterfaceOrientationMaskAll;
+    };
     if (method) {
-        RSSwizzleInstanceMethod([delegate class],
-                                protocol_del.name,
-                                RSSWReturnType(UIInterfaceOrientationMask),
-                                RSSWArguments(UIApplication *application, UIWindow *window),
-                                RSSWReplacement({
-            return UIInterfaceOrientationMaskAll;
-        }), RSSwizzleModeAlways, NULL)
+        [RSSwizzle
+         swizzleInstanceMethod:protocol_del.name
+         inClass:[delegate class]
+         newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+//             UIInterfaceOrientationMask(*originalImplementation_)(__unsafe_unretained id, SEL, id<UIApplicationDelegate> delegate);
+//             SEL selector_ = protocol_del.name;
+             return block;
+         }
+         mode:RSSwizzleModeAlways
+         key:NULL];
     } else {
-        id block = ^UIInterfaceOrientationMask(__unsafe_unretained id self, UIApplication *application, UIWindow *window) {
-            return UIInterfaceOrientationMaskAll;
-        };
         IMP newIMP = imp_implementationWithBlock(block);
         class_addMethod([delegate class], protocol_del.name, newIMP, protocol_del.types);
     }

@@ -53,7 +53,7 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 `UIViewController
 - UIApplication:
   - @selector(setDelegate:)
 - UIApplication.delegate
-  - @selector(application:supportedInterfaceOrientationsForWindow:)
+- @selector(application:supportedInterfaceOrientationsForWindow:)  强制返回ALL, 否则会导致 presented 的 界面 dismiss 时 crash
 
 
 ## Author
