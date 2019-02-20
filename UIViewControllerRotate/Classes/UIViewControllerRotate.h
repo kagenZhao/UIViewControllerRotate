@@ -1,7 +1,7 @@
 //
 //  UIViewController+Rotation.m
 //
-//  Created by 赵国庆 on 2018/7/11.
+//  Created by kagen on 2018/7/11.
 //  Copyright © 2018年 kagen. All rights reserved.
 //
 
@@ -49,6 +49,7 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerR
         @selector(viewWillAppear:)
     UINavigationController:
         @selector(pushViewController:animated:)
+        @selector(popViewControllerAnimated:)
         @selector(popToViewController:animated:)
         @selector(popToRootViewControllerAnimated:)
     UITabBarController:
@@ -57,12 +58,14 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerR
     UIApplication:
         @selector(setDelegate:)
     UIApplication.delegate
+        // 强制返回ALL, 否则会导致 presented 的 界面 dismiss 时 crash
          @selector(application:supportedInterfaceOrientationsForWindow:)
  */
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol UIApplicationOrientationDefault <NSObject>
 @optional
+@property (class, nonatomic, assign, readonly) BOOL disableMethidSwizzle; // default NO
 @property (class, nonatomic, assign, readonly) BOOL defaultShouldAutorotate; // default YES
 @property (class, nonatomic, assign, readonly) UIInterfaceOrientationMask defaultSupportedInterfaceOrientations; // default UIInterfaceOrientationMaskPortrait
 @property (class, nonatomic, assign, readonly) UIInterfaceOrientation defaultPreferredInterfaceOrientationForPresentation; // default UIInterfaceOrientationPortrait

@@ -1,7 +1,7 @@
 //
 //  UIViewController+Rotation.m
 //
-//  Created by 赵国庆 on 2018/7/11.
+//  Created by kagen on 2018/7/11.
 //  Copyright © 2018年 kagen. All rights reserved.
 //
 
@@ -9,6 +9,8 @@
 #import <objc/runtime.h>
 #import <RSSwizzle/RSSwizzle.h>
 @interface UIApplication (Rotation)
+@property (nonatomic, assign) UIDeviceOrientation m_currentOrientation;
++ (BOOL)__UIApplicationRotation__disableMethidSwizzle;
 + (BOOL)__UIApplicationRotation__defaultShouldAutorotate;
 + (UIInterfaceOrientationMask)__UIApplicationRotation__defaultSupportedInterfaceOrientations;
 + (UIInterfaceOrientation)__UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation;
@@ -23,6 +25,7 @@
 @end
 
 @interface InterfaceOrientationController : UIViewController
+@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, assign) UIDeviceOrientation orientation;
 - (instancetype)initWithRotation:(UIDeviceOrientation)orientation;
 @end
@@ -34,6 +37,15 @@
         _orientation = orientation;
     }
     return self;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:self.imageView];
+}
+
+- (void)setImage: (UIImage *)image {
+    self.imageView.image = image;
 }
 
 - (BOOL)shouldAutorotate {
@@ -258,6 +270,9 @@ static void *rotation_viewWillAppearBlockKey;
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        if ([UIApplication __UIApplicationRotation__disableMethidSwizzle]) {
+            return;
+        }
         [self rotation_hook_present];
         [self rotation_hook_dismiss];
         [self rotation_hook_viewWillAppear];
@@ -299,16 +314,20 @@ static void *rotation_viewWillAppearBlockKey;
                             RSSWReturnType(void),
                             RSSWArguments(BOOL flag, void (^__nullable completion)(void)),
                             RSSWReplacement({
-        __weak __typeof(self) weak_self = self;
-        [self setRotation_isDissmissing:true];
-        RSSWCallOriginal(flag, ^{
-            if (weak_self) {
-                [weak_self setRotation_isDissmissing:false];
-            }
-            if (completion) {
-                completion();
-            }
-        });
+        if ([self presentingViewController] == nil) {
+            RSSWCallOriginal(flag, completion);
+        } else {
+            __weak __typeof(self) weak_self = self;
+            [self setRotation_isDissmissing:true];
+            RSSWCallOriginal(flag, ^{
+                if (weak_self) {
+                    [weak_self setRotation_isDissmissing:false];
+                }
+                if (completion) {
+                    completion();
+                }
+            });
+        }
     }), RSSwizzleModeAlways, NULL)
 }
 
@@ -332,7 +351,7 @@ static void *rotation_viewWillAppearBlockKey;
 - (void)rotation_forceToDeviceOrientation:(UIInterfaceOrientation)orientation {
 //    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationUnknown];
     [[UIDevice currentDevice] setValue:@(UIDeviceOrientationUnknown) forKey:@"orientation"];
-    
+
 //    [[UIApplication sharedApplication] setStatusBarOrientation:orientation];
     [[UIDevice currentDevice] setValue:@(orientation) forKey:@"orientation"];
 }
@@ -409,7 +428,16 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 
 - (UIInterfaceOrientation)rotation_fix_preferredInterfaceOrientationForPresentation {
-    return self.shouldAutorotate ? self.preferredInterfaceOrientationForPresentation : [UIApplication __UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation];
+    UIInterfaceOrientation currentInterface = [UIApplication sharedApplication].m_currentOrientation;
+    if (self.shouldAutorotate) {
+        if (self.supportedInterfaceOrientations & (1 << currentInterface)) {
+            return currentInterface;
+        } else {
+            return self.preferredInterfaceOrientationForPresentation;
+        }
+    } else {
+        return [UIApplication __UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation];
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -475,7 +503,9 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        
+        if ([UIApplication __UIApplicationRotation__disableMethidSwizzle]) {
+            return;
+        }
         [self rotation_hook_push];
         
         /*
@@ -483,6 +513,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
          导致 界面没有旋转回正确位置
          */
         [self rotation_hook_pop];
+        [self rotation_hook_popToController];
         [self rotation_hook_popToRoot];
     });
 }
@@ -504,32 +535,72 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
  在系统调用下列两个方法的时候 只有两个相邻的ViewController之间POP才会修复旋转
  所以在这种情况下 在POP超过两个界面的情况下 插入一个中间界面与想要跳转的界面方向相同 即可解决
  */
+
 + (void)rotation_hook_pop {
+    RSSwizzleInstanceMethod(UINavigationController.class,
+                            @selector(popViewControllerAnimated:),
+                            RSSWReturnType(UIViewController *),
+                            RSSWArguments(BOOL animated),
+                            RSSWReplacement({
+        if ([self viewControllers].count < 2) { return nil; }
+        UIViewController *fromViewController = [self viewControllers].lastObject;
+        UIViewController *toViewController = [self viewControllers][[self viewControllers].count - 2];
+        if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return RSSWCallOriginal(animated); }
+        if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
+            return RSSWCallOriginal(animated);
+        }
+        if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
+            return RSSWCallOriginal(animated);
+        }
+        if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+            return RSSWCallOriginal(animated);
+        }
+        __weak __typeof(toViewController) weakToViewController = toViewController;
+        toViewController.rotation_viewWillAppearBlock = ^{
+            __strong __typeof(weakToViewController) toViewController = weakToViewController;
+            if (toViewController == nil) { return; }
+            UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
+            [toViewController rotation_forceToOrientation:ori];
+            toViewController.rotation_viewWillAppearBlock = nil;
+        };
+        return RSSWCallOriginal(animated);
+    }), RSSwizzleModeAlways, NULL)
+}
+
++ (void)rotation_hook_popToController {
     RSSwizzleInstanceMethod(UINavigationController.class,
                             @selector(popToViewController:animated:),
                             RSSWReturnType(NSArray<UIViewController *> *),
                             RSSWArguments(UIViewController *viewController, BOOL animated),
                             RSSWReplacement({
-        
-        if ([self viewControllers].count <= 2) { return RSSWCallOriginal(viewController, animated); }
+        if ([self viewControllers].count < 2) { return nil; }
         UIViewController *fromViewController = [self viewControllers].lastObject;
         UIViewController *toViewController = viewController;
         if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return RSSWCallOriginal(viewController, animated); }
-        if (fromViewController == toViewController) { return RSSWCallOriginal(viewController, animated); }
+        
         if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
             return RSSWCallOriginal(viewController, animated);
         }
-//        if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] != [UIApplication __UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation]) {
-//            return RSSWCallOriginal(viewController, animated);
-//        }
-        NSInteger idx = [[self viewControllers] indexOfObject:viewController];
-        if (idx == NSNotFound) { return RSSWCallOriginal(viewController, animated); }
-        if (idx == [self viewControllers].count - 2) { return @[[self popViewControllerAnimated:animated]]; };
-        NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
-        UIViewController *fixController = [[InterfaceOrientationController alloc] initWithRotation:[toViewController rotation_fix_preferredInterfaceOrientationForPresentation]];
-        [vcs insertObject:fixController atIndex:vcs.count - 1];
-        [self setViewControllers:vcs];
-        return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(viewController, false)];
+        if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
+            NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
+            InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:[toViewController rotation_fix_preferredInterfaceOrientationForPresentation]];
+            fixController.view.backgroundColor = [toViewController.view backgroundColor];
+            [vcs insertObject:fixController atIndex:vcs.count - 1];
+            [self setViewControllers:vcs];
+            return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(viewController, false)];
+        }
+        if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+            return RSSWCallOriginal(viewController, animated);
+        }
+        __weak __typeof(toViewController) weakToViewController = toViewController;
+        toViewController.rotation_viewWillAppearBlock = ^{
+            __strong __typeof(weakToViewController) toViewController = weakToViewController;
+            if (toViewController == nil) { return; }
+            UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
+            [toViewController rotation_forceToOrientation:ori];
+            toViewController.rotation_viewWillAppearBlock = nil;
+        };
+        return RSSWCallOriginal(viewController, animated);
     }), RSSwizzleModeAlways, NULL)
 }
 
@@ -539,30 +610,46 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                             RSSWReturnType(NSArray<UIViewController *> *),
                             RSSWArguments(BOOL animated),
                             RSSWReplacement({
-        if ([self viewControllers].count <= 2) { return RSSWCallOriginal(animated); }
+        if ([self viewControllers].count < 2) { return nil; }
         UIViewController *fromViewController = [self viewControllers].lastObject;
         UIViewController *toViewController = [self viewControllers].firstObject;
-        if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return RSSWCallOriginal(animated); }
         if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
             return RSSWCallOriginal(animated);
         }
-//        if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] != [UIApplication __UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation]) {
-//            return RSSWCallOriginal(animated);
-//        }
-        NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
-        UIViewController *fixController = [[InterfaceOrientationController alloc] initWithRotation:[toViewController rotation_fix_preferredInterfaceOrientationForPresentation]];
-        [vcs insertObject:fixController atIndex:vcs.count - 1];
-        [self setViewControllers:vcs];
-        return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(false)];
+        if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
+            NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
+            InterfaceOrientationController *fixController = [[InterfaceOrientationController alloc] initWithRotation:UIInterfaceOrientationPortrait];
+            fixController.view.backgroundColor = [toViewController.view backgroundColor];
+            [vcs insertObject:fixController atIndex:vcs.count - 1];
+            [self setViewControllers:vcs];
+            return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(false)];
+        }
+        if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+            return RSSWCallOriginal(animated);
+        }
+        __weak __typeof(toViewController) weakToViewController = toViewController;
+        toViewController.rotation_viewWillAppearBlock = ^{
+            __strong __typeof(weakToViewController) toViewController = weakToViewController;
+            if (toViewController == nil) { return; }
+            UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
+            [toViewController rotation_forceToOrientation:ori];
+            toViewController.rotation_viewWillAppearBlock = nil;
+        };
+        return RSSWCallOriginal(animated);
     }), RSSwizzleModeAlways, NULL)
 }
 
 - (void)rotation_setupPrientationWithFromVC:(UIViewController *)fromViewController toVC:(UIViewController *)toViewController {
+    if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+        toViewController.rotation_viewWillAppearBlock = nil;
+        return;
+    }
     if (fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation != toViewController.rotation_fix_preferredInterfaceOrientationForPresentation) {
-        __weak UIViewController * weak_toController = toViewController;
+        __weak __typeof(toViewController) weakToViewController = toViewController;
         toViewController.rotation_viewWillAppearBlock = ^{
-            if (weak_toController == nil) { return; }
-            UIInterfaceOrientation ori = weak_toController.rotation_fix_preferredInterfaceOrientationForPresentation;
+            __strong __typeof(weakToViewController) toViewController = weakToViewController;
+            if (toViewController == nil) { return; }
+            UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
             [self rotation_forceToOrientation:ori];
         };
     } else {
@@ -620,7 +707,9 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        
+        if ([UIApplication __UIApplicationRotation__disableMethidSwizzle]) {
+            return;
+        }
         [self rotation_hook_setSelectedIndex];
         [self rotation_hook_setSelectedViewController];
     });
@@ -632,9 +721,13 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                             RSSWReturnType(void),
                             RSSWArguments(NSUInteger selectedIndex),
                             RSSWReplacement({
+        UIViewController *fromVC = [self selectedViewController];
         RSSWCallOriginal(selectedIndex); 
-        UIViewController *vc = [self selectedViewController];
-        UIInterfaceOrientation ori = vc.rotation_fix_preferredInterfaceOrientationForPresentation;
+        UIViewController *toVc = [self selectedViewController];
+        if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+            return;
+        }
+        UIInterfaceOrientation ori = toVc.rotation_fix_preferredInterfaceOrientationForPresentation;
         [self rotation_forceToOrientation:ori];
     }), RSSwizzleModeAlways, NULL)
 }
@@ -645,8 +738,13 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                             RSSWReturnType(void),
                             RSSWArguments(__kindof UIViewController *selectedViewController),
                             RSSWReplacement({
+        UIViewController *fromVC = [self selectedViewController];
         RSSWCallOriginal(selectedViewController);
         UIViewController *vc = [self selectedViewController];
+        UIViewController *toVc = [self selectedViewController];
+        if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+            return;
+        }
         UIInterfaceOrientation ori = vc.rotation_fix_preferredInterfaceOrientationForPresentation;
         [self rotation_forceToOrientation:ori];
     }), RSSwizzleModeAlways, NULL)
@@ -699,9 +797,15 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 @end
 
 @implementation UIApplication (Rotate)
+static void *rotation_currentOrientationKey;
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(deviceOrientationDidChange:) name: UIDeviceOrientationDidChangeNotification object: nil];
+        if ([UIApplication __UIApplicationRotation__disableMethidSwizzle]) {
+            return;
+        }
         RSSwizzleInstanceMethod(UIApplication.class,
                                 @selector(setDelegate:),
                                 RSSWReturnType(void),
@@ -711,6 +815,19 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
             RSSWCallOriginal(delegate);
         }), RSSwizzleModeAlways, NULL)
     });
+}
+
++ (void)deviceOrientationDidChange:(NSNotification *)notification {
+    [UIApplication sharedApplication].m_currentOrientation = [(UIDevice *)notification.object orientation];
+}
+
+- (void)setM_currentOrientation:(UIDeviceOrientation)m_currentOrientation {
+    objc_setAssociatedObject(self, &rotation_currentOrientationKey, @(m_currentOrientation), OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (UIDeviceOrientation)m_currentOrientation {
+    NSNumber *num = objc_getAssociatedObject(self, &rotation_currentOrientationKey);
+    return num ? num.integerValue : UIDeviceOrientationPortrait;
 }
 
 - (void)hook_setDelegate:(id<UIApplicationDelegate>)delegate {
@@ -723,22 +840,23 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                                 RSSWReturnType(UIInterfaceOrientationMask),
                                 RSSWArguments(UIApplication *application, UIWindow *window),
                                 RSSWReplacement({
-            if (window.rootViewController.rotation_findTopViewController) {
-                return window.rootViewController.rotation_findTopViewController.supportedInterfaceOrientations;
-            } else {
-                return [UIApplication __UIApplicationRotation__defaultSupportedInterfaceOrientations];
-            }
+            return UIInterfaceOrientationMaskAll;
         }), RSSwizzleModeAlways, NULL)
     } else {
         id block = ^UIInterfaceOrientationMask(__unsafe_unretained id self, UIApplication *application, UIWindow *window) {
-            if (window.rootViewController.rotation_findTopViewController) {
-                return window.rootViewController.rotation_findTopViewController.supportedInterfaceOrientations;
-            } else {
-                return [UIApplication __UIApplicationRotation__defaultSupportedInterfaceOrientations];
-            }
+            return UIInterfaceOrientationMaskAll;
         };
         IMP newIMP = imp_implementationWithBlock(block);
         class_addMethod([delegate class], protocol_del.name, newIMP, protocol_del.types);
+    }
+}
+
+
++ (BOOL)__UIApplicationRotation__disableMethidSwizzle {
+    if ([self respondsToSelector:@selector(disableMethidSwizzle)]) {
+        return [self disableMethidSwizzle];
+    } else {
+        return NO;
     }
 }
 

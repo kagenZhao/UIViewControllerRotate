@@ -1,15 +1,15 @@
 //
 //  ViewController2.swift
-//  UIViewControllerRotation_Example
+//  UIViewControllerRotation
 //
-//  Created by 赵国庆 on 2018/10/22.
-//  Copyright © 2018 CocoaPods. All rights reserved.
+//  Created by kagenZhao on 10/22/2018.
+//  Copyright (c) 2018 kagenZhao. All rights reserved.
 //
 
 import UIKit
 
 class ViewController2: UIViewController {
-
+    var aaa  = true
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .orange
@@ -20,7 +20,7 @@ class ViewController2: UIViewController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .all
+        return .landscape
     }
 
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
@@ -28,10 +28,12 @@ class ViewController2: UIViewController {
     }
     
     @IBAction func goback() {
+        aaa = false
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func gobackRoot() {
+        aaa = false
 //        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
         navigationController?.popToRootViewController(animated: true)
     }
