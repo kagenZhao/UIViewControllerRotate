@@ -120,7 +120,7 @@ preferredInterfaceOrientationForPresentation:nil
 }
 
 - (instancetype)initWithClass:(NSString *)cls
-           shouldAutorotate: (NSNumber *)shouldAutorotate
+             shouldAutorotate:(NSNumber *)shouldAutorotate
 supportedInterfaceOrientations:(NSNumber *)supportedInterfaceOrientations
 preferredInterfaceOrientationForPresentation:(NSNumber *)preferredInterfaceOrientationForPresentation
     preferredStatusBarStyle:(NSNumber *)preferredStatusBarStyle
@@ -145,6 +145,26 @@ preferredInterfaceOrientationForPresentation:(NSNumber *)preferredInterfaceOrien
             preferredInterfaceOrientationForPresentation:self.preferredInterfaceOrientationForPresentation
             preferredStatusBarStyle:self.preferredStatusBarStyle
             prefersStatusBarHidden:self.prefersStatusBarHidden];
+}
+
+- (NSNumber *)shouldAutorotate {
+    return _shouldAutorotate ?: @([UIApplication __UIApplicationRotation__defaultShouldAutorotate]);
+}
+
+- (NSNumber *)supportedInterfaceOrientations {
+    return _supportedInterfaceOrientations ?: @([UIApplication __UIApplicationRotation__defaultSupportedInterfaceOrientations]);
+}
+
+- (NSNumber *)preferredInterfaceOrientationForPresentation {
+    return _preferredInterfaceOrientationForPresentation ?: @([UIApplication __UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation]);
+}
+
+- (NSNumber *)preferredStatusBarStyle {
+    return _preferredStatusBarStyle ?: @([UIApplication __UIApplicationRotation__defaultPreferredStatusBarStyle]);
+}
+
+- (NSNumber *)prefersStatusBarHidden {
+    return _prefersStatusBarHidden ?: @([UIApplication __UIApplicationRotation__defaultPrefersStatusBarHidden]);
 }
 
 - (NSString *)description {

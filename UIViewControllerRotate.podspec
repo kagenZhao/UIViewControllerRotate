@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'UIViewControllerRotate'
-  s.version          = '1.1.1'
+  s.version          = '1.1.2'
   s.summary          = '非耦合性的使界面支持旋转'
 
   s.description      = <<-DESC
@@ -18,5 +18,4 @@ Pod::Spec.new do |s|
   s.source_files = 'UIViewControllerRotate/Classes/**/*'
   s.public_header_files = 'UIViewControllerRotate/Classes/**/*.h'
   s.dependency 'RSSwizzle', '~> 0.1'
-  s.swift_version = '4.2'
 end

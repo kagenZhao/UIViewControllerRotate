@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol UIApplicationOrientationDefault <NSObject>
 @optional
-@property (class, nonatomic, assign, readonly) BOOL disableMethidSwizzle; // default NO
+@property (class, nonatomic, assign, readonly) BOOL disableMethidSwizzle; // default NO. 禁止方法交换可能会导致横竖屏异常, 此方法只用来debug, 如果冲突请删除本库, 并选择其他横屏方案.
 @property (class, nonatomic, assign, readonly) BOOL defaultShouldAutorotate; // default YES
 @property (class, nonatomic, assign, readonly) UIInterfaceOrientationMask defaultSupportedInterfaceOrientations; // default UIInterfaceOrientationMaskPortrait
 @property (class, nonatomic, assign, readonly) UIInterfaceOrientation defaultPreferredInterfaceOrientationForPresentation; // default UIInterfaceOrientationPortrait
