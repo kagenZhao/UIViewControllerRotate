@@ -40,6 +40,7 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerR
 3. AVFullScreenViewController
 4. AVFullScreenPlaybackControlsViewController
 5. WebFullScreenVideoRootViewController
+6. UISnapshotModalViewController
  
  风险提示:
     本扩展使用runtime替换了以下方法, 如果有冲突请自行修改或寻找其他解决方案:

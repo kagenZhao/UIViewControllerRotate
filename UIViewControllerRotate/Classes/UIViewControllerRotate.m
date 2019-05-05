@@ -400,7 +400,9 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                                             @"AVPlayerViewController",
                                             @"AVFullScreenViewController",
                                             @"AVFullScreenPlaybackControlsViewController",
-                                            @"WebFullScreenVideoRootViewController"];
+                                            @"WebFullScreenVideoRootViewController",
+                                            @"UISnapshotModalViewController",
+                                            ];
         [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
             [_rotation_preferenceRotateInternalClassModel setObject:[[[[UIViewControllerRotationModel alloc]
                                                                        initWithClass:className]
@@ -495,11 +497,12 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
         NSArray <NSString *>* excludeCls = @[@"UISnapshotModalViewController"];
         /// 当前控制器 模态的Controller
         UIViewController *presentedVC = self.presentedViewController;
+        UIViewController *presentingVC = self.presentingViewController;
         if (presentedVC != nil && ![excludeCls containsObject:NSStringFromClass(presentedVC.class)]) {
-            result = self.presentedViewController.rotation_findTopViewController;
+            result = presentedVC.rotation_findTopViewController;
         } else if ([excludeCls containsObject:NSStringFromClass(self.class)]) {
             /// 模态出当前控制器的Controller
-            result = self.presentingViewController;
+            result = presentingVC;
         } else {
             result = self;
         }
