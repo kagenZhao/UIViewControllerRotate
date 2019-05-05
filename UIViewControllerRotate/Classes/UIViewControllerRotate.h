@@ -99,20 +99,63 @@ __attribute__((objc_subclassing_restricted))
 - (NSString *)debugDescription;
 @end
 
-@interface UIViewController (Rotation)
 
-/*
- 如果发现某个系统的类或者第三方框架中的类需要或者不需要旋转的话 请在Appdelegate 中进行注册
+/**
+ 这里公开了已经处理的系统内部类:
  默认包含:
  1. AVFullScreenViewController
  2. AVPlayerViewController
  3. AVFullScreenViewController
  4. AVFullScreenPlaybackControlsViewController
  5. WebFullScreenVideoRootViewController
- 如果不想要这些 可以调用 "removeClasses:"进行删除
+ 6. UISnapshotModalViewController
+ 
+ 如果发现某个系统的类或者第三方框架中的类需要或者不需要旋转的话 请在Appdelegate 中调用下方 registerClasses: 方法进行注册
+
+ 建议不要删除默认这些类, 删除后会引起崩溃, 比如: AVFullScreenViewController
+ 
+ @return 公开已经处理的系统内部类
+ */
+static inline NSArray <UIViewControllerRotationModel *> * __UIViewControllerDefaultRotationClasses() {
+    NSArray <NSString *>*classNames = @[@"AVFullScreenViewController",
+                                        @"AVPlayerViewController",
+                                        @"AVFullScreenViewController",
+                                        @"AVFullScreenPlaybackControlsViewController",
+                                        @"WebFullScreenVideoRootViewController",
+                                        @"UISnapshotModalViewController",
+                                        ];
+    NSMutableArray <UIViewControllerRotationModel *> * result = [NSMutableArray arrayWithCapacity:classNames.count];
+    [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
+        [result addObject:[[[[UIViewControllerRotationModel alloc]
+                             initWithClass:className]
+                            configShouldAutorotate:true]
+                           configSupportedInterfaceOrientations:UIInterfaceOrientationMaskAll]];
+    }];
+    return result;
+}
+
+@interface UIViewController (Rotation)
+
+
+/**
+ 注册内部不能实例化的类, 使其强制应用某些旋转特性
+
+ @param models 要注册的类转换成的Model, 支持多个
  */
 + (void)registerClasses:(NSArray<UIViewControllerRotationModel *> *)models;
+
+/**
+ 查看已经注册的内部类
+
+ @return 已经注册的类转换成的Model
+ */
 + (NSArray <UIViewControllerRotationModel *> *)registedClasses;
+
+/**
+ 若想要删除某些不需要的类, 则调用此方法
+
+ @param classes 类名字符串列表
+ */
 + (void)removeClasses:(NSArray<NSString *> *)classes;
 @end
 NS_ASSUME_NONNULL_END
