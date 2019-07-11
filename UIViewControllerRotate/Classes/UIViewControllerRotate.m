@@ -70,6 +70,7 @@
 @end
 
 @interface UIViewControllerRotationModel ()
+@property (nonatomic, retain) Class class;
 @property (nonatomic, copy) NSString *cls;
 @property (nonatomic, copy) NSNumber *shouldAutorotate; // BOOL
 @property (nonatomic, copy) NSNumber *supportedInterfaceOrientations; // NSUInteger UIInterfaceOrientationMask
@@ -128,6 +129,7 @@ preferredInterfaceOrientationForPresentation:(NSNumber *)preferredInterfaceOrien
     self = [super init];
     if (self) {
         _cls = cls;
+        _class = NSClassFromString(cls);
         _shouldAutorotate = shouldAutorotate;
         _supportedInterfaceOrientations = supportedInterfaceOrientations;
         _preferredInterfaceOrientationForPresentation = preferredInterfaceOrientationForPresentation;
@@ -406,16 +408,29 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     return self.class.rotation_preferenceRotateInternalClassModel;
 }
 
+- (nullable UIViewControllerRotationModel *)rotation_getPreferenceInternalClassModel:(Class)class {
+    NSString *className = NSStringFromClass(class);
+    __block UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[className];
+    if (preference) { return preference; }
+    [self.rotation_preferenceRotateInternalClassModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewControllerRotationModel * _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([class isKindOfClass:obj.class]) {
+            preference = obj;
+            *stop = true;
+        }
+    }];
+    return preference;
+}
+
 - (BOOL)shouldAutorotate {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.shouldAutorotate.boolValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultShouldAutorotate] : topVC.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.supportedInterfaceOrientations.unsignedIntegerValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultSupportedInterfaceOrientations] : topVC.supportedInterfaceOrientations;
 }
@@ -424,7 +439,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 /// 所以在下边UINavigationController 处 做了处理
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.preferredInterfaceOrientationForPresentation.integerValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation] : topVC.preferredInterfaceOrientationForPresentation;
 }
@@ -444,14 +459,14 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.preferredStatusBarStyle.integerValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultPreferredStatusBarStyle] : topVC.preferredStatusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.prefersStatusBarHidden.boolValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultPrefersStatusBarHidden] : topVC.prefersStatusBarHidden;
 }
@@ -682,35 +697,35 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 
 - (BOOL)shouldAutorotate {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.shouldAutorotate.boolValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultShouldAutorotate] : topVC.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.supportedInterfaceOrientations.unsignedIntegerValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultSupportedInterfaceOrientations] : topVC.supportedInterfaceOrientations;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.preferredInterfaceOrientationForPresentation.integerValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation] : topVC.preferredInterfaceOrientationForPresentation;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.preferredStatusBarStyle.integerValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultPreferredStatusBarStyle] : topVC.preferredStatusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.prefersStatusBarHidden.boolValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultPrefersStatusBarHidden] : topVC.prefersStatusBarHidden;
 }
@@ -784,35 +799,35 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 
 - (BOOL)shouldAutorotate {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.shouldAutorotate.boolValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultShouldAutorotate] : topVC.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.supportedInterfaceOrientations.unsignedIntegerValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultSupportedInterfaceOrientations] : topVC.supportedInterfaceOrientations;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.preferredInterfaceOrientationForPresentation.integerValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation] : topVC.preferredInterfaceOrientationForPresentation;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.preferredStatusBarStyle.integerValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultPreferredStatusBarStyle] : topVC.preferredStatusBarStyle;
 }
 
 - (BOOL)prefersStatusBarHidden {
     UIViewController *topVC = self.rotation_findTopViewController;
-    UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[NSStringFromClass(topVC.class)];
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
     if (preference) return preference.prefersStatusBarHidden.boolValue;
     return topVC == self ? [UIApplication __UIApplicationRotation__defaultPrefersStatusBarHidden] : topVC.prefersStatusBarHidden;
 }

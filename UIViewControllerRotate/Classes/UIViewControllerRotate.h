@@ -41,6 +41,7 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerR
 4. AVFullScreenPlaybackControlsViewController
 5. WebFullScreenVideoRootViewController
 6. UISnapshotModalViewController
+7. UIAlertController // 10.0以下递归崩溃
  
  风险提示:
     本扩展使用runtime替换了以下方法, 如果有冲突请自行修改或寻找其他解决方案:
@@ -123,6 +124,7 @@ static inline NSArray <UIViewControllerRotationModel *> * __UIViewControllerDefa
                                         @"AVFullScreenPlaybackControlsViewController",
                                         @"WebFullScreenVideoRootViewController",
                                         @"UISnapshotModalViewController",
+                                        NSStringFromClass(UIAlertController.class),
                                         ];
     NSMutableArray <UIViewControllerRotationModel *> * result = [NSMutableArray arrayWithCapacity:classNames.count];
     [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
