@@ -85,8 +85,8 @@ __attribute__((objc_subclassing_restricted))
 @interface UIViewControllerRotationModel : NSObject <NSCopying>
 @property (nonatomic, copy, readonly) NSString *cls;
 
-- (instancetype)initWithClass:(NSString *)cls; // 默认不改变这个类
-
+- (instancetype)initWithClass:(NSString *)cls containsSubClass:(BOOL)containsSubClass; // 默认不改变这个类
+- (instancetype)configContainsSubClass:(BOOL)containsSubClass;
 - (instancetype)configShouldAutorotate:(BOOL)shouldAutorotate;
 - (instancetype)configSupportedInterfaceOrientations:(UIInterfaceOrientationMask)supportedInterfaceOrientations;
 - (instancetype)configPrefersStatusBarHidden:(UIInterfaceOrientation)prefersStatusBarHidden;
@@ -110,10 +110,13 @@ __attribute__((objc_subclassing_restricted))
  4. AVFullScreenPlaybackControlsViewController
  5. WebFullScreenVideoRootViewController
  6. UISnapshotModalViewController
- 
+ 7. UIAlertController // 10.0以下递归崩溃
+
  如果发现某个系统的类或者第三方框架中的类需要或者不需要旋转的话 请在Appdelegate 中调用下方 registerClasses: 方法进行注册
 
  建议不要删除默认这些类, 删除后会引起崩溃, 比如: AVFullScreenViewController
+ 
+ 默认同时处理其子类, 若不想处理 请自行设置model的containsSubClass属性
  
  @return 公开已经处理的系统内部类
  */
@@ -129,7 +132,8 @@ static inline NSArray <UIViewControllerRotationModel *> * __UIViewControllerDefa
     NSMutableArray <UIViewControllerRotationModel *> * result = [NSMutableArray arrayWithCapacity:classNames.count];
     [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
         [result addObject:[[[[UIViewControllerRotationModel alloc]
-                             initWithClass:className]
+                             initWithClass:className
+                             containsSubClass:YES]
                             configShouldAutorotate:true]
                            configSupportedInterfaceOrientations:UIInterfaceOrientationMaskAll]];
     }];

@@ -70,6 +70,7 @@
 @end
 
 @interface UIViewControllerRotationModel ()
+@property (nonatomic, assign) BOOL containsSubClass;
 @property (nonatomic, retain) Class class;
 @property (nonatomic, copy) NSString *cls;
 @property (nonatomic, copy) NSNumber *shouldAutorotate; // BOOL
@@ -86,13 +87,19 @@
     return nil;
 }
 
-- (instancetype)initWithClass:(NSString *)cls {
+- (instancetype)initWithClass:(NSString *)cls containsSubClass:(BOOL)containsSubClass {
     return [self initWithClass:cls
+              containsSubClass:containsSubClass
               shouldAutorotate:nil
 supportedInterfaceOrientations:nil
 preferredInterfaceOrientationForPresentation:nil
        preferredStatusBarStyle:nil
         prefersStatusBarHidden:nil];
+}
+
+- (instancetype)configContainsSubClass:(BOOL)containsSubClass {
+    _containsSubClass = containsSubClass;
+    return self;
 }
 
 - (instancetype)configShouldAutorotate:(BOOL)shouldAutorotate {
@@ -121,6 +128,7 @@ preferredInterfaceOrientationForPresentation:nil
 }
 
 - (instancetype)initWithClass:(NSString *)cls
+             containsSubClass:(BOOL)containsSubClass
              shouldAutorotate:(NSNumber *)shouldAutorotate
 supportedInterfaceOrientations:(NSNumber *)supportedInterfaceOrientations
 preferredInterfaceOrientationForPresentation:(NSNumber *)preferredInterfaceOrientationForPresentation
@@ -142,6 +150,7 @@ preferredInterfaceOrientationForPresentation:(NSNumber *)preferredInterfaceOrien
 - (id)copyWithZone:(nullable NSZone *)zone {
     return [[UIViewControllerRotationModel allocWithZone:zone]
             initWithClass:self.cls
+            containsSubClass:self.containsSubClass
             shouldAutorotate:self.shouldAutorotate
             supportedInterfaceOrientations:self.supportedInterfaceOrientations
             preferredInterfaceOrientationForPresentation:self.preferredInterfaceOrientationForPresentation
@@ -413,9 +422,16 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     __block UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[className];
     if (preference) { return preference; }
     [self.rotation_preferenceRotateInternalClassModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewControllerRotationModel * _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([class isKindOfClass:obj.class]) {
-            preference = obj;
-            *stop = true;
+        if (obj.containsSubClass) {
+            if ([class isKindOfClass:obj.class]) {
+                preference = obj;
+                *stop = true;
+            }
+        } else {
+            if ([class isMemberOfClass:obj.class]) {
+                preference = obj;
+                *stop = true;
+            }
         }
     }];
     return preference;
