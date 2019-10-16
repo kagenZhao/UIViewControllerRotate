@@ -6,8 +6,8 @@
 //
 
 #import "UIViewControllerRotate.h"
+#import "KZRSSwizzle.h"
 #import <objc/runtime.h>
-#import <RSSwizzle/RSSwizzle.h>
 @interface UIApplication (_Rotation)
 @property (nonatomic, assign) UIDeviceOrientation m_currentOrientation;
 + (BOOL)__UIApplicationRotation__disableMethidSwizzle;
@@ -298,23 +298,23 @@ static void *rotation_viewWillAppearBlockKey;
  */
 + (void)rotation_hook_present {
     
-    [RSSwizzle
+    [KZRSSwizzle
      swizzleInstanceMethod:@selector(presentViewController:animated:completion:)
      inClass:UIViewController.class
-     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          void (*originalImplementation_)(__unsafe_unretained id, SEL, UIViewController *viewControllerToPresent, BOOL flag, void (^__nullable completion)(void));
          SEL selector_ = @selector(presentViewController:animated:completion:);
          return ^void (__unsafe_unretained id self, UIViewController *viewControllerToPresent, BOOL flag, void (^__nullable completion)(void)) {
              if ([viewControllerToPresent supportedInterfaceOrientations] & (1 << [self rotation_fix_preferredInterfaceOrientationForPresentation])) {
-                 RSSWCallOriginal(viewControllerToPresent, flag, completion);
+                 KZRSSWCallOriginal(viewControllerToPresent, flag, completion);
              } else {
                  UIInterfaceOrientation ori = [viewControllerToPresent rotation_fix_preferredInterfaceOrientationForPresentation];
                  [self rotation_forceToOrientation:ori];
-                 RSSWCallOriginal(viewControllerToPresent, flag, completion);
+                 KZRSSWCallOriginal(viewControllerToPresent, flag, completion);
              }
          };
      }
-     mode:RSSwizzleModeAlways
+     mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
@@ -328,19 +328,19 @@ static void *rotation_viewWillAppearBlockKey;
  导致: 下方的 rotation_findTopViewController 读取错误
  */
 + (void)rotation_hook_dismiss {
-    [RSSwizzle
+    [KZRSSwizzle
      swizzleInstanceMethod:@selector(dismissViewControllerAnimated:completion:)
      inClass:UIViewController.class
-     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          void (*originalImplementation_)(__unsafe_unretained id, SEL, BOOL flag, void (^__nullable completion)(void));
          SEL selector_ = @selector(dismissViewControllerAnimated:completion:);
          return ^void (__unsafe_unretained id self, BOOL flag, void (^__nullable completion)(void)) {
              if ([self presentingViewController] == nil) {
-                 RSSWCallOriginal(flag, completion);
+                 KZRSSWCallOriginal(flag, completion);
              } else {
                  __weak __typeof(self) weak_self = self;
                  [self setRotation_isDissmissing:true];
-                 RSSWCallOriginal(flag, ^{
+                 KZRSSWCallOriginal(flag, ^{
                      if (weak_self) {
                          [weak_self setRotation_isDissmissing:false];
                      }
@@ -351,25 +351,25 @@ static void *rotation_viewWillAppearBlockKey;
              }
          };
      }
-     mode:RSSwizzleModeAlways
+     mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
 + (void)rotation_hook_viewWillAppear {
-    [RSSwizzle
+    [KZRSSwizzle
      swizzleInstanceMethod:@selector(viewWillAppear:)
      inClass:UIViewController.class
-     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          void (*originalImplementation_)(__unsafe_unretained id, SEL, BOOL animated);
          SEL selector_ = @selector(viewWillAppear:);
          return ^void (__unsafe_unretained id self, BOOL animated) {
-             RSSWCallOriginal(animated);
+             KZRSSWCallOriginal(animated);
              if ([self rotation_viewWillAppearBlock]) {
                  [self rotation_viewWillAppearBlock]();
              }
          };
      }
-     mode:RSSwizzleModeAlways
+     mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
@@ -555,20 +555,20 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 
 + (void)rotation_hook_push {
-    [RSSwizzle
+    [KZRSSwizzle
      swizzleInstanceMethod:@selector(pushViewController:animated:)
      inClass:UINavigationController.class
-     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          void (*originalImplementation_)(__unsafe_unretained id, SEL, UIViewController *viewController, BOOL animated);
          SEL selector_ = @selector(pushViewController:animated:);
          return ^void (__unsafe_unretained id self, UIViewController *viewController, BOOL animated) {
              UIViewController *fromViewController = [self viewControllers].lastObject;
              UIViewController *toViewController = viewController;
              [self rotation_setupPrientationWithFromVC:fromViewController toVC:toViewController];
-             RSSWCallOriginal(viewController, animated);
+             KZRSSWCallOriginal(viewController, animated);
          };
      }
-     mode:RSSwizzleModeAlways
+     mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
@@ -578,25 +578,25 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
  */
 
 + (void)rotation_hook_pop {
-    [RSSwizzle
+    [KZRSSwizzle
      swizzleInstanceMethod:@selector(popViewControllerAnimated:)
      inClass:UINavigationController.class
-     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          UIViewController *(*originalImplementation_)(__unsafe_unretained id, SEL,  BOOL animated);
          SEL selector_ = @selector(popViewControllerAnimated:);
          return ^UIViewController * (__unsafe_unretained id self, BOOL animated) {
              if ([self viewControllers].count < 2) { return nil; }
              UIViewController *fromViewController = [self viewControllers].lastObject;
              UIViewController *toViewController = [self viewControllers][[self viewControllers].count - 2];
-             if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return RSSWCallOriginal(animated); }
+             if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return KZRSSWCallOriginal(animated); }
              if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
-                 return RSSWCallOriginal(animated);
+                 return KZRSSWCallOriginal(animated);
              }
              if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
-                 return RSSWCallOriginal(animated);
+                 return KZRSSWCallOriginal(animated);
              }
              if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-                 return RSSWCallOriginal(animated);
+                 return KZRSSWCallOriginal(animated);
              }
              __weak __typeof(toViewController) weakToViewController = toViewController;
              toViewController.rotation_viewWillAppearBlock = ^{
@@ -606,28 +606,28 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                  [toViewController rotation_forceToOrientation:ori];
                  toViewController.rotation_viewWillAppearBlock = nil;
              };
-             return RSSWCallOriginal(animated);
+             return KZRSSWCallOriginal(animated);
          };
      }
-     mode:RSSwizzleModeAlways
+     mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
 + (void)rotation_hook_popToController {
-    [RSSwizzle
+    [KZRSSwizzle
      swizzleInstanceMethod:@selector(popToViewController:animated:)
      inClass:UINavigationController.class
-     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          NSArray<UIViewController *> *(*originalImplementation_)(__unsafe_unretained id, SEL, UIViewController *viewController, BOOL animated);
          SEL selector_ = @selector(popToViewController:animated:);
          return ^NSArray<UIViewController *> * (__unsafe_unretained id self, UIViewController *viewController, BOOL animated) {
              if ([self viewControllers].count < 2) { return nil; }
              UIViewController *fromViewController = [self viewControllers].lastObject;
              UIViewController *toViewController = viewController;
-             if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return RSSWCallOriginal(viewController, animated); }
+             if ([toViewController isKindOfClass:InterfaceOrientationController.class]) { return KZRSSWCallOriginal(viewController, animated); }
              
              if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
-                 return RSSWCallOriginal(viewController, animated);
+                 return KZRSSWCallOriginal(viewController, animated);
              }
              if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
                  NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
@@ -635,10 +635,10 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                  fixController.view.backgroundColor = [toViewController.view backgroundColor];
                  [vcs insertObject:fixController atIndex:vcs.count - 1];
                  [self setViewControllers:vcs];
-                 return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(viewController, false)];
+                 return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:KZRSSWCallOriginal(viewController, false)];
              }
              if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-                 return RSSWCallOriginal(viewController, animated);
+                 return KZRSSWCallOriginal(viewController, animated);
              }
              __weak __typeof(toViewController) weakToViewController = toViewController;
              toViewController.rotation_viewWillAppearBlock = ^{
@@ -648,18 +648,18 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                  [toViewController rotation_forceToOrientation:ori];
                  toViewController.rotation_viewWillAppearBlock = nil;
              };
-             return RSSWCallOriginal(viewController, animated);
+             return KZRSSWCallOriginal(viewController, animated);
          };
      }
-     mode:RSSwizzleModeAlways
+     mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
 + (void)rotation_hook_popToRoot {
-    [RSSwizzle
+    [KZRSSwizzle
      swizzleInstanceMethod:@selector(popToRootViewControllerAnimated:)
      inClass:UINavigationController.class
-     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          NSArray<UIViewController *> *(*originalImplementation_)(__unsafe_unretained id, SEL, BOOL animated);
          SEL selector_ = @selector(popToRootViewControllerAnimated:);
          return ^NSArray<UIViewController *> * (__unsafe_unretained id self, BOOL animated) {
@@ -667,7 +667,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
              UIViewController *fromViewController = [self viewControllers].lastObject;
              UIViewController *toViewController = [self viewControllers].firstObject;
              if ([fromViewController rotation_fix_preferredInterfaceOrientationForPresentation] == [toViewController rotation_fix_preferredInterfaceOrientationForPresentation]) {
-                 return RSSWCallOriginal(animated);
+                 return KZRSSWCallOriginal(animated);
              }
              if ([toViewController rotation_fix_preferredInterfaceOrientationForPresentation] == UIInterfaceOrientationPortrait) {
                  NSMutableArray<UIViewController *> * vcs = [[self viewControllers] mutableCopy];
@@ -675,10 +675,10 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                  fixController.view.backgroundColor = [toViewController.view backgroundColor];
                  [vcs insertObject:fixController atIndex:vcs.count - 1];
                  [self setViewControllers:vcs];
-                 return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:RSSWCallOriginal(false)];
+                 return [@[[self popViewControllerAnimated:true]] arrayByAddingObjectsFromArray:KZRSSWCallOriginal(false)];
              }
              if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-                 return RSSWCallOriginal(animated);
+                 return KZRSSWCallOriginal(animated);
              }
              __weak __typeof(toViewController) weakToViewController = toViewController;
              toViewController.rotation_viewWillAppearBlock = ^{
@@ -688,10 +688,10 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
                  [toViewController rotation_forceToOrientation:ori];
                  toViewController.rotation_viewWillAppearBlock = nil;
              };
-             return RSSWCallOriginal(animated);
+             return KZRSSWCallOriginal(animated);
          };
      }
-     mode:RSSwizzleModeAlways
+     mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
@@ -774,15 +774,15 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 
 + (void)rotation_hook_setSelectedIndex {
-    [RSSwizzle
+    [KZRSSwizzle
      swizzleInstanceMethod:@selector(setSelectedIndex:)
      inClass:UITabBarController.class
-     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          void(*originalImplementation_)(__unsafe_unretained id, SEL, NSUInteger selectedIndex);
          SEL selector_ = @selector(setSelectedIndex:);
          return ^void (__unsafe_unretained id self, NSUInteger selectedIndex) {
              UIViewController *fromVC = [self selectedViewController];
-             RSSWCallOriginal(selectedIndex);
+             KZRSSWCallOriginal(selectedIndex);
              UIViewController *toVc = [self selectedViewController];
              if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
                  return;
@@ -791,20 +791,20 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
              [self rotation_forceToOrientation:ori];
          };
      }
-     mode:RSSwizzleModeAlways
+     mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
 + (void)rotation_hook_setSelectedViewController {
-    [RSSwizzle
+    [KZRSSwizzle
      swizzleInstanceMethod:@selector(setSelectedViewController:)
      inClass:UITabBarController.class
-     newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          void(*originalImplementation_)(__unsafe_unretained id, SEL, __kindof UIViewController *selectedViewController);
          SEL selector_ = @selector(setSelectedViewController:);
          return ^void (__unsafe_unretained id self, __kindof UIViewController *selectedViewController) {
              UIViewController *fromVC = [self selectedViewController];
-             RSSWCallOriginal(selectedViewController);
+             KZRSSWCallOriginal(selectedViewController);
              UIViewController *toVc = [self selectedViewController];
              if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
                  return;
@@ -813,7 +813,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
              [self rotation_forceToOrientation:ori];
          };
      }
-     mode:RSSwizzleModeAlways
+     mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
@@ -873,18 +873,18 @@ static void *rotation_currentOrientationKey;
         if ([UIApplication __UIApplicationRotation__disableMethidSwizzle]) {
             return;
         }
-        [RSSwizzle
+        [KZRSSwizzle
          swizzleInstanceMethod:@selector(setDelegate:)
          inClass:UIApplication.class
-         newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
              void(*originalImplementation_)(__unsafe_unretained id, SEL, id<UIApplicationDelegate> delegate);
              SEL selector_ = @selector(setDelegate:);
              return ^void (__unsafe_unretained id self, id<UIApplicationDelegate> delegate) {
                  [self hook_setDelegate:delegate];
-                 RSSWCallOriginal(delegate);
+                 KZRSSWCallOriginal(delegate);
              };
          }
-         mode:RSSwizzleModeAlways
+         mode:KZRSSwizzleModeAlways
          key:NULL];
     });
 }
@@ -910,15 +910,15 @@ static void *rotation_currentOrientationKey;
         return UIInterfaceOrientationMaskAll;
     };
     if (method) {
-        [RSSwizzle
+        [KZRSSwizzle
          swizzleInstanceMethod:protocol_del.name
          inClass:[delegate class]
-         newImpFactory:^id(RSSwizzleInfo *swizzleInfo) {
+         newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
 //             UIInterfaceOrientationMask(*originalImplementation_)(__unsafe_unretained id, SEL, id<UIApplicationDelegate> delegate);
 //             SEL selector_ = protocol_del.name;
              return block;
          }
-         mode:RSSwizzleModeAlways
+         mode:KZRSSwizzleModeAlways
          key:NULL];
     } else {
         IMP newIMP = imp_implementationWithBlock(block);

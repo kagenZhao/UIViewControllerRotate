@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "KZRSSwizzle.h"
 #import "UIViewControllerRotate.h"
 
 FOUNDATION_EXPORT double UIViewControllerRotateVersionNumber;

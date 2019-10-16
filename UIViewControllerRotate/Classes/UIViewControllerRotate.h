@@ -69,9 +69,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  UIApplicationOrientationDefault 协议 需要自行实现其方法
  OC:
- @interface UIApplication (Rotation) <UIApplicationOrientationDefault>
+ interface UIApplication (Rotation) <UIApplicationOrientationDefault>
  ...
- @end
+ end
  
  Swift:
  extension UIApplication: UIApplicationOrientationDefault {

@@ -48,6 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension UIApplication: UIApplicationOrientationDefault {
     public static var disableMethidSwizzle: Bool {
-        return true
+        return false
     }
 }

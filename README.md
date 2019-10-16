@@ -72,7 +72,7 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 `UIViewController
 
 ## Author
 
-赵国庆, kagen@kagenz.com
+Kagen, kagen@kagenz.com
 
 ## License
 
