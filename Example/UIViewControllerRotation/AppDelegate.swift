@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import UIViewControllerRotate 
+import UIViewControllerRotate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -45,3 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+
+extension UIApplication: UIApplicationOrientationDefault {
+    public static var disableMethidSwizzle: Bool {
+        return true
+    }
+}

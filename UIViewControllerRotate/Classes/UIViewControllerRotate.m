@@ -71,7 +71,6 @@
 
 @interface UIViewControllerRotationModel ()
 @property (nonatomic, assign) BOOL containsSubClass;
-@property (nonatomic, retain) Class class;
 @property (nonatomic, copy) NSString *cls;
 @property (nonatomic, copy) NSNumber *shouldAutorotate; // BOOL
 @property (nonatomic, copy) NSNumber *supportedInterfaceOrientations; // NSUInteger UIInterfaceOrientationMask
@@ -95,6 +94,10 @@ supportedInterfaceOrientations:nil
 preferredInterfaceOrientationForPresentation:nil
        preferredStatusBarStyle:nil
         prefersStatusBarHidden:nil];
+}
+
+- (Class)getClass {
+    return NSClassFromString(_cls);
 }
 
 - (instancetype)configContainsSubClass:(BOOL)containsSubClass {
@@ -137,7 +140,6 @@ preferredInterfaceOrientationForPresentation:(NSNumber *)preferredInterfaceOrien
     self = [super init];
     if (self) {
         _cls = cls;
-        _class = NSClassFromString(cls);
         _shouldAutorotate = shouldAutorotate;
         _supportedInterfaceOrientations = supportedInterfaceOrientations;
         _preferredInterfaceOrientationForPresentation = preferredInterfaceOrientationForPresentation;
@@ -423,12 +425,12 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     if (preference) { return preference; }
     [self.rotation_preferenceRotateInternalClassModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewControllerRotationModel * _Nonnull obj, BOOL * _Nonnull stop) {
         if (obj.containsSubClass) {
-            if ([class isKindOfClass:obj.class]) {
+            if ([class isKindOfClass:obj.getClass]) {
                 preference = obj;
                 *stop = true;
             }
         } else {
-            if ([class isMemberOfClass:obj.class]) {
+            if ([class isMemberOfClass:obj.getClass]) {
                 preference = obj;
                 *stop = true;
             }
@@ -700,11 +702,13 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     }
     if (fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation != toViewController.rotation_fix_preferredInterfaceOrientationForPresentation) {
         __weak __typeof(toViewController) weakToViewController = toViewController;
+        __weak __typeof(self) weakSelf = self;
         toViewController.rotation_viewWillAppearBlock = ^{
             __strong __typeof(weakToViewController) toViewController = weakToViewController;
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
             if (toViewController == nil) { return; }
             UIInterfaceOrientation ori = toViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
-            [self rotation_forceToOrientation:ori];
+            [strongSelf rotation_forceToOrientation:ori];
         };
     } else {
         toViewController.rotation_viewWillAppearBlock = nil;
@@ -925,7 +929,7 @@ static void *rotation_currentOrientationKey;
 
 + (BOOL)__UIApplicationRotation__disableMethidSwizzle {
     if ([self respondsToSelector:@selector(disableMethidSwizzle)]) {
-        return [self disableMethidSwizzle];
+        return [(id<UIApplicationOrientationDefault>)self disableMethidSwizzle];
     } else {
         return NO;
     }
@@ -933,7 +937,7 @@ static void *rotation_currentOrientationKey;
 
 + (BOOL)__UIApplicationRotation__defaultShouldAutorotate {
     if ([self respondsToSelector:@selector(defaultShouldAutorotate)]) {
-        return [self defaultShouldAutorotate];
+        return [(id<UIApplicationOrientationDefault>)self defaultShouldAutorotate];
     } else {
         return YES;
     }
@@ -941,7 +945,7 @@ static void *rotation_currentOrientationKey;
 
 + (UIInterfaceOrientationMask)__UIApplicationRotation__defaultSupportedInterfaceOrientations {
     if ([self respondsToSelector:@selector(defaultSupportedInterfaceOrientations)]) {
-        return [self defaultSupportedInterfaceOrientations];
+        return [(id<UIApplicationOrientationDefault>)self defaultSupportedInterfaceOrientations];
     } else {
         return UIInterfaceOrientationMaskPortrait;
     }
@@ -949,7 +953,7 @@ static void *rotation_currentOrientationKey;
 
 + (UIInterfaceOrientation)__UIApplicationRotation__defaultPreferredInterfaceOrientationForPresentation {
     if ([self respondsToSelector:@selector(defaultPreferredInterfaceOrientationForPresentation)]) {
-        return [self defaultPreferredInterfaceOrientationForPresentation];
+        return [(id<UIApplicationOrientationDefault>)self defaultPreferredInterfaceOrientationForPresentation];
     } else {
         return UIInterfaceOrientationPortrait;
     }
@@ -957,7 +961,7 @@ static void *rotation_currentOrientationKey;
 
 + (UIStatusBarStyle)__UIApplicationRotation__defaultPreferredStatusBarStyle {
     if ([self respondsToSelector:@selector(defaultPreferredStatusBarStyle)]) {
-        return [self defaultPreferredStatusBarStyle];
+        return [(id<UIApplicationOrientationDefault>)self defaultPreferredStatusBarStyle];
     } else {
         return UIStatusBarStyleDefault;
     }
@@ -965,7 +969,7 @@ static void *rotation_currentOrientationKey;
 
 + (BOOL)__UIApplicationRotation__defaultPrefersStatusBarHidden {
     if ([self respondsToSelector:@selector(defaultPrefersStatusBarHidden)]) {
-        return [self defaultPrefersStatusBarHidden];
+        return [(id<UIApplicationOrientationDefault>)self defaultPrefersStatusBarHidden];
     } else {
         return NO;
     }

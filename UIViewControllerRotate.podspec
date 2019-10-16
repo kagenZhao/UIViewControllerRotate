@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'UIViewControllerRotate'
-  s.version          = '1.1.4'
+  s.version          = '1.1.5'
   s.summary          = '非耦合性的使界面支持旋转'
 
   s.description      = <<-DESC

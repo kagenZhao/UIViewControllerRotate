@@ -65,6 +65,19 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerR
  */
 NS_ASSUME_NONNULL_BEGIN
 
+
+/**
+ UIApplicationOrientationDefault 协议 需要自行实现其方法
+ OC:
+ @interface UIApplication (Rotation) <UIApplicationOrientationDefault>
+ ...
+ @end
+ 
+ Swift:
+ extension UIApplication: UIApplicationOrientationDefault {
+ ...
+ }
+ */
 @protocol UIApplicationOrientationDefault <NSObject>
 @optional
 @property (class, nonatomic, assign, readonly) BOOL disableMethidSwizzle; // default NO. 禁止方法交换可能会导致横竖屏异常, 此方法只用来debug, 如果冲突请删除本库, 并选择其他横屏方案.
@@ -75,11 +88,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, assign, readonly) BOOL defaultPrefersStatusBarHidden; // default NO
 @end
 
-@interface UIApplication (Rotation) <UIApplicationOrientationDefault>
-/*
- UIApplicationOrientationDefault 协议 需要自行实现其方法
- */
-@end
 
 __attribute__((objc_subclassing_restricted))
 @interface UIViewControllerRotationModel : NSObject <NSCopying>
@@ -121,14 +129,14 @@ __attribute__((objc_subclassing_restricted))
  @return 公开已经处理的系统内部类
  */
 static inline NSArray <UIViewControllerRotationModel *> * __UIViewControllerDefaultRotationClasses() {
-    NSArray <NSString *>*classNames = @[@"AVFullScreenViewController",
-                                        @"AVPlayerViewController",
-                                        @"AVFullScreenViewController",
-                                        @"AVFullScreenPlaybackControlsViewController",
-                                        @"WebFullScreenVideoRootViewController",
-                                        @"UISnapshotModalViewController",
-                                        NSStringFromClass(UIAlertController.class),
-                                        ];
+    NSArray <NSString *>*classNames = @[
+    @"AVPlayerViewController",
+    @"AVFullScreenViewController",
+    @"AVFullScreenPlaybackControlsViewController",
+    @"WebFullScreenVideoRootViewController",
+    @"UISnapshotModalViewController",
+    NSStringFromClass(UIAlertController.class),
+    ];
     NSMutableArray <UIViewControllerRotationModel *> * result = [NSMutableArray arrayWithCapacity:classNames.count];
     [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
         [result addObject:[[[[UIViewControllerRotationModel alloc]
