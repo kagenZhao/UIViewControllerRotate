@@ -2,6 +2,5 @@
 use_frameworks!
 target 'UIViewControllerRotation_Example' do
     pod 'UIViewControllerRotate', :path => '../'
-    pod 'RSSwizzle', :git => 'https://github.com/kagenZhao/RSSwizzle.git'
 end
 

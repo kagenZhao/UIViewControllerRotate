@@ -37,11 +37,10 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 UIViewControllerR
 目前已经包含的内部类包括:
 1. AVFullScreenViewController
 2. AVPlayerViewController
-3. AVFullScreenViewController
-4. AVFullScreenPlaybackControlsViewController
-5. WebFullScreenVideoRootViewController
-6. UISnapshotModalViewController
-7. UIAlertController // 10.0以下递归崩溃
+3. AVFullScreenPlaybackControlsViewController
+4. WebFullScreenVideoRootViewController
+5. UISnapshotModalViewController
+6. UIAlertController // 10.0以下递归崩溃
  
  风险提示:
     本扩展使用runtime替换了以下方法, 如果有冲突请自行修改或寻找其他解决方案:
@@ -114,11 +113,10 @@ __attribute__((objc_subclassing_restricted))
  默认包含:
  1. AVFullScreenViewController
  2. AVPlayerViewController
- 3. AVFullScreenViewController
- 4. AVFullScreenPlaybackControlsViewController
- 5. WebFullScreenVideoRootViewController
- 6. UISnapshotModalViewController
- 7. UIAlertController // 10.0以下递归崩溃
+ 3. AVFullScreenPlaybackControlsViewController
+ 4. WebFullScreenVideoRootViewController
+ 5. UISnapshotModalViewController
+ 6. UIAlertController // 10.0以下递归崩溃
 
  如果发现某个系统的类或者第三方框架中的类需要或者不需要旋转的话 请在Appdelegate 中调用下方 registerClasses: 方法进行注册
 

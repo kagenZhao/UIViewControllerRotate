@@ -68,13 +68,31 @@ class ViewController: UIViewController {
     }
     
     @IBAction func presentNavi() {
-        let navi = NavigationController(rootViewController: SubViewController())
-        navi.modalPresentationStyle = .fullScreen
-        present(navi, animated: true, completion: nil)
+//        let navi = NavigationController(rootViewController: SubViewController())
+//        navi.modalPresentationStyle = .fullScreen
+//        present(navi, animated: true, completion: nil)
+        
+        present(SuperViewController(), animated: true, completion: nil)
+        
     }
     
     deinit {
         print("\(type(of: self)) 已经销毁了")
+    }
+}
+
+
+
+class SuperViewController: UIViewController {
+    
+    override func viewDidLoad() {
+           super.viewDidLoad()
+        view.backgroundColor = .red
+           
+       }
+    
+    override var shouldAutorotate: Bool {
+        return presentingViewController!.shouldAutorotate
     }
 }
 

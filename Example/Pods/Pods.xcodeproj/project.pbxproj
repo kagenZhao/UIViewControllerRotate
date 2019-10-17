@@ -9,30 +9,18 @@
 /* Begin PBXBuildFile section */
 		04E5702C502D3BB9368AA2D02C9A0084 /* UIViewControllerRotate.h in Headers */ = {isa = PBXBuildFile; fileRef = F2E5778096AE45976E14773FC3794768 /* UIViewControllerRotate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		11ABC666E8BEFDB77C96C5E6E6707316 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
-		1F8F5C32B195885E9B15236D34B14C4C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
-		2362CF64C941686FDA034A49071F70FA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
-		41668F464C269404F1AC449319BF80A6 /* Pods-UIViewControllerRotation_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B4E2919DBF137FC1F45FA946C93AFBB1 /* Pods-UIViewControllerRotation_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41DB320252B29B126253C4EC6B73880C /* UIViewControllerRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8BE09F5FB16BB1066E8E82A5FC5268 /* UIViewControllerRotate.m */; };
-		49FD93BF44D4D75E176CC5893EE79207 /* RSSwizzle-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AA0AC25A653E26C30B4DA8807A8C5175 /* RSSwizzle-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		847BF2DAF255A8A19CF0F3B3E8A6FF97 /* RSSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = C03A5BCF04E22F986D5F7EF096D36DCB /* RSSwizzle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4981128DA9586B3263C5E96066D21C2D /* Pods-UIViewControllerRotation_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 89069024D02D5B11D8B8A24EB6EECC9D /* Pods-UIViewControllerRotation_Example-dummy.m */; };
+		4BC3E9CCF7597F6D50B40CA81EFDB18F /* Pods-UIViewControllerRotation_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B4E2919DBF137FC1F45FA946C93AFBB1 /* Pods-UIViewControllerRotation_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8AAF176453D325149ADEFB82AABECF51 /* KZRSSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 962C2EE12E81D16BCE17606509F2661D /* KZRSSwizzle.m */; };
-		A04310BF599EA666C3079B7E50CFF681 /* RSSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 591FBBDB00083B411E60547C8F0B8ADD /* RSSwizzle.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		9E405C07215B820DFFF71E37BDF98769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		B2F72C14E64E8170FF9947E0D4CCBD4B /* UIViewControllerRotate-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 71292071D9EC2A116583AF338553DCE4 /* UIViewControllerRotate-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEFAA583E5B468276536F384530F9DF8 /* RSSwizzle-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3E3F034A2580C28786B52BE6DF39E6 /* RSSwizzle-dummy.m */; };
-		D153E8B152C4C49393E9B730EFA14D64 /* Pods-UIViewControllerRotation_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 89069024D02D5B11D8B8A24EB6EECC9D /* Pods-UIViewControllerRotation_Example-dummy.m */; };
 		D36A7B489C24CC4EE23DC79AB5614837 /* KZRSSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = 758E9311B1F79C6B2D497114A766B03F /* KZRSSwizzle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA337C9608C1A692F0E60F0723A7DD3B /* UIViewControllerRotate-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B4265CFF5C4A3C534A278B007F6BF6D6 /* UIViewControllerRotate-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		DAF7FB8A0F740808926F5DA357237D20 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1D8380E6EEBCE39C17D7992C2131202F;
-			remoteInfo = RSSwizzle;
-		};
-		E02AF06C08FD49FAE0D32BA7F86FCA69 /* PBXContainerItemProxy */ = {
+		12809F6ED4024DE5806554AD8CA28471 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -48,43 +36,34 @@
 		2DA8951E44B8208232712364763B5A44 /* UIViewControllerRotate.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = UIViewControllerRotate.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2F19ED4642C288AF423A6A7573FAA22F /* Pods_UIViewControllerRotation_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_UIViewControllerRotation_Example.framework; path = "Pods-UIViewControllerRotation_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		36D23293CFC3D62E79818FEC7807B639 /* RSSwizzle-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "RSSwizzle-Info.plist"; sourceTree = "<group>"; };
 		3DBAD2296A9F160450A91153962468E0 /* UIViewControllerRotate-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "UIViewControllerRotate-Info.plist"; sourceTree = "<group>"; };
 		403C0D21FA3399DADCA9D52D2CE49106 /* UIViewControllerRotate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = UIViewControllerRotate.framework; path = UIViewControllerRotate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F402148608F2BF31ED89F07D662315A /* UIViewControllerRotate.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = UIViewControllerRotate.modulemap; sourceTree = "<group>"; };
-		591FBBDB00083B411E60547C8F0B8ADD /* RSSwizzle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RSSwizzle.m; path = RSSwizzle/RSSwizzle.m; sourceTree = "<group>"; };
-		6FA95986B180E1F813F89A86F8DF3BD6 /* RSSwizzle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = RSSwizzle.framework; path = RSSwizzle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71292071D9EC2A116583AF338553DCE4 /* UIViewControllerRotate-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIViewControllerRotate-umbrella.h"; sourceTree = "<group>"; };
 		7583D0032CF0876122C6F474A4EC830F /* Pods-UIViewControllerRotation_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UIViewControllerRotation_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		758E9311B1F79C6B2D497114A766B03F /* KZRSSwizzle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KZRSSwizzle.h; path = UIViewControllerRotate/Classes/KZRSSwizzle.h; sourceTree = "<group>"; };
-		86036D823D2C20F2DDE457EEC97D6C20 /* RSSwizzle.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = RSSwizzle.modulemap; sourceTree = "<group>"; };
 		87916331EA7C0C5778A8E581BF61F1AD /* Pods-UIViewControllerRotation_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-UIViewControllerRotation_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		89069024D02D5B11D8B8A24EB6EECC9D /* Pods-UIViewControllerRotation_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-UIViewControllerRotation_Example-dummy.m"; sourceTree = "<group>"; };
 		962C2EE12E81D16BCE17606509F2661D /* KZRSSwizzle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KZRSSwizzle.m; path = UIViewControllerRotate/Classes/KZRSSwizzle.m; sourceTree = "<group>"; };
 		99876D458366BC5E1A2C36D40C755908 /* Pods-UIViewControllerRotation_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-UIViewControllerRotation_Example-frameworks.sh"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		AA0AC25A653E26C30B4DA8807A8C5175 /* RSSwizzle-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RSSwizzle-umbrella.h"; sourceTree = "<group>"; };
 		B4265CFF5C4A3C534A278B007F6BF6D6 /* UIViewControllerRotate-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIViewControllerRotate-dummy.m"; sourceTree = "<group>"; };
 		B4E2919DBF137FC1F45FA946C93AFBB1 /* Pods-UIViewControllerRotation_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-UIViewControllerRotation_Example-umbrella.h"; sourceTree = "<group>"; };
-		B8569A5D7368FF976E11F192B5FB1B24 /* RSSwizzle.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RSSwizzle.xcconfig; sourceTree = "<group>"; };
 		BC968625CD31F30978F9238C1923DA98 /* Pods-UIViewControllerRotation_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UIViewControllerRotation_Example.release.xcconfig"; sourceTree = "<group>"; };
-		C03A5BCF04E22F986D5F7EF096D36DCB /* RSSwizzle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSSwizzle.h; path = RSSwizzle/RSSwizzle.h; sourceTree = "<group>"; };
 		C23B1C4E8C264B68C1F9408807B89017 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		E01AF9AA41BEEEB269AF6738C7DFA5EA /* RSSwizzle-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RSSwizzle-prefix.pch"; sourceTree = "<group>"; };
 		EF8BE09F5FB16BB1066E8E82A5FC5268 /* UIViewControllerRotate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = UIViewControllerRotate.m; path = UIViewControllerRotate/Classes/UIViewControllerRotate.m; sourceTree = "<group>"; };
 		EFBCBFC5F914DC43700C0763378AD84A /* UIViewControllerRotate.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = UIViewControllerRotate.xcconfig; sourceTree = "<group>"; };
 		F2E5778096AE45976E14773FC3794768 /* UIViewControllerRotate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UIViewControllerRotate.h; path = UIViewControllerRotate/Classes/UIViewControllerRotate.h; sourceTree = "<group>"; };
-		FC3E3F034A2580C28786B52BE6DF39E6 /* RSSwizzle-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RSSwizzle-dummy.m"; sourceTree = "<group>"; };
 		FD27B29FDE5C87A722B1952622A8C667 /* Pods-UIViewControllerRotation_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-UIViewControllerRotation_Example-Info.plist"; sourceTree = "<group>"; };
 		FFB1857E6DFBC932EFDCFE6EFEA88234 /* Pods-UIViewControllerRotation_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-UIViewControllerRotation_Example.modulemap"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3976A44CD68B5909B57F21AE8C3A0FAD /* Frameworks */ = {
+		7B6DD657EEA23E2CFD7585FD30BA3C2C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2362CF64C941686FDA034A49071F70FA /* Foundation.framework in Frameworks */,
+				9E405C07215B820DFFF71E37BDF98769 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,14 +72,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				11ABC666E8BEFDB77C96C5E6E6707316 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E10E4C58EE8C6A3A86B12E0768D83A26 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1F8F5C32B195885E9B15236D34B14C4C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,49 +90,6 @@
 			);
 			name = UIViewControllerRotate;
 			path = ../..;
-			sourceTree = "<group>";
-		};
-		05EE0201E443CF2E22A5F69DF8686187 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				86036D823D2C20F2DDE457EEC97D6C20 /* RSSwizzle.modulemap */,
-				B8569A5D7368FF976E11F192B5FB1B24 /* RSSwizzle.xcconfig */,
-				FC3E3F034A2580C28786B52BE6DF39E6 /* RSSwizzle-dummy.m */,
-				36D23293CFC3D62E79818FEC7807B639 /* RSSwizzle-Info.plist */,
-				E01AF9AA41BEEEB269AF6738C7DFA5EA /* RSSwizzle-prefix.pch */,
-				AA0AC25A653E26C30B4DA8807A8C5175 /* RSSwizzle-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/RSSwizzle";
-			sourceTree = "<group>";
-		};
-		0DF614F5BB62969ACF0937BB08BECDD4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2F19ED4642C288AF423A6A7573FAA22F /* Pods_UIViewControllerRotation_Example.framework */,
-				6FA95986B180E1F813F89A86F8DF3BD6 /* RSSwizzle.framework */,
-				403C0D21FA3399DADCA9D52D2CE49106 /* UIViewControllerRotate.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		0E41D5715459D56A30B97D4F0D5CFDBF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				6F3BC60BC88A7F7358B029CB8A23CC70 /* RSSwizzle */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		6F3BC60BC88A7F7358B029CB8A23CC70 /* RSSwizzle */ = {
-			isa = PBXGroup;
-			children = (
-				C03A5BCF04E22F986D5F7EF096D36DCB /* RSSwizzle.h */,
-				591FBBDB00083B411E60547C8F0B8ADD /* RSSwizzle.m */,
-				05EE0201E443CF2E22A5F69DF8686187 /* Support Files */,
-			);
-			name = RSSwizzle;
-			path = RSSwizzle;
 			sourceTree = "<group>";
 		};
 		72CD603E6F0F631D81C110B4BD90F3D5 /* Pod */ = {
@@ -218,8 +146,7 @@
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				9AC0DD0BBD834B0DF5FEFF512E76C45E /* Development Pods */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				0E41D5715459D56A30B97D4F0D5CFDBF /* Pods */,
-				0DF614F5BB62969ACF0937BB08BECDD4 /* Products */,
+				F71FBB522DE53F106DA5FB9662746C0B /* Products */,
 				7FDBF0454844A2D9FC03499181B926C9 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -249,17 +176,18 @@
 			path = "Target Support Files/Pods-UIViewControllerRotation_Example";
 			sourceTree = "<group>";
 		};
+		F71FBB522DE53F106DA5FB9662746C0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2F19ED4642C288AF423A6A7573FAA22F /* Pods_UIViewControllerRotation_Example.framework */,
+				403C0D21FA3399DADCA9D52D2CE49106 /* UIViewControllerRotate.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		234D4D6632DB78672468D0A262175A61 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				41668F464C269404F1AC449319BF80A6 /* Pods-UIViewControllerRotation_Example-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2503ACD161934B5DDC98096C2317017B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -270,12 +198,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		869C800A537EE4BFF4C40CAB26DD0CFA /* Headers */ = {
+		77025BAA4054CC2E419C71B75B2978EC /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49FD93BF44D4D75E176CC5893EE79207 /* RSSwizzle-umbrella.h in Headers */,
-				847BF2DAF255A8A19CF0F3B3E8A6FF97 /* RSSwizzle.h in Headers */,
+				4BC3E9CCF7597F6D50B40CA81EFDB18F /* Pods-UIViewControllerRotation_Example-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,38 +227,19 @@
 			productReference = 403C0D21FA3399DADCA9D52D2CE49106 /* UIViewControllerRotate.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		1D8380E6EEBCE39C17D7992C2131202F /* RSSwizzle */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CA0354E188D47A4995B146A98578BB24 /* Build configuration list for PBXNativeTarget "RSSwizzle" */;
-			buildPhases = (
-				869C800A537EE4BFF4C40CAB26DD0CFA /* Headers */,
-				449E27D9B8819F9D8BECE559DBEB167A /* Sources */,
-				E10E4C58EE8C6A3A86B12E0768D83A26 /* Frameworks */,
-				07D7D6DC092477E51D986D0C28A99312 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = RSSwizzle;
-			productName = RSSwizzle;
-			productReference = 6FA95986B180E1F813F89A86F8DF3BD6 /* RSSwizzle.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		59BAB2BE174B832559895AD5CB102609 /* Pods-UIViewControllerRotation_Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B2A80F83D864975D259D3EF5A5100447 /* Build configuration list for PBXNativeTarget "Pods-UIViewControllerRotation_Example" */;
+			buildConfigurationList = CC3976862EE262D9C9A65FE26E567178 /* Build configuration list for PBXNativeTarget "Pods-UIViewControllerRotation_Example" */;
 			buildPhases = (
-				234D4D6632DB78672468D0A262175A61 /* Headers */,
-				2DCF0691C6AD6552ECC16EF7809756E2 /* Sources */,
-				3976A44CD68B5909B57F21AE8C3A0FAD /* Frameworks */,
-				F1B726DE3E62BF8D7E14ED46A7E85886 /* Resources */,
+				77025BAA4054CC2E419C71B75B2978EC /* Headers */,
+				3BF193C83419C448A51D85225845A282 /* Sources */,
+				7B6DD657EEA23E2CFD7585FD30BA3C2C /* Frameworks */,
+				7360CCD55FD5A2703CD70CDEFDD0BAEA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				1D7D8A23E45CC1C7367EFA495F7F32FC /* PBXTargetDependency */,
-				CD4E24362D5D8135CFBF4A17018AAAA0 /* PBXTargetDependency */,
+				B53F6C82FCBF54B998E7FAD1ED72E0B1 /* PBXTargetDependency */,
 			);
 			name = "Pods-UIViewControllerRotation_Example";
 			productName = "Pods-UIViewControllerRotation_Example";
@@ -355,19 +263,18 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 0DF614F5BB62969ACF0937BB08BECDD4 /* Products */;
+			productRefGroup = F71FBB522DE53F106DA5FB9662746C0B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				59BAB2BE174B832559895AD5CB102609 /* Pods-UIViewControllerRotation_Example */,
-				1D8380E6EEBCE39C17D7992C2131202F /* RSSwizzle */,
 				004175C5C4BF050A26566B963732CCEC /* UIViewControllerRotate */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		07D7D6DC092477E51D986D0C28A99312 /* Resources */ = {
+		7360CCD55FD5A2703CD70CDEFDD0BAEA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -381,30 +288,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F1B726DE3E62BF8D7E14ED46A7E85886 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2DCF0691C6AD6552ECC16EF7809756E2 /* Sources */ = {
+		3BF193C83419C448A51D85225845A282 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D153E8B152C4C49393E9B730EFA14D64 /* Pods-UIViewControllerRotation_Example-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		449E27D9B8819F9D8BECE559DBEB167A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CEFAA583E5B468276536F384530F9DF8 /* RSSwizzle-dummy.m in Sources */,
-				A04310BF599EA666C3079B7E50CFF681 /* RSSwizzle.m in Sources */,
+				4981128DA9586B3263C5E96066D21C2D /* Pods-UIViewControllerRotation_Example-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,17 +312,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1D7D8A23E45CC1C7367EFA495F7F32FC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RSSwizzle;
-			target = 1D8380E6EEBCE39C17D7992C2131202F /* RSSwizzle */;
-			targetProxy = DAF7FB8A0F740808926F5DA357237D20 /* PBXContainerItemProxy */;
-		};
-		CD4E24362D5D8135CFBF4A17018AAAA0 /* PBXTargetDependency */ = {
+		B53F6C82FCBF54B998E7FAD1ED72E0B1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = UIViewControllerRotate;
 			target = 004175C5C4BF050A26566B963732CCEC /* UIViewControllerRotate */;
-			targetProxy = E02AF06C08FD49FAE0D32BA7F86FCA69 /* PBXContainerItemProxy */;
+			targetProxy = 12809F6ED4024DE5806554AD8CA28471 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -531,9 +416,43 @@
 			};
 			name = Debug;
 		};
-		427B2FA896E91E63674D5F4F0B40B299 /* Debug */ = {
+		62D57C1869352BE865EAFCC07A851091 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8569A5D7368FF976E11F192B5FB1B24 /* RSSwizzle.xcconfig */;
+			baseConfigurationReference = 7583D0032CF0876122C6F474A4EC830F /* Pods-UIViewControllerRotation_Example.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-UIViewControllerRotation_Example/Pods-UIViewControllerRotation_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-UIViewControllerRotation_Example/Pods-UIViewControllerRotation_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		9A68A194358BEE8EB67F9E24E0F0B575 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFBCBFC5F914DC43700C0763378AD84A /* UIViewControllerRotate.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -544,25 +463,26 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/RSSwizzle/RSSwizzle-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/RSSwizzle/RSSwizzle-Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/UIViewControllerRotate/UIViewControllerRotate-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/UIViewControllerRotate/UIViewControllerRotate-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/RSSwizzle/RSSwizzle.modulemap";
-				PRODUCT_MODULE_NAME = RSSwizzle;
-				PRODUCT_NAME = RSSwizzle;
+				MODULEMAP_FILE = "Target Support Files/UIViewControllerRotate/UIViewControllerRotate.modulemap";
+				PRODUCT_MODULE_NAME = UIViewControllerRotate;
+				PRODUCT_NAME = UIViewControllerRotate;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
-		460CD12A84AAA20D869E1CD65AF454F0 /* Release */ = {
+		AC0247CD6E7C9C58CAB6E270A08A574E /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BC968625CD31F30978F9238C1923DA98 /* Pods-UIViewControllerRotation_Example.release.xcconfig */;
 			buildSettings = {
@@ -590,38 +510,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		9A68A194358BEE8EB67F9E24E0F0B575 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EFBCBFC5F914DC43700C0763378AD84A /* UIViewControllerRotate.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/UIViewControllerRotate/UIViewControllerRotate-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/UIViewControllerRotate/UIViewControllerRotate-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/UIViewControllerRotate/UIViewControllerRotate.modulemap";
-				PRODUCT_MODULE_NAME = UIViewControllerRotate;
-				PRODUCT_NAME = UIViewControllerRotate;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -689,72 +577,6 @@
 			};
 			name = Release;
 		};
-		E24679EF809C6323BC06BEDEFEBA80D4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7583D0032CF0876122C6F474A4EC830F /* Pods-UIViewControllerRotation_Example.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-UIViewControllerRotation_Example/Pods-UIViewControllerRotation_Example-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-UIViewControllerRotation_Example/Pods-UIViewControllerRotation_Example.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		EB4122ADFCDA6C0BFE645AA4A04FF36B /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8569A5D7368FF976E11F192B5FB1B24 /* RSSwizzle.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/RSSwizzle/RSSwizzle-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/RSSwizzle/RSSwizzle-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/RSSwizzle/RSSwizzle.modulemap";
-				PRODUCT_MODULE_NAME = RSSwizzle;
-				PRODUCT_NAME = RSSwizzle;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -776,20 +598,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B2A80F83D864975D259D3EF5A5100447 /* Build configuration list for PBXNativeTarget "Pods-UIViewControllerRotation_Example" */ = {
+		CC3976862EE262D9C9A65FE26E567178 /* Build configuration list for PBXNativeTarget "Pods-UIViewControllerRotation_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E24679EF809C6323BC06BEDEFEBA80D4 /* Debug */,
-				460CD12A84AAA20D869E1CD65AF454F0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CA0354E188D47A4995B146A98578BB24 /* Build configuration list for PBXNativeTarget "RSSwizzle" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				427B2FA896E91E63674D5F4F0B40B299 /* Debug */,
-				EB4122ADFCDA6C0BFE645AA4A04FF36B /* Release */,
+				62D57C1869352BE865EAFCC07A851091 /* Debug */,
+				AC0247CD6E7C9C58CAB6E270A08A574E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
