@@ -68,12 +68,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func presentNavi() {
-//        let navi = NavigationController(rootViewController: SubViewController())
-//        navi.modalPresentationStyle = .fullScreen
-//        present(navi, animated: true, completion: nil)
-        
-        present(SuperViewController(), animated: true, completion: nil)
-        
+        let vc = SuperViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
     }
     
     deinit {
