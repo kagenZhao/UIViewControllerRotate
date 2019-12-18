@@ -432,6 +432,16 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     } else {
         result = self;
     }
+    /**
+    修复视频全屏无法横屏
+    <UIViewController>
+    | <AVPlayerViewController>
+    + <AVFullScreenViewController>
+    */
+    if ([[result presentedViewController] isKindOfClass:NSClassFromString(@"AVFullScreenViewController")]) {
+        return [result presentedViewController];
+    }
+    
     result = result ?: self;
     return result;
 }
