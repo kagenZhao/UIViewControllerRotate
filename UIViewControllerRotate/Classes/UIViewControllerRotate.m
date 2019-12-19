@@ -9,7 +9,6 @@
 #import "KZRSSwizzle.h"
 #import <objc/runtime.h>
 @interface UIApplication (_Rotation)
-@property (nonatomic, assign) UIDeviceOrientation m_currentOrientation;
 + (BOOL)_UIApplicationRotationDisableMethidSwizzle;
 + (BOOL)_UIApplicationRotationDefaultShouldAutorotate;
 + (UIInterfaceOrientationMask)_UIApplicationRotationDefaultSupportedInterfaceOrientations;
@@ -397,7 +396,13 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 }
 
 - (UIInterfaceOrientation)rotation_fix_preferredInterfaceOrientationForPresentation {
-    UIInterfaceOrientation currentInterface = (UIInterfaceOrientation)[UIApplication sharedApplication].m_currentOrientation;
+    UIInterfaceOrientation currentInterface;
+    if (@available(iOS 13.0, *)) {
+        currentInterface = UIApplication.sharedApplication.windows.firstObject.windowScene.interfaceOrientation;
+    } else {
+        currentInterface = [UIApplication sharedApplication].statusBarOrientation;
+    }
+    
     if (self.shouldAutorotate) {
         if (self.supportedInterfaceOrientations & (1 << currentInterface)) {
             return currentInterface;
@@ -781,12 +786,9 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 @end
 
 @implementation UIApplication (Rotate)
-static void *rotation_currentOrientationKey;
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(deviceOrientationDidChange:) name: UIDeviceOrientationDidChangeNotification object: nil];
         if ([UIApplication _UIApplicationRotationDisableMethidSwizzle]) {
             return;
         }
@@ -804,19 +806,6 @@ static void *rotation_currentOrientationKey;
          mode:KZRSSwizzleModeAlways
          key:NULL];
     });
-}
-
-+ (void)deviceOrientationDidChange:(NSNotification *)notification {
-    [UIApplication sharedApplication].m_currentOrientation = [(UIDevice *)notification.object orientation];
-}
-
-- (void)setM_currentOrientation:(UIDeviceOrientation)m_currentOrientation {
-    objc_setAssociatedObject(self, &rotation_currentOrientationKey, @(m_currentOrientation), OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (UIDeviceOrientation)m_currentOrientation {
-    NSNumber *num = objc_getAssociatedObject(self, &rotation_currentOrientationKey);
-    return num ? num.integerValue : UIDeviceOrientationPortrait;
 }
 
 - (void)hook_setDelegate:(id<UIApplicationDelegate>)delegate {
