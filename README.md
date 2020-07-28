@@ -27,17 +27,13 @@ pod 'UIViewControllerRotation'
 - `preferredStatusBarStyle` <font color=#f00>默认返回</font> `UIStatusBarStyleDefault`
 - `prefersStatusBarHidden` <font color=#f00>默认返回</font> `false`
 
-如果想要修改默认值, 请让`UIApplication`遵循`UIApplicationOrientationDefault`协议, 如下:
+如果想要修改默认值, 请查看`UIViewControllerRotateDefault`遵循` 如下:
 ```
 OC:
-@interface UIApplication (Rotation) <UIApplicationOrientationDefault>
-// 需要自行实现其方法
-@end
+[UIViewControllerRotateDefault shared].defaultShouldAutorotate = NO;
 
 Swift:
-extension UIApplication: UIApplicationOrientationDefault {
-// 需要自行实现其方法
-}
+UIViewControllerRotateDefault.shared.defaultShouldAutorotate = false
 ```
 
 PS.如遇到某些类想要强制修改其方向, 需要用到 `UIViewControllerRotationModel` 进行设置
