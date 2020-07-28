@@ -17,9 +17,65 @@
 + (BOOL)_UIApplicationRotationDefaultPrefersStatusBarHidden;
 @end
 
-@interface UIViewController ()
+@interface UIViewController (Rotate)
 @property (nonatomic, assign) BOOL rotation_isDissmissing;
 @property (nonatomic, copy) void(^rotation_viewWillAppearBlock)(void);
+
+- (UIViewController *)rotation_findTopViewController;
+- (UIInterfaceOrientation)rotation_fix_preferredInterfaceOrientationForPresentation;
+- (void)rotation_forceToOrientation:(UIInterfaceOrientation)orientation;
+@end
+
+@interface UIViewControllerRotateDefault ()
+@end
+
+@implementation UIViewControllerRotateDefault
+
++ (instancetype)shared {
+    static dispatch_once_t onceToken;
+    static UIViewControllerRotateDefault * instance = nil;
+    dispatch_once(&onceToken, ^{
+        instance = [[UIViewControllerRotateDefault alloc] initDefaultValues];
+    });
+    return instance;
+}
+
+- (instancetype)init {
+    NSAssert(false, @"请使用默认初始化方法: - (instancetype)initWithClass:(NSString *)cls");
+    return nil;
+}
+
+- (instancetype) initDefaultValues {
+    self = [super init];
+    if (self) {
+        _disableMethidSwizzle = NO;
+        _defaultShouldAutorotate = YES;
+        _defaultSupportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
+        _defaultPreferredInterfaceOrientationForPresentation = UIInterfaceOrientationPortrait;
+        _defaultPreferredStatusBarStyle = UIStatusBarStyleDefault;
+        _defaultPrefersStatusBarHidden = NO;
+        
+        [self addObserver:self forKeyPath:@"defaultPrefersStatusBarHidden" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+        [self addObserver:self forKeyPath:@"defaultPreferredStatusBarStyle" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+        
+        [self addObserver:self forKeyPath:@"defaultShouldAutorotate" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+        [self addObserver:self forKeyPath:@"defaultSupportedInterfaceOrientations" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+        [self addObserver:self forKeyPath:@"defaultPreferredInterfaceOrientationForPresentation" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+    }
+    return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"defaultPrefersStatusBarHidden"] || [keyPath isEqualToString:@"defaultPreferredStatusBarStyle"]) {
+        UIViewController * topViewController = [[[UIApplication sharedApplication] keyWindow].rootViewController rotation_findTopViewController];
+        [topViewController setNeedsStatusBarAppearanceUpdate];
+    } else if ([keyPath isEqualToString:@"defaultShouldAutorotate"] || [keyPath isEqualToString:@"defaultSupportedInterfaceOrientations"] || [keyPath isEqualToString:@"defaultPreferredInterfaceOrientationForPresentation"]) {
+        UIViewController * topViewController = [[[UIApplication sharedApplication] keyWindow].rootViewController rotation_findTopViewController];
+        UIInterfaceOrientation ori = topViewController.rotation_fix_preferredInterfaceOrientationForPresentation;
+        [topViewController rotation_forceToOrientation:ori];
+    }
+}
+
 @end
 
 @interface InterfaceOrientationController : UIViewController
@@ -1054,50 +1110,26 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
 
 
 + (BOOL)_UIApplicationRotationDisableMethidSwizzle {
-    if ([self conformsToProtocol:@protocol(UIApplicationOrientationDefault)] && [self respondsToSelector:@selector(disableMethidSwizzle)]) {
-        return [(id<UIApplicationOrientationDefault>)self disableMethidSwizzle];
-    } else {
-        return NO;
-    }
+    return [UIViewControllerRotateDefault shared].disableMethidSwizzle;
 }
 
 + (BOOL)_UIApplicationRotationDefaultShouldAutorotate {
-    if ([self conformsToProtocol:@protocol(UIApplicationOrientationDefault)] && [self respondsToSelector:@selector(defaultShouldAutorotate)]) {
-        return [(id<UIApplicationOrientationDefault>)self defaultShouldAutorotate];
-    } else {
-        return YES;
-    }
+    return [UIViewControllerRotateDefault shared].defaultShouldAutorotate;
 }
 
 + (UIInterfaceOrientationMask)_UIApplicationRotationDefaultSupportedInterfaceOrientations {
-    if ([self conformsToProtocol:@protocol(UIApplicationOrientationDefault)] && [self respondsToSelector:@selector(defaultSupportedInterfaceOrientations)]) {
-        return [(id<UIApplicationOrientationDefault>)self defaultSupportedInterfaceOrientations];
-    } else {
-        return UIInterfaceOrientationMaskPortrait;
-    }
+    return [UIViewControllerRotateDefault shared].defaultSupportedInterfaceOrientations;
 }
 
 + (UIInterfaceOrientation)_UIApplicationRotationDefaultPreferredInterfaceOrientationForPresentation {
-    if ([self conformsToProtocol:@protocol(UIApplicationOrientationDefault)] && [self respondsToSelector:@selector(defaultPreferredInterfaceOrientationForPresentation)]) {
-        return [(id<UIApplicationOrientationDefault>)self defaultPreferredInterfaceOrientationForPresentation];
-    } else {
-        return UIInterfaceOrientationPortrait;
-    }
+    return [UIViewControllerRotateDefault shared].defaultPreferredInterfaceOrientationForPresentation;
 }
 
 + (UIStatusBarStyle)_UIApplicationRotationDefaultPreferredStatusBarStyle {
-    if ([self conformsToProtocol:@protocol(UIApplicationOrientationDefault)] && [self respondsToSelector:@selector(defaultPreferredStatusBarStyle)]) {
-        return [(id<UIApplicationOrientationDefault>)self defaultPreferredStatusBarStyle];
-    } else {
-        return UIStatusBarStyleDefault;
-    }
+    return [UIViewControllerRotateDefault shared].defaultPreferredStatusBarStyle;
 }
 
 + (BOOL)_UIApplicationRotationDefaultPrefersStatusBarHidden {
-    if ([self conformsToProtocol:@protocol(UIApplicationOrientationDefault)] && [self respondsToSelector:@selector(defaultPrefersStatusBarHidden)]) {
-        return [(id<UIApplicationOrientationDefault>)self defaultPrefersStatusBarHidden];
-    } else {
-        return NO;
-    }
+    return [UIViewControllerRotateDefault shared].defaultPrefersStatusBarHidden;
 }
 @end
