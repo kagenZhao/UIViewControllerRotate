@@ -16,6 +16,11 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		C06F931524CFF9DB000E698D /* Main2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C06F931424CFF9DB000E698D /* Main2.storyboard */; };
+		C06F931924CFFA92000E698D /* ViewController11.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06F931824CFFA92000E698D /* ViewController11.swift */; };
+		C06F931B24CFFAA4000E698D /* ViewController12.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06F931A24CFFAA4000E698D /* ViewController12.swift */; };
+		C06F931D24CFFB37000E698D /* ViewController21.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06F931C24CFFB37000E698D /* ViewController21.swift */; };
+		C06F931F24CFFB3C000E698D /* ViewController22.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06F931E24CFFB3C000E698D /* ViewController22.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +42,11 @@
 		8E80B828FE75A78B0B097A71 /* Pods-UIViewControllerRotation_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIViewControllerRotation_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-UIViewControllerRotation_Example/Pods-UIViewControllerRotation_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9638034271F94B978A7C4F0E /* Pods-UIViewControllerRotation_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIViewControllerRotation_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UIViewControllerRotation_Example/Pods-UIViewControllerRotation_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		AB7FBFFD0CCB90A572F32CB6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		C06F931424CFF9DB000E698D /* Main2.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main2.storyboard; sourceTree = "<group>"; };
+		C06F931824CFFA92000E698D /* ViewController11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController11.swift; sourceTree = "<group>"; };
+		C06F931A24CFFAA4000E698D /* ViewController12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController12.swift; sourceTree = "<group>"; };
+		C06F931C24CFFB37000E698D /* ViewController21.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController21.swift; sourceTree = "<group>"; };
+		C06F931E24CFFB3C000E698D /* ViewController22.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController22.swift; sourceTree = "<group>"; };
 		C1533D8EA0037FB951A434B1 /* Pods-UIViewControllerRotation_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIViewControllerRotation_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UIViewControllerRotation_Tests/Pods-UIViewControllerRotation_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D0CCB7F4E2A73028302D7DB7 /* Pods_UIViewControllerRotation_Example_OC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIViewControllerRotation_Example_OC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE257BBF66BF7CA2DD40EFE /* Pods-UIViewControllerRotation_Example_OC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIViewControllerRotation_Example_OC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UIViewControllerRotation_Example_OC/Pods-UIViewControllerRotation_Example_OC.debug.xcconfig"; sourceTree = "<group>"; };
@@ -89,11 +99,11 @@
 		607FACD21AFB9204008FA782 /* Example for UIViewControllerRotation */ = {
 			isa = PBXGroup;
 			children = (
+				C06F931724CFFA68000E698D /* StatusBar */,
+				C06F931624CFFA53000E698D /* Rotation */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				046131E0217DC376005E3FF8 /* ViewController1.swift */,
-				046131E2217DC384005E3FF8 /* ViewController2.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				C06F931424CFF9DB000E698D /* Main2.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -128,6 +138,27 @@
 				D0CCB7F4E2A73028302D7DB7 /* Pods_UIViewControllerRotation_Example_OC.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C06F931624CFFA53000E698D /* Rotation */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				046131E0217DC376005E3FF8 /* ViewController1.swift */,
+				046131E2217DC384005E3FF8 /* ViewController2.swift */,
+			);
+			name = Rotation;
+			sourceTree = "<group>";
+		};
+		C06F931724CFFA68000E698D /* StatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				C06F931824CFFA92000E698D /* ViewController11.swift */,
+				C06F931A24CFFAA4000E698D /* ViewController12.swift */,
+				C06F931C24CFFB37000E698D /* ViewController21.swift */,
+				C06F931E24CFFB3C000E698D /* ViewController22.swift */,
+			);
+			name = StatusBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,6 +227,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				0453A1A9217EE09F008A7A83 /* UIViewControllerRotate.podspec in Resources */,
+				C06F931524CFF9DB000E698D /* Main2.storyboard in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,9 +282,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C06F931924CFFA92000E698D /* ViewController11.swift in Sources */,
+				C06F931B24CFFAA4000E698D /* ViewController12.swift in Sources */,
 				046131E1217DC376005E3FF8 /* ViewController1.swift in Sources */,
 				046131E3217DC384005E3FF8 /* ViewController2.swift in Sources */,
+				C06F931F24CFFB3C000E698D /* ViewController22.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				C06F931D24CFFB37000E698D /* ViewController21.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,7 +429,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3GC8WR7B3G;
 				INFOPLIST_FILE = UIViewControllerRotation/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.kagenz.UIViewControllerRotation-Example";
@@ -412,7 +448,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3GC8WR7B3G;
 				INFOPLIST_FILE = UIViewControllerRotation/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.kagenz.UIViewControllerRotation-Example";
