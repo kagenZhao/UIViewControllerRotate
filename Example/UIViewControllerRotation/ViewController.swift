@@ -50,6 +50,17 @@ class ViewController: UIViewController {
         
     }
     
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
     
     @IBAction func gobackRoot() {
 //        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
