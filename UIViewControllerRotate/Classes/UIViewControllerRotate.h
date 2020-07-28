@@ -9,25 +9,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- UIApplicationOrientationDefault 协议 需要自行实现其方法
- OC:
- interface UIApplication (Rotation) <UIApplicationOrientationDefault>
- ...
- end
- 
- Swift:
- extension UIApplication: UIApplicationOrientationDefault {
- ...
- }
+ 可设置默认值
  */
-@protocol UIApplicationOrientationDefault <NSObject>
-@optional
-@property (class, nonatomic, assign, readonly) BOOL disableMethidSwizzle; // default NO. 禁止方法交换可能会导致横竖屏异常, 此方法只用来debug, 如果冲突请删除本库, 并选择其他横屏方案.
-@property (class, nonatomic, assign, readonly) BOOL defaultShouldAutorotate; // default YES
-@property (class, nonatomic, assign, readonly) UIInterfaceOrientationMask defaultSupportedInterfaceOrientations; // default UIInterfaceOrientationMaskPortrait
-@property (class, nonatomic, assign, readonly) UIInterfaceOrientation defaultPreferredInterfaceOrientationForPresentation; // default UIInterfaceOrientationPortrait
-@property (class, nonatomic, assign, readonly) UIStatusBarStyle defaultPreferredStatusBarStyle; // default UIStatusBarStyleDefault
-@property (class, nonatomic, assign, readonly) BOOL defaultPrefersStatusBarHidden; // default NO
+@interface UIViewControllerRotateDefault : NSObject
+@property (nonatomic, assign) BOOL disableMethidSwizzle; // default NO. 禁止方法交换可能会导致横竖屏异常, 此方法只用来debug, 如果冲突请删除本库, 并选择其他横屏方案.
+@property (nonatomic, assign) BOOL defaultShouldAutorotate; // default YES
+@property (nonatomic, assign) UIInterfaceOrientationMask defaultSupportedInterfaceOrientations; // default UIInterfaceOrientationMaskPortrait
+@property (nonatomic, assign) UIInterfaceOrientation defaultPreferredInterfaceOrientationForPresentation; // default UIInterfaceOrientationPortrait
+@property (nonatomic, assign) UIStatusBarStyle defaultPreferredStatusBarStyle; // default UIStatusBarStyleDefault
+@property (nonatomic, assign) BOOL defaultPrefersStatusBarHidden; // default NO
+
++ (instancetype)shared;
+
 @end
 
 
