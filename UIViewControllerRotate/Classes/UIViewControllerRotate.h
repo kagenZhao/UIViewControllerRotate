@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
  可设置默认值
  */
 @interface UIViewControllerRotateDefault : NSObject
-@property (nonatomic, assign) BOOL disableMethidSwizzle; // default NO. 禁止方法交换可能会导致横竖屏异常, 此方法只用来debug, 如果冲突请删除本库, 并选择其他横屏方案.
 @property (nonatomic, assign) BOOL defaultShouldAutorotate; // default YES
 @property (nonatomic, assign) UIInterfaceOrientationMask defaultSupportedInterfaceOrientations; // default UIInterfaceOrientationMaskPortrait
 @property (nonatomic, assign) UIInterfaceOrientation defaultPreferredInterfaceOrientationForPresentation; // default UIInterfaceOrientationPortrait
@@ -67,7 +66,6 @@ static inline NSArray <UIViewControllerRotationModel *> * __UIViewControllerDefa
     @"AVFullScreenViewController",
     @"AVFullScreenPlaybackControlsViewController",
     @"WebFullScreenVideoRootViewController",
-    @"UISnapshotModalViewController",
     ];
     NSMutableArray <UIViewControllerRotationModel *> * result = [NSMutableArray arrayWithCapacity:classNames.count];
     [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -77,6 +75,18 @@ static inline NSArray <UIViewControllerRotationModel *> * __UIViewControllerDefa
                             configShouldAutorotate:true]
                            configSupportedInterfaceOrientations:UIInterfaceOrientationMaskAll]];
     }];
+    
+    NSArray <NSString *>*otherClassNames = @[
+        @"UISnapshotModalViewController" // 设置为true 会崩溃
+    ];
+    [otherClassNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
+        [result addObject:[[[[UIViewControllerRotationModel alloc]
+                             initWithClass:className
+                             containsSubClass:YES]
+                            configShouldAutorotate:false]
+                           configSupportedInterfaceOrientations:UIInterfaceOrientationMaskPortrait]];
+    }];
+    
     return result;
 }
 
