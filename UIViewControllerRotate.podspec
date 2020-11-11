@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'UIViewControllerRotate'
-  s.version          = '2.1.4'
+  s.version          = '3.0.0'
   s.summary          = '非耦合性的使界面支持旋转'
 
   s.description      = <<-DESC
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.author           = { 'kagenZhao' => 'kagen@kagenz.com' }
   s.source           = { :git => 'https://github.com/kagenZhao/UIViewControllerRotate.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
   s.source_files = 'UIViewControllerRotate/Classes/**/*'
   s.public_header_files = 'UIViewControllerRotate/Classes/**/*.h'
 end

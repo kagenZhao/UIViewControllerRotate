@@ -66,6 +66,7 @@ static inline NSArray <UIViewControllerRotationModel *> * __UIViewControllerDefa
     @"AVFullScreenViewController",
     @"AVFullScreenPlaybackControlsViewController",
     @"WebFullScreenVideoRootViewController",
+    @"UISnapshotModalViewController"
     ];
     NSMutableArray <UIViewControllerRotationModel *> * result = [NSMutableArray arrayWithCapacity:classNames.count];
     [classNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -75,18 +76,6 @@ static inline NSArray <UIViewControllerRotationModel *> * __UIViewControllerDefa
                             configShouldAutorotate:true]
                            configSupportedInterfaceOrientations:UIInterfaceOrientationMaskAll]];
     }];
-    
-    NSArray <NSString *>*otherClassNames = @[
-        @"UISnapshotModalViewController" // 设置为true 会崩溃
-    ];
-    [otherClassNames enumerateObjectsUsingBlock:^(NSString * _Nonnull className, NSUInteger idx, BOOL * _Nonnull stop) {
-        [result addObject:[[[[UIViewControllerRotationModel alloc]
-                             initWithClass:className
-                             containsSubClass:YES]
-                            configShouldAutorotate:false]
-                           configSupportedInterfaceOrientations:UIInterfaceOrientationMaskPortrait]];
-    }];
-    
     return result;
 }
 
