@@ -340,6 +340,8 @@ static void *rotation_viewWillAppearBlockKey;
         [self rotation_hook_preferredInterfaceOrientationForPresentation];
         [self rotation_hook_preferredStatusBarStyle];
         [self rotation_hook_prefersStatusBarHidden];
+        [self rotation_hook_childViewControllerForStatusBarStyle];
+        [self rotation_hook_childViewControllerForStatusBarHidden];
         
         [self rotation_hook_viewWillAppear];
     });
@@ -510,6 +512,35 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      mode:KZRSSwizzleModeAlways
      key:NULL];
 }
+
++ (void)rotation_hook_childViewControllerForStatusBarStyle {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(childViewControllerForStatusBarStyle)
+     inClass:UIViewController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         return ^UIViewController* (__unsafe_unretained UIViewController * self) {
+             UIViewController *topVC = self.rotation_findTopViewController;
+             return topVC == self ? nil : topVC;
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
++ (void)rotation_hook_childViewControllerForStatusBarHidden {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(childViewControllerForStatusBarHidden)
+     inClass:UIViewController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         return ^UIViewController* (__unsafe_unretained UIViewController * self) {
+             UIViewController *topVC = self.rotation_findTopViewController;
+             return topVC == self ? nil : topVC;
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
 
 - (UIInterfaceOrientation)rotation_fix_preferredInterfaceOrientationForPresentation {
     UIInterfaceOrientation currentInterface;
