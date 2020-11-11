@@ -347,90 +347,6 @@ static void *rotation_viewWillAppearBlockKey;
     });
 }
 
-+ (void)rotation_hook_viewWillAppear {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(viewWillAppear:)
-     inClass:UIViewController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         void (*originalImplementation_)(__unsafe_unretained UIViewController *, SEL, BOOL animated);
-         SEL selector_ = @selector(viewWillAppear:);
-         return ^void (__unsafe_unretained UIViewController * self, BOOL animated) {
-             KZRSSWCallOriginal(animated);
-             if ([self rotation_viewWillAppearBlock]) {
-                 [self rotation_viewWillAppearBlock]();
-             }
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
-}
-
-/*
- 为什么每次设置orientation的时候都先设置为UnKnown？
- 因为在视图B回到视图A时，如果当时设备方向已经是Portrait，再设置成Portrait会不起作用(直接return)。
- */
-- (void)rotation_forceToDeviceOrientation:(UIDeviceOrientation)orientation {
-    [[UIDevice currentDevice] setValue:@(UIDeviceOrientationUnknown) forKey:@"orientation"];
-    [[UIDevice currentDevice] setValue:@(orientation) forKey:@"orientation"];
-}
-
-- (void)rotation_forceToOrientation:(UIInterfaceOrientation)orientation {
-    [self rotation_forceToDeviceOrientation:(UIDeviceOrientation)orientation];
-}
-
-// 有一些 系统内部类, 无法重写, 这里就给出一个列表来进行修改
-static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotation_preferenceRotateInternalClassModel;
-+ (NSMutableDictionary <NSString *,UIViewControllerRotationModel *>*)rotation_preferenceRotateInternalClassModel {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _rotation_preferenceRotateInternalClassModel = [NSMutableDictionary dictionary];
-        [__UIViewControllerDefaultRotationClasses() enumerateObjectsUsingBlock:^(UIViewControllerRotationModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [_rotation_preferenceRotateInternalClassModel setObject:obj forKey:obj.cls];
-        }];
-    });
-    return _rotation_preferenceRotateInternalClassModel;
-}
-
-+ (void)registerClasses:(NSArray<UIViewControllerRotationModel *> *)models {
-    for (UIViewControllerRotationModel *model in models) {
-        if (NSClassFromString(model.cls)) {
-            [self.rotation_preferenceRotateInternalClassModel setObject:model forKey:model.cls];
-        }
-    }
-}
-
-+ (NSArray <UIViewControllerRotationModel *> *)registedClasses {
-    return [[NSArray alloc] initWithArray:self.rotation_preferenceRotateInternalClassModel.allValues copyItems:true];
-}
-
-+ (void)removeClasses:(NSArray<NSString *> *)classes {
-    [self.rotation_preferenceRotateInternalClassModel removeObjectsForKeys:classes];
-}
-
-- (NSMutableDictionary <NSString *,UIViewControllerRotationModel *>*)rotation_preferenceRotateInternalClassModel {
-    return self.class.rotation_preferenceRotateInternalClassModel;
-}
-
-- (nullable UIViewControllerRotationModel *)rotation_getPreferenceInternalClassModel:(Class)class {
-    NSString *className = NSStringFromClass(class);
-    __block UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[className];
-    if (preference) { return preference; }
-    [self.rotation_preferenceRotateInternalClassModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewControllerRotationModel * _Nonnull obj, BOOL * _Nonnull stop) {
-        if (obj.containsSubClass) {
-            if ([class isKindOfClass:obj.getClass]) {
-                preference = obj;
-                *stop = true;
-            }
-        } else {
-            if ([class isMemberOfClass:obj.getClass]) {
-                preference = obj;
-                *stop = true;
-            }
-        }
-    }];
-    return preference;
-}
-
 + (void)rotation_hook_shouldAutorotate {
     [KZRSSwizzle
      swizzleInstanceMethod:@selector(shouldAutorotate)
@@ -522,6 +438,90 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      }
      mode:KZRSSwizzleModeAlways
      key:NULL];
+}
+
++ (void)rotation_hook_viewWillAppear {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(viewWillAppear:)
+     inClass:UIViewController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         void (*originalImplementation_)(__unsafe_unretained UIViewController *, SEL, BOOL);
+         SEL selector_ = @selector(viewWillAppear:);
+         return ^void (__unsafe_unretained UIViewController * self, BOOL animated) {
+             KZRSSWCallOriginal(animated);
+             if ([self rotation_viewWillAppearBlock]) {
+                 [self rotation_viewWillAppearBlock]();
+             }
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
+// 有一些 系统内部类, 无法重写, 这里就给出一个列表来进行修改
+static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotation_preferenceRotateInternalClassModel;
++ (NSMutableDictionary <NSString *,UIViewControllerRotationModel *>*)rotation_preferenceRotateInternalClassModel {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _rotation_preferenceRotateInternalClassModel = [NSMutableDictionary dictionary];
+        [__UIViewControllerDefaultRotationClasses() enumerateObjectsUsingBlock:^(UIViewControllerRotationModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [_rotation_preferenceRotateInternalClassModel setObject:obj forKey:obj.cls];
+        }];
+    });
+    return _rotation_preferenceRotateInternalClassModel;
+}
+
++ (void)registerClasses:(NSArray<UIViewControllerRotationModel *> *)models {
+    for (UIViewControllerRotationModel *model in models) {
+        if (NSClassFromString(model.cls)) {
+            [self.rotation_preferenceRotateInternalClassModel setObject:model forKey:model.cls];
+        }
+    }
+}
+
++ (NSArray <UIViewControllerRotationModel *> *)registedClasses {
+    return [[NSArray alloc] initWithArray:self.rotation_preferenceRotateInternalClassModel.allValues copyItems:true];
+}
+
++ (void)removeClasses:(NSArray<NSString *> *)classes {
+    [self.rotation_preferenceRotateInternalClassModel removeObjectsForKeys:classes];
+}
+
+- (NSMutableDictionary <NSString *,UIViewControllerRotationModel *>*)rotation_preferenceRotateInternalClassModel {
+    return self.class.rotation_preferenceRotateInternalClassModel;
+}
+
+- (nullable UIViewControllerRotationModel *)rotation_getPreferenceInternalClassModel:(Class)class {
+    NSString *className = NSStringFromClass(class);
+    __block UIViewControllerRotationModel *preference = self.rotation_preferenceRotateInternalClassModel[className];
+    if (preference) { return preference; }
+    [self.rotation_preferenceRotateInternalClassModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewControllerRotationModel * _Nonnull obj, BOOL * _Nonnull stop) {
+        if (obj.containsSubClass) {
+            if ([class isKindOfClass:obj.getClass]) {
+                preference = obj;
+                *stop = true;
+            }
+        } else {
+            if ([class isMemberOfClass:obj.getClass]) {
+                preference = obj;
+                *stop = true;
+            }
+        }
+    }];
+    return preference;
+}
+
+/*
+ 为什么每次设置orientation的时候都先设置为UnKnown？
+ 因为在视图B回到视图A时，如果当时设备方向已经是Portrait，再设置成Portrait会不起作用(直接return)。
+ */
+- (void)rotation_forceToDeviceOrientation:(UIDeviceOrientation)orientation {
+    [[UIDevice currentDevice] setValue:@(UIDeviceOrientationUnknown) forKey:@"orientation"];
+    [[UIDevice currentDevice] setValue:@(orientation) forKey:@"orientation"];
+}
+
+- (void)rotation_forceToOrientation:(UIInterfaceOrientation)orientation {
+    [self rotation_forceToDeviceOrientation:(UIDeviceOrientation)orientation];
 }
 
 - (BOOL)rotation_shouldAutorotate {
@@ -644,6 +644,99 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
         [self rotation_hook_popToController];
         [self rotation_hook_popToRoot];
     });
+}
+
++ (void)rotation_hook_shouldAutorotate {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(shouldAutorotate)
+     inClass:UINavigationController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         return ^BOOL (__unsafe_unretained UINavigationController *self) {
+             return [self rotation_shouldAutorotate];
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
++ (void)rotation_hook_supportedInterfaceOrientations {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(supportedInterfaceOrientations)
+     inClass:UINavigationController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         return ^UIInterfaceOrientationMask (__unsafe_unretained UINavigationController * self) {
+             return [self rotation_supportedInterfaceOrientations];
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
+/// 此方法只针对 present 出来的controller 管用, 在push 的时候不起作用
+/// 所以在下边UINavigationController 处 做了处理
++ (void)rotation_hook_preferredInterfaceOrientationForPresentation {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(preferredInterfaceOrientationForPresentation)
+     inClass:UINavigationController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         return ^UIInterfaceOrientation (__unsafe_unretained UINavigationController * self) {
+             return [self rotation_preferredInterfaceOrientationForPresentation];
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
++ (void)rotation_hook_preferredStatusBarStyle {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(preferredStatusBarStyle)
+     inClass:UINavigationController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         return ^UIStatusBarStyle (__unsafe_unretained UINavigationController * self) {
+             return [self rotation_preferredStatusBarStyle];
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
++ (void)rotation_hook_prefersStatusBarHidden {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(prefersStatusBarHidden)
+     inClass:UINavigationController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         return ^BOOL (__unsafe_unretained UINavigationController * self) {
+             return [self rotation_prefersStatusBarHidden];
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
++ (void)rotation_hook_childViewControllerForStatusBarStyle {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(childViewControllerForStatusBarStyle)
+     inClass:UINavigationController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         return ^UIViewController* (__unsafe_unretained UINavigationController * self) {
+             return [self rotation_childViewControllerForStatusBarStyle];
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
++ (void)rotation_hook_childViewControllerForStatusBarHidden {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(childViewControllerForStatusBarHidden)
+     inClass:UINavigationController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         return ^UIViewController* (__unsafe_unretained UINavigationController * self) {
+             return [self rotation_childViewControllerForStatusBarHidden];
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
 }
 
 + (void)rotation_hook_push {
@@ -787,6 +880,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      key:NULL];
 }
 
+
 - (void)rotation_setupPrientationWithFromVC:(UIViewController *)fromViewController toVC:(UIViewController *)toViewController {
     if ([toViewController supportedInterfaceOrientations] & (1 << fromViewController.rotation_fix_preferredInterfaceOrientationForPresentation)) {
         toViewController.rotation_viewWillAppearBlock = nil;
@@ -807,99 +901,6 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
     }
 }
 
-+ (void)rotation_hook_shouldAutorotate {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(shouldAutorotate)
-     inClass:UINavigationController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         return ^BOOL (__unsafe_unretained UINavigationController *self) {
-             return [self rotation_shouldAutorotate];
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
-}
-
-+ (void)rotation_hook_supportedInterfaceOrientations {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(supportedInterfaceOrientations)
-     inClass:UINavigationController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         return ^UIInterfaceOrientationMask (__unsafe_unretained UINavigationController * self) {
-             return [self rotation_supportedInterfaceOrientations];
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
-}
-
-/// 此方法只针对 present 出来的controller 管用, 在push 的时候不起作用
-/// 所以在下边UINavigationController 处 做了处理
-+ (void)rotation_hook_preferredInterfaceOrientationForPresentation {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(preferredInterfaceOrientationForPresentation)
-     inClass:UINavigationController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         return ^UIInterfaceOrientation (__unsafe_unretained UINavigationController * self) {
-             return [self rotation_preferredInterfaceOrientationForPresentation];
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
-}
-
-+ (void)rotation_hook_preferredStatusBarStyle {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(preferredStatusBarStyle)
-     inClass:UINavigationController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         return ^UIStatusBarStyle (__unsafe_unretained UINavigationController * self) {
-             return [self rotation_preferredStatusBarStyle];
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
-}
-
-+ (void)rotation_hook_prefersStatusBarHidden {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(prefersStatusBarHidden)
-     inClass:UINavigationController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         return ^BOOL (__unsafe_unretained UINavigationController * self) {
-             return [self rotation_prefersStatusBarHidden];
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
-}
-
-+ (void)rotation_hook_childViewControllerForStatusBarStyle {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(childViewControllerForStatusBarStyle)
-     inClass:UINavigationController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         return ^UIViewController* (__unsafe_unretained UINavigationController * self) {
-             return [self rotation_childViewControllerForStatusBarStyle];
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
-}
-
-+ (void)rotation_hook_childViewControllerForStatusBarHidden {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(childViewControllerForStatusBarHidden)
-     inClass:UINavigationController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         return ^UIViewController* (__unsafe_unretained UINavigationController * self) {
-             return [self rotation_childViewControllerForStatusBarHidden];
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
-}
-
 @end
 
 @implementation UITabBarController (Rotate)
@@ -917,50 +918,6 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
         [self rotation_hook_setSelectedIndex];
         [self rotation_hook_setSelectedViewController];
     });
-}
-
-+ (void)rotation_hook_setSelectedIndex {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(setSelectedIndex:)
-     inClass:UITabBarController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         void(*originalImplementation_)(__unsafe_unretained UITabBarController *, SEL, NSUInteger);
-         SEL selector_ = @selector(setSelectedIndex:);
-         return ^void (__unsafe_unretained UITabBarController * self, NSUInteger selectedIndex) {
-             UIViewController *fromVC = [self selectedViewController];
-             KZRSSWCallOriginal(selectedIndex);
-             UIViewController *toVc = [self selectedViewController];
-             if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-                 return;
-             }
-             UIInterfaceOrientation ori = toVc.rotation_fix_preferredInterfaceOrientationForPresentation;
-             [self rotation_forceToOrientation:ori];
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
-}
-
-+ (void)rotation_hook_setSelectedViewController {
-    [KZRSSwizzle
-     swizzleInstanceMethod:@selector(setSelectedViewController:)
-     inClass:UITabBarController.class
-     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-         void(*originalImplementation_)(__unsafe_unretained UITabBarController *, SEL, __kindof UITabBarController *);
-         SEL selector_ = @selector(setSelectedViewController:);
-         return ^void (__unsafe_unretained UITabBarController * self, __kindof UITabBarController *selectedViewController) {
-             UIViewController *fromVC = [self selectedViewController];
-             KZRSSWCallOriginal(selectedViewController);
-             UIViewController *toVc = [self selectedViewController];
-             if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
-                 return;
-             }
-             UIInterfaceOrientation ori = toVc.rotation_fix_preferredInterfaceOrientationForPresentation;
-             [self rotation_forceToOrientation:ori];
-         };
-     }
-     mode:KZRSSwizzleModeAlways
-     key:NULL];
 }
 
 + (void)rotation_hook_shouldAutorotate {
@@ -1055,6 +1012,51 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      mode:KZRSSwizzleModeAlways
      key:NULL];
 }
+
++ (void)rotation_hook_setSelectedIndex {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(setSelectedIndex:)
+     inClass:UITabBarController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         void(*originalImplementation_)(__unsafe_unretained UITabBarController *, SEL, NSUInteger);
+         SEL selector_ = @selector(setSelectedIndex:);
+         return ^void (__unsafe_unretained UITabBarController * self, NSUInteger selectedIndex) {
+             UIViewController *fromVC = [self selectedViewController];
+             KZRSSWCallOriginal(selectedIndex);
+             UIViewController *toVc = [self selectedViewController];
+             if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+                 return;
+             }
+             UIInterfaceOrientation ori = toVc.rotation_fix_preferredInterfaceOrientationForPresentation;
+             [self rotation_forceToOrientation:ori];
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
++ (void)rotation_hook_setSelectedViewController {
+    [KZRSSwizzle
+     swizzleInstanceMethod:@selector(setSelectedViewController:)
+     inClass:UITabBarController.class
+     newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
+         void(*originalImplementation_)(__unsafe_unretained UITabBarController *, SEL, __kindof UITabBarController *);
+         SEL selector_ = @selector(setSelectedViewController:);
+         return ^void (__unsafe_unretained UITabBarController * self, __kindof UITabBarController *selectedViewController) {
+             UIViewController *fromVC = [self selectedViewController];
+             KZRSSWCallOriginal(selectedViewController);
+             UIViewController *toVc = [self selectedViewController];
+             if ([toVc supportedInterfaceOrientations] & (1 << fromVC.rotation_fix_preferredInterfaceOrientationForPresentation)) {
+                 return;
+             }
+             UIInterfaceOrientation ori = toVc.rotation_fix_preferredInterfaceOrientationForPresentation;
+             [self rotation_forceToOrientation:ori];
+         };
+     }
+     mode:KZRSSwizzleModeAlways
+     key:NULL];
+}
+
 @end
 
 @implementation UIApplication (Rotate)
@@ -1065,7 +1067,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
          swizzleInstanceMethod:@selector(setDelegate:)
          inClass:UIApplication.class
          newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
-             void(*originalImplementation_)(__unsafe_unretained UIApplication *, SEL, id<UIApplicationDelegate> delegate);
+             void(*originalImplementation_)(__unsafe_unretained UIApplication *, SEL, id<UIApplicationDelegate>);
              SEL selector_ = @selector(setDelegate:);
              return ^void (__unsafe_unretained UIApplication * self, id<UIApplicationDelegate> delegate) {
                  [self hook_setDelegate:delegate];

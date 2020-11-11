@@ -8,40 +8,6 @@
 
 import UIKit
 
-class NavigationController: UINavigationController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("NavigationController 创建了")
-    }
-    
-    deinit {
-        print("NavigationController 销毁了")
-    }
-}
-
-
-class SubViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("SubViewController 创建了")
-        view.backgroundColor = .white
-        let btn = UIButton(type: .system)
-        btn.frame = CGRect(x: 10, y: 200, width: 100, height: 100)
-        btn.backgroundColor = .red
-        btn.addTarget(self, action: #selector(back), for: .touchUpInside)
-        view.addSubview(btn)
-    }
-    
-    @objc func back() {
-        self.navigationController?.dismiss(animated: true, completion: nil)
-    }
-    
-    deinit {
-        print("SubViewController 销毁了")
-    }
-}
-
-
 
 class ViewController: UIViewController {
 
@@ -61,16 +27,41 @@ class ViewController: UIViewController {
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .portrait
     }
-    
-    @IBAction func gobackRoot() {
+
+    @IBAction func popRoot() {
 //        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @IBAction func popself() {
+//        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func dismissself() {
+//        navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
+        (tabBarController ?? navigationController ?? self).dismiss(animated: true, completion: nil)
     }
     
     @IBAction func presentNavi() {
         let vc = SuperViewController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func showAlert() {
+        let alert = UIAlertController(title: "title", message: "message", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "好", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func testStatusBar() {
+        if let vc = UIStoryboard.init(name: "Main2", bundle: Bundle.main).instantiateInitialViewController() {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     deinit {
@@ -83,13 +74,30 @@ class ViewController: UIViewController {
 class SuperViewController: UIViewController {
     
     override func viewDidLoad() {
-           super.viewDidLoad()
-        view.backgroundColor = .red
-           
-       }
+        super.viewDidLoad()
+        view.backgroundColor = .purple
+        
+        let button = UIButton(type: .system)
+        button.setTitle("dismiss", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(dismissController), for: .touchUpInside)
+        button.frame = CGRect(x: 50, y: 100, width: 100, height: 50)
+        self.view.addSubview(button)
+    }
     
     override var shouldAutorotate: Bool {
-        return presentingViewController!.shouldAutorotate
+//        return presentingViewController!.shouldAutorotate
+        return true
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//        return presentingViewController!.supportedInterfaceOrientations
+        return .landscapeLeft
+    }
+    
+    @objc func dismissController() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
