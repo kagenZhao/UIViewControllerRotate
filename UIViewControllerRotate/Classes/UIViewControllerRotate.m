@@ -437,10 +437,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UIViewController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^BOOL (__unsafe_unretained UIViewController *self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.shouldAutorotate.boolValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultShouldAutorotate] : topVC.shouldAutorotate;
+             return [self rotation_shouldAutorotate];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -453,10 +450,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UIViewController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIInterfaceOrientationMask (__unsafe_unretained UIViewController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.supportedInterfaceOrientations.boolValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultSupportedInterfaceOrientations] : topVC.supportedInterfaceOrientations;
+             return [self rotation_supportedInterfaceOrientations];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -471,10 +465,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UIViewController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIInterfaceOrientation (__unsafe_unretained UIViewController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.preferredInterfaceOrientationForPresentation.integerValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultPreferredInterfaceOrientationForPresentation] : topVC.preferredInterfaceOrientationForPresentation;
+             return [self rotation_preferredInterfaceOrientationForPresentation];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -487,10 +478,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UIViewController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIStatusBarStyle (__unsafe_unretained UIViewController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.preferredStatusBarStyle.integerValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultPreferredStatusBarStyle] : topVC.preferredStatusBarStyle;
+             return [self rotation_preferredStatusBarStyle];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -503,10 +491,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UIViewController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^BOOL (__unsafe_unretained UIViewController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.prefersStatusBarHidden.boolValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultPrefersStatusBarHidden] : topVC.prefersStatusBarHidden;
+             return [self rotation_prefersStatusBarHidden];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -519,8 +504,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UIViewController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIViewController* (__unsafe_unretained UIViewController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             return topVC == self ? nil : topVC;
+             return [self rotation_childViewControllerForStatusBarStyle];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -533,14 +517,59 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UIViewController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIViewController* (__unsafe_unretained UIViewController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             return topVC == self ? nil : topVC;
+             return [self rotation_childViewControllerForStatusBarHidden];
          };
      }
      mode:KZRSSwizzleModeAlways
      key:NULL];
 }
 
+- (BOOL)rotation_shouldAutorotate {
+    UIViewController *topVC = self.rotation_findTopViewController;
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
+    if (preference) return preference.shouldAutorotate.boolValue;
+    return topVC == self ? [UIApplication _UIApplicationRotationDefaultShouldAutorotate] : topVC.shouldAutorotate;
+}
+
+- (UIInterfaceOrientationMask)rotation_supportedInterfaceOrientations {
+    UIViewController *topVC = self.rotation_findTopViewController;
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
+    if (preference) return preference.supportedInterfaceOrientations.unsignedIntegerValue;
+    return topVC == self ? [UIApplication _UIApplicationRotationDefaultSupportedInterfaceOrientations] : topVC.supportedInterfaceOrientations;
+}
+
+/// 此方法只针对 present 出来的controller 管用, 在push 的时候不起作用
+/// 所以在下边UINavigationController 处 做了处理
+- (UIInterfaceOrientation)rotation_preferredInterfaceOrientationForPresentation {
+    UIViewController *topVC = self.rotation_findTopViewController;
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
+    if (preference) return preference.preferredInterfaceOrientationForPresentation.integerValue;
+    return topVC == self ? [UIApplication _UIApplicationRotationDefaultPreferredInterfaceOrientationForPresentation] : topVC.preferredInterfaceOrientationForPresentation;
+}
+
+- (UIStatusBarStyle)rotation_preferredStatusBarStyle {
+    UIViewController *topVC = self.rotation_findTopViewController;
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
+    if (preference) return preference.preferredStatusBarStyle.integerValue;
+    return topVC == self ? [UIApplication _UIApplicationRotationDefaultPreferredStatusBarStyle] : topVC.preferredStatusBarStyle;
+}
+
+- (BOOL)rotation_prefersStatusBarHidden {
+    UIViewController *topVC = self.rotation_findTopViewController;
+    UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
+    if (preference) return preference.prefersStatusBarHidden.boolValue;
+    return topVC == self ? [UIApplication _UIApplicationRotationDefaultPrefersStatusBarHidden] : topVC.prefersStatusBarHidden;
+}
+
+- (UIViewController *)rotation_childViewControllerForStatusBarStyle {
+    UIViewController *topVC = self.rotation_findTopViewController;
+    return topVC == self ? nil : topVC;
+}
+
+- (UIViewController *)rotation_childViewControllerForStatusBarHidden {
+    UIViewController *topVC = self.rotation_findTopViewController;
+    return topVC == self ? nil : topVC;
+}
 
 - (UIInterfaceOrientation)rotation_fix_preferredInterfaceOrientationForPresentation {
     UIInterfaceOrientation currentInterface;
@@ -784,10 +813,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UINavigationController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^BOOL (__unsafe_unretained UINavigationController *self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.shouldAutorotate.boolValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultShouldAutorotate] : topVC.shouldAutorotate;
+             return [self rotation_shouldAutorotate];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -800,10 +826,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UINavigationController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIInterfaceOrientationMask (__unsafe_unretained UINavigationController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.supportedInterfaceOrientations.boolValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultSupportedInterfaceOrientations] : topVC.supportedInterfaceOrientations;
+             return [self rotation_supportedInterfaceOrientations];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -818,10 +841,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UINavigationController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIInterfaceOrientation (__unsafe_unretained UINavigationController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.preferredInterfaceOrientationForPresentation.integerValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultPreferredInterfaceOrientationForPresentation] : topVC.preferredInterfaceOrientationForPresentation;
+             return [self rotation_preferredInterfaceOrientationForPresentation];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -834,10 +854,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UINavigationController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIStatusBarStyle (__unsafe_unretained UINavigationController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.preferredStatusBarStyle.integerValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultPreferredStatusBarStyle] : topVC.preferredStatusBarStyle;
+             return [self rotation_preferredStatusBarStyle];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -850,10 +867,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UINavigationController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^BOOL (__unsafe_unretained UINavigationController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.prefersStatusBarHidden.boolValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultPrefersStatusBarHidden] : topVC.prefersStatusBarHidden;
+             return [self rotation_prefersStatusBarHidden];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -866,8 +880,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UINavigationController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIViewController* (__unsafe_unretained UINavigationController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             return topVC == self ? nil : topVC;
+             return [self rotation_childViewControllerForStatusBarStyle];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -880,8 +893,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UINavigationController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIViewController* (__unsafe_unretained UINavigationController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             return topVC == self ? nil : topVC;
+             return [self rotation_childViewControllerForStatusBarHidden];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -957,10 +969,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UITabBarController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^BOOL (__unsafe_unretained UITabBarController *self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.shouldAutorotate.boolValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultShouldAutorotate] : topVC.shouldAutorotate;
+             return [self rotation_shouldAutorotate];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -973,10 +982,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UITabBarController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIInterfaceOrientationMask (__unsafe_unretained UITabBarController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.supportedInterfaceOrientations.boolValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultSupportedInterfaceOrientations] : topVC.supportedInterfaceOrientations;
+             return [self rotation_supportedInterfaceOrientations];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -991,10 +997,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UITabBarController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIInterfaceOrientation (__unsafe_unretained UITabBarController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.preferredInterfaceOrientationForPresentation.integerValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultPreferredInterfaceOrientationForPresentation] : topVC.preferredInterfaceOrientationForPresentation;
+             return [self rotation_preferredInterfaceOrientationForPresentation];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -1007,10 +1010,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UITabBarController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIStatusBarStyle (__unsafe_unretained UITabBarController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.preferredStatusBarStyle.integerValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultPreferredStatusBarStyle] : topVC.preferredStatusBarStyle;
+             return [self rotation_preferredStatusBarStyle];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -1023,10 +1023,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UITabBarController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^BOOL (__unsafe_unretained UITabBarController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             UIViewControllerRotationModel *preference = [self rotation_getPreferenceInternalClassModel:topVC.class];
-             if (preference) return preference.prefersStatusBarHidden.boolValue;
-             return topVC == self ? [UIApplication _UIApplicationRotationDefaultPrefersStatusBarHidden] : topVC.prefersStatusBarHidden;
+             return [self rotation_prefersStatusBarHidden];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -1039,8 +1036,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UITabBarController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIViewController* (__unsafe_unretained UITabBarController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             return topVC == self ? nil : topVC;
+             return [self rotation_childViewControllerForStatusBarStyle];
          };
      }
      mode:KZRSSwizzleModeAlways
@@ -1053,8 +1049,7 @@ static NSMutableDictionary <NSString *,UIViewControllerRotationModel *>* _rotati
      inClass:UITabBarController.class
      newImpFactory:^id(KZRSSwizzleInfo *swizzleInfo) {
          return ^UIViewController* (__unsafe_unretained UITabBarController * self) {
-             UIViewController *topVC = self.rotation_findTopViewController;
-             return topVC == self ? nil : topVC;
+             return [self rotation_childViewControllerForStatusBarHidden];
          };
      }
      mode:KZRSSwizzleModeAlways

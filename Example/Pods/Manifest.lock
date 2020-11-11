@@ -1,5 +1,5 @@
 PODS:
-  - UIViewControllerRotate (2.1.4)
+  - UIViewControllerRotate (3.0.0)
 
 DEPENDENCIES:
   - UIViewControllerRotate (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  UIViewControllerRotate: 1be750287fe1649f0c2b2d33ad1bb3a65adc3deb
+  UIViewControllerRotate: ad0cf9ec44aad76dfa55a63a24ecd551931ee9e1
 
-PODFILE CHECKSUM: 53ca4ed416f2dc667e48040ab7e146e91b7f11d9
+PODFILE CHECKSUM: b533f3da7ab1c6937c7f762612315e83c325caaa
 
 COCOAPODS: 1.10.0

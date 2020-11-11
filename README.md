@@ -10,7 +10,11 @@
 1. 就应该是创建`BaseViewController`, `BaseNavigationController`, `BaseTabBarController` 这三个基类,
 2. 修改其 `shouldAutorotate`, `supportedInterfaceOrientations`, `preferredInterfaceOrientationForPresentation` 方法来实现个别界面旋转效果
 
-但是这样项目的耦合性就非常大, 需要所有类都进行继承, 所以想到用扩展的方法实现, 但是swift的extension 不支持重写父类方法, 所以这里用OC实现
+但是这样项目的耦合性就非常大, 需要所有类都m继承
+
+~~所以想到用扩展的方法实现, 但是swift的extension 不支持重写父类方法, 所以这里用OC实现~~
+
+从Xcode 11 开始遇到一个问题: iOS13 在 debug连接模拟器/真机调试时无法触发Category重写系统的一些列方法(但不影响release包),  故从`3.0.0`版本开始完全使用Swizzle的形式实现功能
 
 ## 添加方法:
 1. 往项目中拖入文件
@@ -48,12 +52,33 @@ PS.如遇到某些类想要强制修改其方向, 需要用到 `UIViewController
 ## 风险提示:
 本扩展使用runtime替换了以下方法, 如果有冲突请自行修改或寻找其他解决方案:
 - UIViewController:
+  - @selector(shouldAutorotate)
+  - @selector(supportedInterfaceOrientations)
+  - @selector(preferredInterfaceOrientationForPresentation)
+  - @selector(preferredStatusBarStyle)
+  - @selector(prefersStatusBarHidden)
+  - @selector(childViewControllerForStatusBarStyle)
+  - @selector(childViewControllerForStatusBarHidden)
   - @selector(viewWillAppear:)
 - UINavigationController:
+  - @selector(shouldAutorotate)
+  - @selector(supportedInterfaceOrientations)
+  - @selector(preferredInterfaceOrientationForPresentation)
+  - @selector(preferredStatusBarStyle)
+  - @selector(prefersStatusBarHidden)
+  - @selector(childViewControllerForStatusBarStyle)
+  - @selector(childViewControllerForStatusBarHidden)
   - @selector(pushViewController:animated:)
   - @selector(popToViewController:animated:)
   - @selector(popToRootViewControllerAnimated:)
 - UITabBarController:
+  - @selector(shouldAutorotate)
+  - @selector(supportedInterfaceOrientations)
+  - @selector(preferredInterfaceOrientationForPresentation)
+  - @selector(preferredStatusBarStyle)
+  - @selector(prefersStatusBarHidden)
+  - @selector(childViewControllerForStatusBarStyle)
+  - @selector(childViewControllerForStatusBarHidden)
   - @selector(setSelectedIndex:)
   - @selector(setSelectedViewController:)
 - UIApplication:
