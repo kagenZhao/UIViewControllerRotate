@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5ke-8R-ZbO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5ke-8R-ZbO">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,64 +16,103 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbV-Kl-RGd">
-                                <rect key="frame" x="16" y="92" width="99" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbV-Kl-RGd">
+                                <rect key="frame" x="51" y="133" width="99" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push 旋转向左"/>
                                 <connections>
-                                    <segue destination="7BC-RI-P00" kind="show" id="VjS-AW-dbP"/>
+                                    <segue destination="7BC-RI-P00" kind="show" id="R1J-FZ-eS3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SNl-iJ-Neu">
-                                <rect key="frame" x="16" y="157" width="99" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SNl-iJ-Neu">
+                                <rect key="frame" x="51" y="171" width="99" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push 旋转向右"/>
                                 <connections>
-                                    <segue destination="kh9-fi-dJw" kind="show" id="G3g-EG-12y"/>
+                                    <segue destination="kh9-fi-dJw" kind="show" id="WJM-vk-Nsh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEh-5u-uBK">
-                                <rect key="frame" x="16" y="280" width="118" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="present 旋转向左"/>
-                                <connections>
-                                    <segue destination="7BC-RI-P00" kind="presentation" modalPresentationStyle="fullScreen" id="ujL-Ar-1ll"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8VZ-h5-8XJ">
-                                <rect key="frame" x="16" y="312" width="118" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="present 旋转向左"/>
-                                <connections>
-                                    <segue destination="kh9-fi-dJw" kind="presentation" modalPresentationStyle="fullScreen" id="39X-EA-GXO"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOu-3Y-KbZ">
-                                <rect key="frame" x="22" y="202" width="69" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOu-3Y-KbZ">
+                                <rect key="frame" x="51" y="209" width="93" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push 正向"/>
                                 <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="show" id="u6W-87-eZR"/>
+                                    <segue destination="vXZ-lx-hvc" kind="show" id="nXa-5m-qTr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jui-xA-QXl">
-                                <rect key="frame" x="22" y="240" width="63" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jui-xA-QXl">
+                                <rect key="frame" x="92" y="97" width="95" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="返回Root"/>
+                                <state key="normal" title="Pop Root"/>
                                 <connections>
-                                    <action selector="gobackRoot" destination="7BC-RI-P00" eventType="touchUpInside" id="D76-Oo-Gv5"/>
-                                    <action selector="gobackRoot" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Nrn-0q-cje"/>
+                                    <action selector="popRoot" destination="vXZ-lx-hvc" eventType="touchUpInside" id="49c-il-Xuf"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qa-67-NWE">
-                                <rect key="frame" x="33" y="433" width="84" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qa-67-NWE">
+                                <rect key="frame" x="243" y="288" width="84" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="present navi"/>
                                 <connections>
                                     <action selector="presentNavi" destination="vXZ-lx-hvc" eventType="touchUpInside" id="t6Y-ty-8AF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bM1-ha-0li">
+                                <rect key="frame" x="233" y="192" width="114" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="show alert"/>
+                                <connections>
+                                    <action selector="showAlert" destination="vXZ-lx-hvc" eventType="touchUpInside" id="HYT-qD-pGy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FrC-6z-QN3">
+                                <rect key="frame" x="213" y="114" width="126" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Test StatusBar"/>
+                                <connections>
+                                    <action selector="testStatusBar" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Mgo-cS-LEr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7G0-6g-ZLZ">
+                                <rect key="frame" x="41" y="97" width="43" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Pop"/>
+                                <connections>
+                                    <action selector="popself" destination="vXZ-lx-hvc" eventType="touchUpInside" id="mGq-2x-aW0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEh-5u-uBK">
+                                <rect key="frame" x="48" y="295" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 旋转向左"/>
+                                <connections>
+                                    <segue destination="7BC-RI-P00" kind="presentation" modalPresentationStyle="fullScreen" id="7Vn-1E-LFf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8VZ-h5-8XJ">
+                                <rect key="frame" x="48" y="327" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 旋转向左"/>
+                                <connections>
+                                    <segue destination="kh9-fi-dJw" kind="presentation" modalPresentationStyle="fullScreen" id="boK-8w-eFy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDT-hH-2uX">
+                                <rect key="frame" x="48" y="365" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 正向"/>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="presentation" modalPresentationStyle="pageSheet" id="d8m-zh-Qdp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uCG-9z-R3d">
+                                <rect key="frame" x="35" y="258" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="dismiss"/>
+                                <connections>
+                                    <action selector="dismissself" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lDS-vk-kHj"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -82,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2862" y="-6"/>
+            <point key="canvasLocation" x="2861.5999999999999" y="-6.746626686656672"/>
         </scene>
         <!--Item-->
         <scene sceneID="IpI-hQ-zhm">
@@ -135,44 +175,92 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5q-kt-dVs">
-                                <rect key="frame" x="24" y="100" width="41" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5KW-sa-Dl7">
+                                <rect key="frame" x="333" y="110" width="114" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="返回"/>
+                                <state key="normal" title="show alert"/>
                                 <connections>
-                                    <action selector="goback" destination="7BC-RI-P00" eventType="touchUpInside" id="lq3-KF-BKp"/>
+                                    <action selector="showAlert" destination="7BC-RI-P00" eventType="touchUpInside" id="vgN-eb-3OL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwi-aA-IyL">
-                                <rect key="frame" x="24" y="146" width="99" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uo-7m-bSc">
+                                <rect key="frame" x="44" y="146" width="99" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push 旋转向左"/>
                                 <connections>
-                                    <segue destination="7BC-RI-P00" kind="show" id="Kka-CT-haa"/>
+                                    <segue destination="7BC-RI-P00" kind="show" id="id6-eL-RMZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ISM-H7-9oN">
-                                <rect key="frame" x="24" y="184" width="99" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FI-bT-4ha">
+                                <rect key="frame" x="44" y="184" width="99" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push 旋转向右"/>
                                 <connections>
-                                    <segue destination="kh9-fi-dJw" kind="show" id="3s0-qa-8A5"/>
+                                    <segue destination="kh9-fi-dJw" kind="show" id="Bli-zA-6Os"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="re0-vZ-6u9">
-                                <rect key="frame" x="24" y="258" width="63" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="返回Root"/>
-                                <connections>
-                                    <action selector="gobackRoot" destination="7BC-RI-P00" eventType="touchUpInside" id="i58-oZ-Jj2"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNZ-J1-Hko">
-                                <rect key="frame" x="21" y="220" width="69" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yyE-a6-FNF">
+                                <rect key="frame" x="44" y="222" width="93" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push 正向"/>
                                 <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="show" id="D6o-Hn-dLg"/>
+                                    <segue destination="vXZ-lx-hvc" kind="show" id="ZRG-vY-HZh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xwm-Ot-wau">
+                                <rect key="frame" x="85" y="110" width="95" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Pop Root"/>
+                                <connections>
+                                    <action selector="popRoot" destination="7BC-RI-P00" eventType="touchUpInside" id="bXQ-a4-HJZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TGK-Zj-BAA">
+                                <rect key="frame" x="34" y="110" width="43" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Pop"/>
+                                <connections>
+                                    <action selector="popself" destination="7BC-RI-P00" eventType="touchUpInside" id="R8s-Of-7xL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AvU-eB-Rrk">
+                                <rect key="frame" x="181" y="149" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 旋转向左"/>
+                                <connections>
+                                    <segue destination="7BC-RI-P00" kind="presentation" modalPresentationStyle="fullScreen" id="i4B-mW-Ra9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="faj-8W-FRK">
+                                <rect key="frame" x="181" y="181" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 旋转向右"/>
+                                <connections>
+                                    <segue destination="kh9-fi-dJw" kind="presentation" modalPresentationStyle="fullScreen" id="ffQ-PP-H1x"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ih-Z1-bVp">
+                                <rect key="frame" x="181" y="219" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 正向"/>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="presentation" modalPresentationStyle="fullScreen" id="qGa-VS-Ko7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hB1-gc-Eg3">
+                                <rect key="frame" x="363" y="184" width="84" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present navi"/>
+                                <connections>
+                                    <action selector="presentNavi" destination="7BC-RI-P00" eventType="touchUpInside" id="Tev-GL-CkL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TE6-sp-yKF">
+                                <rect key="frame" x="181" y="119" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="dismiss"/>
+                                <connections>
+                                    <action selector="dismissself" destination="7BC-RI-P00" eventType="touchUpInside" id="bYf-KS-1SH"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -182,7 +270,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Pe-HJ-O60" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2020" y="843.32833583208401"/>
+            <point key="canvasLocation" x="2020" y="843"/>
         </scene>
         <!--Item-->
         <scene sceneID="CdP-MH-2de">
@@ -215,44 +303,92 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uCV-zy-o3J">
-                                <rect key="frame" x="25" y="93" width="41" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="返回"/>
-                                <connections>
-                                    <action selector="goback" destination="kh9-fi-dJw" eventType="touchUpInside" id="J94-HD-4SW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPg-Av-hSM">
-                                <rect key="frame" x="25" y="137" width="99" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="heB-O9-N2L">
+                                <rect key="frame" x="48" y="139" width="99" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push 旋转向左"/>
                                 <connections>
-                                    <segue destination="7BC-RI-P00" kind="show" id="YEX-Ka-Tkx"/>
+                                    <segue destination="7BC-RI-P00" kind="show" id="XVA-wI-PuI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPS-Oa-VSE">
-                                <rect key="frame" x="25" y="175" width="99" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffA-NO-EHs">
+                                <rect key="frame" x="48" y="177" width="99" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push 旋转向右"/>
                                 <connections>
-                                    <segue destination="kh9-fi-dJw" kind="show" id="8vY-mM-K0q"/>
+                                    <segue destination="kh9-fi-dJw" kind="show" id="SOC-Cd-yeY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fq-5T-IYB">
-                                <rect key="frame" x="25" y="266" width="63" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="返回Root"/>
-                                <connections>
-                                    <action selector="gobackRoot" destination="kh9-fi-dJw" eventType="touchUpInside" id="EeB-r0-E3G"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PDl-Da-kMD">
-                                <rect key="frame" x="25" y="221" width="69" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DDC-ha-iEo">
+                                <rect key="frame" x="48" y="215" width="93" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push 正向"/>
                                 <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="show" id="yn4-YV-rqk"/>
+                                    <segue destination="vXZ-lx-hvc" kind="show" id="XbO-w0-GSI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hzd-HB-s9r">
+                                <rect key="frame" x="89" y="103" width="95" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Pop Root"/>
+                                <connections>
+                                    <action selector="popRoot" destination="kh9-fi-dJw" eventType="touchUpInside" id="o9y-Ai-MdU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlh-re-q1s">
+                                <rect key="frame" x="38" y="103" width="43" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Pop"/>
+                                <connections>
+                                    <action selector="popself" destination="kh9-fi-dJw" eventType="touchUpInside" id="ffz-Yd-3xA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e00-wk-U8w">
+                                <rect key="frame" x="212" y="139" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 旋转向左"/>
+                                <connections>
+                                    <segue destination="7BC-RI-P00" kind="presentation" modalPresentationStyle="fullScreen" id="JUM-PD-LwD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZD-kU-xTh">
+                                <rect key="frame" x="212" y="171" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 旋转向右"/>
+                                <connections>
+                                    <segue destination="kh9-fi-dJw" kind="presentation" modalPresentationStyle="fullScreen" id="MKb-OS-my0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9P4-fS-VJ5">
+                                <rect key="frame" x="212" y="209" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present 正向"/>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="presentation" modalPresentationStyle="fullScreen" id="paB-2d-76Q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CgW-MT-6Mf">
+                                <rect key="frame" x="199" y="102" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="dismiss"/>
+                                <connections>
+                                    <action selector="dismissself" destination="kh9-fi-dJw" eventType="touchUpInside" id="I0H-mI-oO6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Yy-Mf-gCB">
+                                <rect key="frame" x="349" y="127" width="114" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="show alert"/>
+                                <connections>
+                                    <action selector="showAlert" destination="kh9-fi-dJw" eventType="touchUpInside" id="huZ-ca-dql"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zYz-be-fHe">
+                                <rect key="frame" x="345" y="186" width="84" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="present navi"/>
+                                <connections>
+                                    <action selector="presentNavi" destination="kh9-fi-dJw" eventType="touchUpInside" id="Eof-Xp-DgT"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -285,8 +421,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="39X-EA-GXO"/>
-        <segue reference="ujL-Ar-1ll"/>
-        <segue reference="D6o-Hn-dLg"/>
+        <segue reference="boK-8w-eFy"/>
+        <segue reference="7Vn-1E-LFf"/>
+        <segue reference="qGa-VS-Ko7"/>
     </inferredMetricsTieBreakers>
 </document>

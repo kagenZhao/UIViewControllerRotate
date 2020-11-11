@@ -16,6 +16,9 @@ class ViewController11: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func goback(_ sender: Any) {
+        self.tabBarController?.dismiss(animated: true, completion: nil)
+    }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
