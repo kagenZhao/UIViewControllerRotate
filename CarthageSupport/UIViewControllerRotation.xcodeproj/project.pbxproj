@@ -8,20 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		C09910B52671B4A3006D8A4C /* UIViewControllerRotation.h in Headers */ = {isa = PBXBuildFile; fileRef = C09910B32671B4A3006D8A4C /* UIViewControllerRotation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C09910C22671B4B9006D8A4C /* KZRSSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = C09910BD2671B4B9006D8A4C /* KZRSSwizzle.h */; };
-		C09910C32671B4B9006D8A4C /* UIViewControllerRotate.h in Headers */ = {isa = PBXBuildFile; fileRef = C09910BE2671B4B9006D8A4C /* UIViewControllerRotate.h */; };
-		C09910C42671B4B9006D8A4C /* KZRSSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = C09910BF2671B4B9006D8A4C /* KZRSSwizzle.m */; };
-		C09910C52671B4B9006D8A4C /* UIViewControllerRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = C09910C02671B4B9006D8A4C /* UIViewControllerRotate.m */; };
+		C0BFE91D2671E610000353A3 /* KZRSSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = C0BFE9182671E610000353A3 /* KZRSSwizzle.h */; };
+		C0BFE91E2671E610000353A3 /* UIViewControllerRotate.h in Headers */ = {isa = PBXBuildFile; fileRef = C0BFE9192671E610000353A3 /* UIViewControllerRotate.h */; };
+		C0BFE91F2671E610000353A3 /* KZRSSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BFE91A2671E610000353A3 /* KZRSSwizzle.m */; };
+		C0BFE9202671E610000353A3 /* UIViewControllerRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BFE91B2671E610000353A3 /* UIViewControllerRotate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C09910B02671B4A3006D8A4C /* UIViewControllerRotation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UIViewControllerRotation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C09910B32671B4A3006D8A4C /* UIViewControllerRotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIViewControllerRotation.h; sourceTree = "<group>"; };
 		C09910B42671B4A3006D8A4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C09910BD2671B4B9006D8A4C /* KZRSSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KZRSSwizzle.h; sourceTree = "<group>"; };
-		C09910BE2671B4B9006D8A4C /* UIViewControllerRotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewControllerRotate.h; sourceTree = "<group>"; };
-		C09910BF2671B4B9006D8A4C /* KZRSSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KZRSSwizzle.m; sourceTree = "<group>"; };
-		C09910C02671B4B9006D8A4C /* UIViewControllerRotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewControllerRotate.m; sourceTree = "<group>"; };
+		C0BFE9182671E610000353A3 /* KZRSSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KZRSSwizzle.h; sourceTree = "<group>"; };
+		C0BFE9192671E610000353A3 /* UIViewControllerRotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewControllerRotate.h; sourceTree = "<group>"; };
+		C0BFE91A2671E610000353A3 /* KZRSSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KZRSSwizzle.m; sourceTree = "<group>"; };
+		C0BFE91B2671E610000353A3 /* UIViewControllerRotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewControllerRotate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,35 +54,35 @@
 		C09910B22671B4A3006D8A4C /* UIViewControllerRotation */ = {
 			isa = PBXGroup;
 			children = (
-				C09910BB2671B4B9006D8A4C /* UIViewControllerRotate */,
+				C0BFE9162671E610000353A3 /* UIViewControllerRotate */,
 				C09910B32671B4A3006D8A4C /* UIViewControllerRotation.h */,
 				C09910B42671B4A3006D8A4C /* Info.plist */,
 			);
 			path = UIViewControllerRotation;
 			sourceTree = "<group>";
 		};
-		C09910BB2671B4B9006D8A4C /* UIViewControllerRotate */ = {
+		C0BFE9162671E610000353A3 /* UIViewControllerRotate */ = {
 			isa = PBXGroup;
 			children = (
-				C09910BC2671B4B9006D8A4C /* Classes */,
-				C09910C12671B4B9006D8A4C /* Assets */,
+				C0BFE9172671E610000353A3 /* Classes */,
+				C0BFE91C2671E610000353A3 /* Assets */,
 			);
 			name = UIViewControllerRotate;
-			path = ../../../UIViewControllerRotate;
+			path = ../../UIViewControllerRotate;
 			sourceTree = "<group>";
 		};
-		C09910BC2671B4B9006D8A4C /* Classes */ = {
+		C0BFE9172671E610000353A3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C09910BD2671B4B9006D8A4C /* KZRSSwizzle.h */,
-				C09910BE2671B4B9006D8A4C /* UIViewControllerRotate.h */,
-				C09910BF2671B4B9006D8A4C /* KZRSSwizzle.m */,
-				C09910C02671B4B9006D8A4C /* UIViewControllerRotate.m */,
+				C0BFE9182671E610000353A3 /* KZRSSwizzle.h */,
+				C0BFE9192671E610000353A3 /* UIViewControllerRotate.h */,
+				C0BFE91A2671E610000353A3 /* KZRSSwizzle.m */,
+				C0BFE91B2671E610000353A3 /* UIViewControllerRotate.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		C09910C12671B4B9006D8A4C /* Assets */ = {
+		C0BFE91C2671E610000353A3 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -97,8 +97,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C09910B52671B4A3006D8A4C /* UIViewControllerRotation.h in Headers */,
-				C09910C32671B4B9006D8A4C /* UIViewControllerRotate.h in Headers */,
-				C09910C22671B4B9006D8A4C /* KZRSSwizzle.h in Headers */,
+				C0BFE91E2671E610000353A3 /* UIViewControllerRotate.h in Headers */,
+				C0BFE91D2671E610000353A3 /* KZRSSwizzle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,8 +169,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C09910C42671B4B9006D8A4C /* KZRSSwizzle.m in Sources */,
-				C09910C52671B4B9006D8A4C /* UIViewControllerRotate.m in Sources */,
+				C0BFE91F2671E610000353A3 /* KZRSSwizzle.m in Sources */,
+				C0BFE9202671E610000353A3 /* UIViewControllerRotate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
