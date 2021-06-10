@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C09910AF2671B4A3006D8A4C"
-               BuildableName = "UIViewControllerRotation.framework"
-               BlueprintName = "UIViewControllerRotation"
-               ReferencedContainer = "container:UIViewControllerRotation.xcodeproj">
+               BlueprintIdentifier = "C0BFE9322671F3D7000353A3"
+               BuildableName = "UIViewControllerRotate.framework"
+               BlueprintName = "UIViewControllerRotate"
+               ReferencedContainer = "container:UIViewControllerRotate.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,10 +50,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C09910AF2671B4A3006D8A4C"
-            BuildableName = "UIViewControllerRotation.framework"
-            BlueprintName = "UIViewControllerRotation"
-            ReferencedContainer = "container:UIViewControllerRotation.xcodeproj">
+            BlueprintIdentifier = "C0BFE9322671F3D7000353A3"
+            BuildableName = "UIViewControllerRotate.framework"
+            BlueprintName = "UIViewControllerRotate"
+            ReferencedContainer = "container:UIViewControllerRotate.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
